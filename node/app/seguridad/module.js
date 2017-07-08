@@ -1,10 +1,9 @@
-'use strict';
+"use strict";
 
 module.exports = function(app) {
+  require("./usuario.schema.js");
 
-  require('./usuario.schema.js');
+  require("./usuario.controller.js")(app);
 
-  require('./usuario.controller.js')(app);
-
-  require('./strategy/passport.js')();
+  require("./strategy/passport.js")();
 };

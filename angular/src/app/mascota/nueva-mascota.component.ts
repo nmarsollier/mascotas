@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MascotaService, Mascota } from './mascota.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { Router } from '@angular/router';
-import { DatePickerPipe } from '../tools/common-pipes.pipe';
-import { DatePickerModule } from 'ng2-datepicker';
-
+import { Component, OnInit } from "@angular/core";
+import { MascotaService, Mascota } from "./mascota.service";
+import { ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs/Rx";
+import { Router } from "@angular/router";
+import { DatePickerPipe } from "../tools/common-pipes.pipe";
+import { DatePickerModule } from "ng2-datepicker";
 
 @Component({
-  selector: 'app-nueva-mascota',
-  templateUrl: './nueva-mascota.component.html'
+  selector: "app-nueva-mascota",
+  templateUrl: "./nueva-mascota.component.html"
 })
 export class NuevaMascotaComponent implements OnInit {
   mascota: Mascota;
@@ -17,34 +16,44 @@ export class NuevaMascotaComponent implements OnInit {
   formSubmitted: boolean;
   errors: string[] = [];
 
-  constructor(private mascotasService: MascotaService,
-    private route: ActivatedRoute, private router: Router) {
-    this.mascota = { _id: null, nombre: '', fechaNacimiento: '', descripcion: '' };
+  constructor(
+    private mascotasService: MascotaService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.mascota = {
+      _id: null,
+      nombre: "",
+      fechaNacimiento: "",
+      descripcion: ""
+    };
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      let id = params['id'];
+      let id = params["id"];
       if (id) {
-        this.mascotasService.buscarMascota(id)
-          .then(mascota => this.mascota = mascota)
-          .catch(error => this.errorMessage = <any>error);
+        this.mascotasService
+          .buscarMascota(id)
+          .then(mascota => (this.mascota = mascota))
+          .catch(error => (this.errorMessage = <any>error));
       }
     });
   }
 
   submitForm() {
     this.cleanRestValidations();
-    this.mascotasService.guardarMascota(this.mascota)
-      .then(mascota => this.router.navigate(['/mascotas']))
+    this.mascotasService
+      .guardarMascota(this.mascota)
+      .then(mascota => this.router.navigate(["/mascotas"]))
       .catch(error => this.procesarValidacionesRest(error));
   }
-  
-  
+
   onDelete() {
     this.cleanRestValidations();
-    this.mascotasService.eliminarMascota(this.mascota._id)
-      .then(any => this.router.navigate(['/mascotas']))
+    this.mascotasService
+      .eliminarMascota(this.mascota._id)
+      .then(any => this.router.navigate(["/mascotas"]))
       .catch(error => this.procesarValidacionesRest(error));
   }
 

@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, Response, URLSearchParams } from '@angular/http';
-import { RestBaseService } from '../tools/rest.tools';
-import 'rxjs/add/operator/toPromise';
+import { Injectable } from "@angular/core";
+import { Http, Headers, Response, URLSearchParams } from "@angular/http";
+import { RestBaseService } from "../tools/rest.tools";
+import "rxjs/add/operator/toPromise";
 
 @Injectable()
 export class PerfilService extends RestBaseService {
-  private perfilUrl = '/perfil';
+  private perfilUrl = "/perfil";
 
-  constructor(private http: Http) { super(); }
+  constructor(private http: Http) {
+    super();
+  }
 
   buscarPerfil(): Promise<Perfil> {
-    return this.http.get(PerfilService.serverUrl + this.perfilUrl, this.getRestHeader())
+    return this.http
+      .get(PerfilService.serverUrl + this.perfilUrl, this.getRestHeader())
       .toPromise()
       .then(response => {
         return response.json() as Perfil;
@@ -19,7 +22,12 @@ export class PerfilService extends RestBaseService {
   }
 
   guardarPerfil(value: Perfil): Promise<Perfil> {
-    return this.http.post(PerfilService.serverUrl + this.perfilUrl, JSON.stringify(value), this.getRestHeader())
+    return this.http
+      .post(
+        PerfilService.serverUrl + this.perfilUrl,
+        JSON.stringify(value),
+        this.getRestHeader()
+      )
       .toPromise()
       .then(response => {
         return response.json() as Perfil;
@@ -34,5 +42,5 @@ export interface Perfil {
   provincia: string;
   email: string;
   direccion: string;
-  telefono: string
+  telefono: string;
 }

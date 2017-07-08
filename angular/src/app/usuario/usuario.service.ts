@@ -1,27 +1,33 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, Response, URLSearchParams } from '@angular/http';
-import { RestBaseService } from '../tools/rest.tools';
-import 'rxjs/add/operator/toPromise';
+import { Injectable } from "@angular/core";
+import { Http, Headers, Response, URLSearchParams } from "@angular/http";
+import { RestBaseService } from "../tools/rest.tools";
+import "rxjs/add/operator/toPromise";
 
 @Injectable()
 export class UsuarioService extends RestBaseService {
-  private loginUrl = '/auth/signin';
-  private logoutUrl = '/auth/signout';
-  private principalUrl = '/auth/currentUser';
-  private registrarUrl = '/auth/signup';
-  
+  private loginUrl = "/auth/signin";
+  private logoutUrl = "/auth/signout";
+  private principalUrl = "/auth/currentUser";
+  private registrarUrl = "/auth/signup";
 
   private usuarioLogueado;
 
-  constructor(private http: Http) { super(); }
+  constructor(private http: Http) {
+    super();
+  }
 
   login(username: string, password: string): Promise<Usuario> {
     const data = {
-      'login': username,
-      'password': password
+      login: username,
+      password: password
     };
 
-    return this.http.post(UsuarioService.serverUrl + this.loginUrl, JSON.stringify(data), this.getRestHeader())
+    return this.http
+      .post(
+        UsuarioService.serverUrl + this.loginUrl,
+        JSON.stringify(data),
+        this.getRestHeader()
+      )
       .toPromise()
       .then(response => {
         return response.json() as Usuario;
@@ -30,7 +36,8 @@ export class UsuarioService extends RestBaseService {
   }
 
   logout(): Promise<Usuario> {
-    return this.http.get(UsuarioService.serverUrl + this.logoutUrl, this.getRestHeader())
+    return this.http
+      .get(UsuarioService.serverUrl + this.logoutUrl, this.getRestHeader())
       .toPromise()
       .then(response => {
         return response.json() as Usuario;
@@ -39,7 +46,8 @@ export class UsuarioService extends RestBaseService {
   }
 
   getPrincipal(): Promise<Usuario> {
-    return this.http.get(UsuarioService.serverUrl + this.principalUrl, this.getRestHeader())
+    return this.http
+      .get(UsuarioService.serverUrl + this.principalUrl, this.getRestHeader())
       .toPromise()
       .then(response => {
         return response.json() as Usuario;
@@ -48,7 +56,12 @@ export class UsuarioService extends RestBaseService {
   }
 
   registrarUsuario(value: RegistrarUsuario): Promise<Usuario> {
-      return this.http.put(UsuarioService.serverUrl + this.registrarUrl, JSON.stringify(value), this.getRestHeader())
+    return this.http
+      .put(
+        UsuarioService.serverUrl + this.registrarUrl,
+        JSON.stringify(value),
+        this.getRestHeader()
+      )
       .toPromise()
       .then(response => {
         return response.json() as Usuario;
@@ -73,4 +86,3 @@ export interface Usuario {
   activo: boolean;
   roles: string[];
 }
-
