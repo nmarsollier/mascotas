@@ -5,10 +5,10 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class UsuarioService extends RestBaseService {
-  private loginUrl = '/rest/seguridad/login';
-  private logoutUrl = '/rest/seguridad/logout';
-  private principalUrl = '/rest/seguridad/principal';
-  private registrarUrl = '/rest/usuarios';
+  private loginUrl = '/auth/signin';
+  private logoutUrl = '/auth/signout';
+  private principalUrl = '/auth/currentUser';
+  private registrarUrl = '/auth/signup';
   
 
   private usuarioLogueado;
@@ -48,7 +48,7 @@ export class UsuarioService extends RestBaseService {
   }
 
   registrarUsuario(value: RegistrarUsuario): Promise<Usuario> {
-      return this.http.post(UsuarioService.serverUrl + this.registrarUrl, JSON.stringify(value), this.getRestHeader())
+      return this.http.put(UsuarioService.serverUrl + this.registrarUrl, JSON.stringify(value), this.getRestHeader())
       .toPromise()
       .then(response => {
         return response.json() as Usuario;

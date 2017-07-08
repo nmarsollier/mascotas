@@ -19,12 +19,12 @@ export class NuevaMascotaComponent implements OnInit {
 
   constructor(private mascotasService: MascotaService,
     private route: ActivatedRoute, private router: Router) {
-    this.mascota = { id: null, nombre: '', fechaNacimiento: '', descripcion: '' };
+    this.mascota = { _id: null, nombre: '', fechaNacimiento: '', descripcion: '' };
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      let id = +params['id'];
+      let id = params['id'];
       if (id) {
         this.mascotasService.buscarMascota(id)
           .then(mascota => this.mascota = mascota)
@@ -43,7 +43,7 @@ export class NuevaMascotaComponent implements OnInit {
   
   onDelete() {
     this.cleanRestValidations();
-    this.mascotasService.eliminarMascota(this.mascota.id)
+    this.mascotasService.eliminarMascota(this.mascota._id)
       .then(any => this.router.navigate(['/mascotas']))
       .catch(error => this.procesarValidacionesRest(error));
   }

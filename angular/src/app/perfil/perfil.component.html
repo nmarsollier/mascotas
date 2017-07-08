@@ -30,12 +30,12 @@
 
 		<br />
 		<select name='provincia' [formControl]="form.controls['provincia']" >
-					<option *ngFor="let item of provincias" [value]="item.id" >{{item.nombre}}</option>
+			<option *ngFor="let item of provincias" [value]="item._id" >{{item.nombre}}</option>
 		</select>	
 
 		<div class="error"
-					*ngIf="(form.controls['provincia'].dirty || formSubmitted) && form.controls['provincia'].invalid">
-						Valor no v&aacute;lido.
+			*ngIf="(form.controls['provincia'].dirty || formSubmitted) && form.controls['provincia'].invalid">
+				Valor no v&aacute;lido.
 		</div>
 	</div>
 

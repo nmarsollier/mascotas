@@ -1,4 +1,4 @@
-<h1>{{mascota.id ? "Editar Mascota" : 'Nueva Mascota' }}</h1>
+<h1>{{mascota._id ? "Editar Mascota" : 'Nueva Mascota' }}</h1>
 
 <form novalidate #f="ngForm">
 	
@@ -46,6 +46,6 @@
 
 
 	<button class="btn btn-default" [routerLink]="['/mascotas']" >Cancelar</button>
-	<button class="btn btn-warning" *ngIf="mascota.id" (click)="onDelete()">Eliminar</button>
+	<button class="btn btn-warning" *ngIf="mascota._id" (click)="onDelete()">Eliminar</button>
 	<button class="btn btn-success"  (click)="submitForm()" [disabled]="f.invalid">Guardar</button>
 </form>

@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ProvinciaService extends RestBaseService {
-  private provinciasUrl = '/rest/provincias';
+  private provinciasUrl = '/provincias';
 
   constructor(private http: Http) { super(); }
 
@@ -20,7 +20,7 @@ export class ProvinciaService extends RestBaseService {
 }
 
 export interface Provincia {
-  id: string;
+  _id: string;
   nombre: string;
 }
 

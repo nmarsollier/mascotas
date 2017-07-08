@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  serverBase: '/Mascotas',
-  baseHref: '/Mascotas/'
+  serverBase: 'http://localhost:3000',
+  baseHref: '/'
 };

@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  serverBase: 'http://127.0.0.1:8080/Mascotas',
+  serverBase: 'http://localhost:3000',
   baseHref: '/'
 };

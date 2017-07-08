@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PerfilService extends RestBaseService {
-  private perfilUrl = '/rest/perfil';
+  private perfilUrl = '/perfil';
 
   constructor(private http: Http) { super(); }
 
@@ -29,7 +29,7 @@ export class PerfilService extends RestBaseService {
 }
 
 export interface Perfil {
-  id: string;
+  _id: string;
   nombre: string;
   provincia: string;
   email: string;

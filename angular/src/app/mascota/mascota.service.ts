@@ -5,7 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class MascotaService extends RestBaseService {
-  private url = '/rest/mascota';
+  private url = '/mascota';
 
   constructor(private http: Http) { super(); }
 
@@ -28,15 +28,15 @@ export class MascotaService extends RestBaseService {
   }
 
   guardarMascota(value: Mascota): Promise<Mascota> {
-    if (value.id) {
-      return this.http.post(MascotaService.serverUrl + this.url + '/' + value.id, JSON.stringify(value), this.getRestHeader())
+    if (value._id) {
+      return this.http.post(MascotaService.serverUrl + this.url + '/' + value._id, JSON.stringify(value), this.getRestHeader())
       .toPromise()
       .then(response => {
         return response.json() as Mascota;
       })
       .catch(this.handleError);
     } else {
-      return this.http.post(MascotaService.serverUrl + this.url, JSON.stringify(value), this.getRestHeader())
+      return this.http.put(MascotaService.serverUrl + this.url, JSON.stringify(value), this.getRestHeader())
       .toPromise()
       .then(response => {
         return response.json() as Mascota;
@@ -45,7 +45,7 @@ export class MascotaService extends RestBaseService {
     }
   }
 
-  eliminarMascota(id: number): Promise<any> {
+  eliminarMascota(id: string): Promise<any> {
     if (id) {
       return this.http.delete(MascotaService.serverUrl + this.url + '/' + id, this.getRestHeader())
       .toPromise()
@@ -58,7 +58,7 @@ export class MascotaService extends RestBaseService {
 }
 
 export interface Mascota {
-  id: number;
+  _id: string;
   nombre: string;
   fechaNacimiento: string;
   descripcion: string;
