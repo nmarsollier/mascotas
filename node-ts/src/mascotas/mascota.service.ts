@@ -1,6 +1,6 @@
 "use strict";
 
-import { Mascota } from "./mascota.schema";
+import { Mascota, IMascota } from "./mascota.schema";
 import * as mongoose from "mongoose";
 import * as ErrorHandler from "../utils/error.handler";
 import * as _ from "lodash";
@@ -16,7 +16,7 @@ export function read(req: any, res: any) {
  * Actualiza los datos de la mascota
  */
 export function update(req: any, res: any) {
-  let mascota = req.mascota;
+  let mascota = <IMascota>req.mascota;
   if (!mascota) {
     mascota = new Mascota();
     mascota.usuario = req.user;
@@ -47,7 +47,7 @@ export function update(req: any, res: any) {
  * Elimina una mascota
  */
 export function remove(req: any, res: any) {
-  const mascota = req.mascota;
+  const mascota = <IMascota>req.mascota;
   mascota.remove(function(err: any) {
     if (err) {
       return res.status(400).send({
@@ -87,7 +87,7 @@ export function findByID(req: any, res: any, next: Function, id: string) {
 /**
  * Autorizacion, el unico que puede modificar el mascota es el dueño
  */
-export function hasAuthorization(req: any, res: any, next: Function) {
+export function validateOwner(req: any, res: any, next: Function) {
   if (!req.user._id.equals(req.mascota.usuario)) {
     return res.status(403).send({
       message: "User is not authorized"

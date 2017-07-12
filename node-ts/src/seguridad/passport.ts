@@ -4,14 +4,14 @@ import * as passport from "passport";
 import * as mongoose from "mongoose";
 import * as path from "path";
 import * as local from "./local";
-import { Usuario } from "./usuario.schema";
+import { Usuario, IUsuario } from "./usuario.schema";
 
 /**
  * Module init function.
  */
 export function init() {
   // Serialize sessions
-  passport.serializeUser(function(user: any, done: Function) {
+  passport.serializeUser(function(user: IUsuario, done: Function) {
     done(undefined, user.id);
   });
 

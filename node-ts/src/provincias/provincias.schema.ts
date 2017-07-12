@@ -5,6 +5,11 @@ import * as mongoose from "mongoose";
 /**
  * Definicio del Esquema de Provincia
  */
+
+export interface IProvincia extends mongoose.Document {
+  nombre: string;
+}
+
 export let ProvinciaSchema = new mongoose.Schema({
   nombre: {
     type: String,
@@ -14,4 +19,4 @@ export let ProvinciaSchema = new mongoose.Schema({
   }
 });
 
-export let Provincia = mongoose.model("Provincia", ProvinciaSchema);
+export let Provincia = mongoose.model<IProvincia>("Provincia", ProvinciaSchema);

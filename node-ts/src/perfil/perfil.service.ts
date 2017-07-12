@@ -1,6 +1,6 @@
 "use strict";
 
-import { Perfil } from "./perfil.schema";
+import { Perfil, IPerfil } from "./perfil.schema";
 import { Provincia } from "../provincias/provincias.schema";
 import * as mongoose from "mongoose";
 import * as errorHandler from "../utils/error.handler";
@@ -22,7 +22,7 @@ export function read(req: any, res: any) {
  * Actualiza los datos del perfil
  */
 export function update(req: any, res: any) {
-  let perfil = req.perfil;
+  let perfil = <IPerfil> req.perfil;
   if (!perfil) {
     perfil = new Perfil();
     perfil.usuario = req.user;

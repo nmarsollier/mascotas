@@ -2,7 +2,7 @@
 
 import * as mongoose from "mongoose";
 import * as errorHandler from "../utils/error.handler";
-import { Usuario } from "./usuario.schema";
+import { Usuario, IUsuario } from "./usuario.schema";
 
 /**
  * Cambiar contraseña
@@ -23,7 +23,7 @@ export function cambiarPassword(req: any, res: any) {
     return;
   }
 
-  Usuario.findById(req.user.id, function(err: any, user: any) {
+  Usuario.findById(req.user.id, function(err: any, user: IUsuario) {
     if (err || !user) {
       return res.status(400).send({
         message: "El usuario no se encuentra"

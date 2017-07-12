@@ -2,6 +2,13 @@
 
 import * as mongoose from "mongoose";
 
+export interface IMascota extends mongoose.Document {
+  nombre: string;
+  fechaNacimiento: Date;
+  descripcion: string;
+  usuario: mongoose.Schema.Types.ObjectId;
+}
+
 /**
  * Esquema de Mascotas
  */
@@ -29,4 +36,4 @@ export let MascotaSchema = new mongoose.Schema({
   }
 });
 
-export let Mascota = mongoose.model("Mascota", MascotaSchema);
+export let Mascota = mongoose.model<IMascota>("Mascota", MascotaSchema);

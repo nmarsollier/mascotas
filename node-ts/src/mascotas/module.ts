@@ -14,10 +14,10 @@ export function init(app: Express) {
   app
     .route("/mascota/:mascotaId")
     .get(mascota.read)
-    .post(authorization.requiresLogin, mascota.hasAuthorization, mascota.update)
+    .post(authorization.requiresLogin, mascota.validateOwner, mascota.update)
     .delete(
       authorization.requiresLogin,
-      mascota.hasAuthorization,
+      mascota.validateOwner,
       mascota.remove
     );
 

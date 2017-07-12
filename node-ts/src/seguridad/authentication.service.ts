@@ -4,14 +4,14 @@ import * as _ from "lodash";
 import * as ErrorHandler from "../utils/error.handler";
 import * as mongoose from "mongoose";
 import * as passport from "passport";
-import { Usuario } from "./usuario.schema";
+import { Usuario, IUsuario } from "./usuario.schema";
 import { NextFunction } from "express-serve-static-core";
 
 /**
  * Signup
  */
 export function signup(req: any, res: any) {
-  const user: any = new Usuario();
+  const user = <IUsuario>new Usuario();
   console.log(req.body);
   user.nombre = req.body.nombre;
   user.login = req.body.login;
@@ -45,7 +45,7 @@ export function signup(req: any, res: any) {
  * Signin
  */
 export function signin(req: any, res: any, next: NextFunction) {
-  passport.authenticate("local", function(err: any, user: any, info: any) {
+  passport.authenticate("local", function(err: any, user: IUsuario, info: any) {
     if (err || !user) {
       return res.status(400).send(info);
     }

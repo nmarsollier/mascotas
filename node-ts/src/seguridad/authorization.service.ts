@@ -2,7 +2,7 @@
 
 import * as _ from "lodash";
 import * as mongoose from "mongoose";
-import { Usuario } from "./usuario.schema";
+import { Usuario, IUsuario } from "./usuario.schema";
 
 /**
  * Filtro busca un usario y lo agrega al request
@@ -10,7 +10,7 @@ import { Usuario } from "./usuario.schema";
 export function findByID(req: any, res: any, next: Function, id: string) {
   Usuario.findOne({
     _id: id
-  }).exec(function(err, user) {
+  }).exec(function(err: any, user: IUsuario) {
     if (err) return next(err);
     if (!user) return next(new Error("No se encontro el usuario " + id));
     req.profile = user;

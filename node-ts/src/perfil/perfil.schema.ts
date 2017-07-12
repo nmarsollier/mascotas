@@ -2,6 +2,17 @@
 
 import * as mongoose from "mongoose";
 
+
+export interface IPerfil extends mongoose.Document {
+  nombre: string;
+  telefono: string;
+  email: string;
+  direccion: string;
+  imagen: string;
+  habilitado: Boolean;
+  provincia: mongoose.Schema.Types.ObjectId;
+  usuario: mongoose.Schema.Types.ObjectId;
+}
 /**
  * Esquema del Perfil
  */
@@ -48,4 +59,4 @@ export let PerfilSchema = new mongoose.Schema({
   }
 });
 
-export let Perfil = mongoose.model("Perfil", PerfilSchema);
+export let Perfil = mongoose.model<IPerfil>("Perfil", PerfilSchema);

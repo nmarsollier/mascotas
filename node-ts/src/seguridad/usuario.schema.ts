@@ -3,6 +3,19 @@
 import * as mongoose from "mongoose";
 import * as crypto from "crypto";
 
+export interface IUsuario extends mongoose.Document {
+  nombre: string;
+  login: string;
+  password: string;
+  salt: string;
+  rol: string;
+  updated: Date;
+  created: Date;
+  resetPasswordToken: string;
+  resetPasswordExpires: string;
+  authenticate: Function;
+}
+
 /**
  * Validacion para tamaño de contraseña
  */
@@ -97,4 +110,4 @@ UsuarioSchema.methods.authenticate = function(password: string) {
   return this.password === this.hashPassword(password);
 };
 
-export let Usuario = mongoose.model("Usuario", UsuarioSchema);
+export let Usuario = mongoose.model<IUsuario>("Usuario", UsuarioSchema);
