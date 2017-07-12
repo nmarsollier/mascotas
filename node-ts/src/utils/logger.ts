@@ -1,7 +1,7 @@
 "use strict";
 
 import * as winston from "winston";
-import * as config from "../server/config";
+import * as config from "../config/environment";
 
 export let logger: winston.LoggerInstance;
 
