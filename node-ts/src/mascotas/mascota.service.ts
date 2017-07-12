@@ -3,7 +3,7 @@
 import { NextFunction } from "express-serve-static-core";
 import { Mascota, IMascota } from "./mascota.schema";
 import * as mongoose from "mongoose";
-import * as ErrorHandler from "../utils/error.handler";
+import * as errorHandler from "../utils/error.handler";
 import * as _ from "lodash";
 import * as express from "express";
 
@@ -46,7 +46,7 @@ export function update(req: IUpdateRequest, res: express.Response) {
   mascota.save(function (err: any) {
     if (err) {
       return res.status(400).send({
-        message: ErrorHandler.getErrorMessage(err)
+        message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(mascota);
@@ -66,7 +66,7 @@ export function remove(req: IRemoveRequest, res: express.Response) {
   mascota.remove(function (err: any) {
     if (err) {
       return res.status(400).send({
-        message: ErrorHandler.getErrorMessage(err)
+        message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(mascota);
