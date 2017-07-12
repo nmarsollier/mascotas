@@ -2,21 +2,21 @@
 
 import { Express } from "express";
 import * as mascota from "./mascota.service";
-import * as authorization from "../seguridad/authorization.service";
+import * as security from "../seguridad/security.service";
 
 export function init(app: Express) {
   // Routas de acceso a mascotas
   app
     .route("/mascota")
-    .get(authorization.requiresLogin, mascota.findByCurrentUser)
-    .put(authorization.requiresLogin, mascota.update);
+    .get(security.requiresLogin, mascota.findByCurrentUser)
+    .put(security.requiresLogin, mascota.update);
 
   app
     .route("/mascota/:mascotaId")
     .get(mascota.read)
-    .post(authorization.requiresLogin, mascota.validateOwner, mascota.update)
+    .post(security.requiresLogin, mascota.validateOwner, mascota.update)
     .delete(
-      authorization.requiresLogin,
+      security.requiresLogin,
       mascota.validateOwner,
       mascota.remove
     );

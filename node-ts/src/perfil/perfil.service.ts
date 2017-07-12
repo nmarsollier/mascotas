@@ -1,15 +1,21 @@
 "use strict";
 
+import { NextFunction } from "express-serve-static-core";
 import { Perfil, IPerfil } from "./perfil.schema";
-import { Provincia } from "../provincias/provincias.schema";
+import { Provincia, IProvincia } from "../provincias/provincias.schema";
 import * as mongoose from "mongoose";
 import * as errorHandler from "../utils/error.handler";
 import * as _ from "lodash";
+import * as express from "express";
+
+export interface IReadRequest extends express.Request {
+  perfil: IPerfil;
+}
 
 /**
  * Retorna los datos del perfil
  */
-export function read(req: any, res: any) {
+export function read(req: IReadRequest, res: express.Response) {
   if (!req.perfil) {
     res.status(500).json({
       message: "No se encuentra el perfil del usuario logueado"
@@ -18,11 +24,16 @@ export function read(req: any, res: any) {
   res.json(req.perfil);
 }
 
+
+export interface IUpdateRequest extends express.Request {
+  perfil: IPerfil;
+  provincia: mongoose.Schema.Types.ObjectId;
+}
 /**
  * Actualiza los datos del perfil
  */
-export function update(req: any, res: any) {
-  let perfil = <IPerfil> req.perfil;
+export function update(req: IUpdateRequest, res: express.Response) {
+  let perfil = <IPerfil>req.perfil;
   if (!perfil) {
     perfil = new Perfil();
     perfil.usuario = req.user;
@@ -49,7 +60,7 @@ export function update(req: any, res: any) {
     perfil.provincia = undefined;
   }
 
-  perfil.save(function(err: any) {
+  perfil.save(function (err: any) {
     if (err) {
       return res.status(400).json({
         message: errorHandler.getErrorMessage(err)
@@ -60,17 +71,22 @@ export function update(req: any, res: any) {
   });
 }
 
+
+export interface IFindProvincia extends express.Request {
+  provincia: IProvincia;
+}
+
 /**
  * Filtro, busca una provincia que viene en el parametro del body.
  * La provincia es agregada al request.
  */
-export function findProvincia(req: any, res: any, next: Function) {
+export function findProvincia(req: IFindProvincia, res: express.Response, next: NextFunction) {
   // Si no viene ninguna provincia definida, no hacemos nada
   if (_.isUndefined(req.body.provincia)) {
     return next();
   }
   console.log(req.body);
-  Provincia.findById(req.body.provincia).exec(function(err, provincia) {
+  Provincia.findById(req.body.provincia).exec(function (err, provincia) {
     if (err) return next(err);
     if (!provincia) {
       return next(
@@ -82,13 +98,18 @@ export function findProvincia(req: any, res: any, next: Function) {
   });
 }
 
+export interface IFindByCurrentUserRequest extends express.Request {
+  perfil: IPerfil;
+  user: mongoose.Schema.Types.ObjectId;
+}
+
 /**
  * Filtro, busca el perfil del usuario logueado
  */
-export function findByCurrentUser(req: any, res: any, next: Function) {
+export function findByCurrentUser(req: IFindByCurrentUserRequest, res: express.Response, next: NextFunction) {
   Perfil.findOne({
     usuario: req.user
-  }).exec(function(err, perfil) {
+  }).exec(function (err, perfil) {
     if (err || !perfil) return next();
     req.perfil = perfil;
     next();

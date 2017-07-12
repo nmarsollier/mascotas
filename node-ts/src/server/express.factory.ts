@@ -1,7 +1,8 @@
 "use strict";
 
-import { Express } from "express";
 import { Config } from "../server/config";
+import { NextFunction } from "express-serve-static-core";
+
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as morgan from "morgan";
@@ -12,21 +13,23 @@ import * as mongo from "connect-mongo";
 import * as methodOverride from "method-override";
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
-import * as indexModule from "../index/module";
-import * as mascotasModule from "../mascotas/module";
-import * as perfilModule from "../perfil/module";
-import * as provinciasModule from "../provincias/module";
-import * as seguridad from "../seguridad/module";
 import * as compression from "compression";
 import * as passport from "passport";
 import * as expressValidator from "express-validator";
 
-export function init(appConfig: Config): Express {
+// Modulos de la aplicacion
+import * as indexModule from "../index/module";
+import * as mascotasModule from "../mascotas/module";
+import * as perfilModule from "../perfil/module";
+import * as provinciasModule from "../provincias/module";
+import * as seguridadModule from "../seguridad/module";
+
+export function init(appConfig: Config): express.Express {
   const app = express();
   app.set("port", appConfig.port);
 
   // Passing the request url to environment locals
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     res.locals.url = req.protocol + "://" + req.headers.host + req.url;
     next();
   });
@@ -93,10 +96,10 @@ export function init(appConfig: Config): Express {
   mascotasModule.init(app);
   perfilModule.init(app);
   provinciasModule.init(app);
-  seguridad.init(app);
+  seguridadModule.init(app);
 
   // Para el manejo de errores, para que los loguee en la consola
-  app.use(function(err: any, req: any, res: any, next: any) {
+  app.use(function (err: any, req: express.Request, res: express.Response, next: NextFunction) {
     if (!err) return next();
 
     console.error(err.message);
@@ -109,7 +112,7 @@ export function init(appConfig: Config): Express {
 
   // Responder con JSON cuando hay un error 404, sino responde con un html
   // Esto tiene que ir al final porque sino nos sobreescribe las otras rutas
-  app.use(function(req, res) {
+  app.use(function (req, res) {
     res.status(404);
     res.json({
       url: req.originalUrl,
