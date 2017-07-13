@@ -23,12 +23,11 @@ export function read(req: IReadRequest, res: express.Response) {
 export function list(req: express.Request, res: express.Response) {
   Provincia.find().sort("-created").exec(function (err, provincia) {
     if (err) {
-      return res.status(400).send({
+      return res.status(errorHandler.ERROR_INTERNAL_ERROR).send({
         message: errorHandler.getErrorMessage(err)
       });
-    } else {
-      res.json(provincia);
     }
+    return res.json(provincia);
   });
 }
 

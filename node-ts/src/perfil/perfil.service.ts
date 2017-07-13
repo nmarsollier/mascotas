@@ -17,7 +17,7 @@ export interface IReadRequest extends express.Request {
  */
 export function read(req: IReadRequest, res: express.Response) {
   if (!req.perfil) {
-    res.status(500).json({
+    res.status(errorHandler.ERROR_INTERNAL_ERROR).json({
       message: "No se encuentra el perfil del usuario logueado"
     });
   }
@@ -62,12 +62,11 @@ export function update(req: IUpdateRequest, res: express.Response) {
 
   perfil.save(function (err: any) {
     if (err) {
-      return res.status(400).json({
+      return res.status(errorHandler.ERROR_INTERNAL_ERROR).json({
         message: errorHandler.getErrorMessage(err)
       });
-    } else {
-      res.json(perfil);
     }
+    return res.json(perfil);
   });
 }
 

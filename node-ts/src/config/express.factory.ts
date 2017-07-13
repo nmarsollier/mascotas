@@ -23,6 +23,7 @@ import * as mascotasModule from "../mascotas/module";
 import * as perfilModule from "../perfil/module";
 import * as provinciasModule from "../provincias/module";
 import * as seguridadModule from "../seguridad/module";
+import * as errorHandler from "../utils/error.handler";
 
 export function init(appConfig: Config): express.Express {
   const app = express();
@@ -104,7 +105,7 @@ export function init(appConfig: Config): express.Express {
 
     console.error(err.message);
 
-    res.status(err.status || 500);
+    res.status(err.status || errorHandler.ERROR_INTERNAL_ERROR);
     res.json({
       message: err.message
     });
@@ -113,7 +114,7 @@ export function init(appConfig: Config): express.Express {
   // Responder con JSON cuando hay un error 404, sino responde con un html
   // Esto tiene que ir al final porque sino nos sobreescribe las otras rutas
   app.use(function (req, res) {
-    res.status(404);
+    res.status(errorHandler.ERROR_NOT_FOUND);
     res.json({
       url: req.originalUrl,
       error: "Not Found"

@@ -1,5 +1,13 @@
 "use strict";
 
+export const ERROR_UNATORIZED = 401;
+export const ERROR_NOT_FOUND = 404;
+export const ERROR_UNAUTORIZED_METHOD = 405;
+export const ERROR_BAD_REQUEST = 400;
+export const ERROR_INTERNAL_ERROR = 500;
+export const ERROR_NOT_IMPLEMENTED = 501;
+
+
 // Obtiene un error adecuando cuando hay errores de db
 const getUniqueErrorMessage = function(err: any) {
   let output;

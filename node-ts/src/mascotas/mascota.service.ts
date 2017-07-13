@@ -45,12 +45,11 @@ export function update(req: IUpdateRequest, res: express.Response) {
 
   mascota.save(function (err: any) {
     if (err) {
-      return res.status(400).send({
+      return res.status(errorHandler.ERROR_INTERNAL_ERROR).send({
         message: errorHandler.getErrorMessage(err)
       });
-    } else {
-      res.json(mascota);
     }
+    res.json(mascota);
   });
 }
 
@@ -65,7 +64,7 @@ export function remove(req: IRemoveRequest, res: express.Response) {
   const mascota = <IMascota>req.mascota;
   mascota.remove(function (err: any) {
     if (err) {
-      return res.status(400).send({
+      return res.status(errorHandler.ERROR_INTERNAL_ERROR).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
@@ -113,7 +112,7 @@ export interface IValidateOwnerRequest extends express.Request {
 }
 export function validateOwner(req: IValidateOwnerRequest, res: express.Response, next: NextFunction) {
   if (!req.user._id.equals(req.mascota.usuario)) {
-    return res.status(403).send({
+    return res.status(errorHandler.ERROR_UNAUTORIZED_METHOD).send({
       message: "User is not authorized"
     });
   }
