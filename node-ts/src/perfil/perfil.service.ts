@@ -62,9 +62,7 @@ export function update(req: IUpdateRequest, res: express.Response) {
 
   perfil.save(function (err: any) {
     if (err) {
-      return res.status(errorHandler.ERROR_INTERNAL_ERROR).json({
-        message: errorHandler.getErrorMessage(err)
-      });
+      return errorHandler.handleError(res, err);
     }
     return res.json(perfil);
   });

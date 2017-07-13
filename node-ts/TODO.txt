@@ -1,0 +1,9 @@
+
+Mejorar el error handling
+    Hacer que se mande el header de X-Status-Reason: Validation failed
+
+Usar passport con json web token
+
+
+
+

@@ -71,9 +71,7 @@ export function signup(req: express.Request, res: express.Response) {
   // Then save the user
   user.save(function (err: any) {
     if (err) {
-      return res.status(errorHandler.ERROR_INTERNAL_ERROR).send({
-        message: errorHandler.getErrorMessage(err)
-      });
+      return errorHandler.handleError(res, err);
     }
 
     // Esta informacion queda en la sesion, hay que limpiarlo
@@ -176,19 +174,17 @@ export function cambiarPassword(req: express.Request, res: express.Response) {
 
     user.save(function (err: any) {
       if (err) {
-        return res.status(errorHandler.ERROR_INTERNAL_ERROR).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-        req.login(user, function (err: any) {
-          if (err) {
-            return res.status(errorHandler.ERROR_INTERNAL_ERROR).send(err);
-          }
-          return res.send({
-            message: "Contraseña cambiada"
-          });
-        });
+        return errorHandler.handleError(res, err);
       }
+
+      req.login(user, function (err: any) {
+        if (err) {
+          return res.status(errorHandler.ERROR_INTERNAL_ERROR).send(err);
+        }
+        return res.send({
+          message: "Contraseña cambiada"
+        });
+      });
     });
   });
 }

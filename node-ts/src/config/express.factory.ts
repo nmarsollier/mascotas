@@ -37,7 +37,7 @@ export function init(appConfig: Config): express.Express {
 
   // Permitir cualquier origen en CORS
   const corsOptions = {
-    origin: appConfig.corsServer,
+    origin: appConfig.corsEnabled,
     optionsSuccessStatus: 200,
     credentials: true
   };

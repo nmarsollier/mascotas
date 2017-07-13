@@ -1,14 +1,23 @@
 "use strict";
 
+import * as dotenv from "dotenv";
+
+let config: Config;
+
 export function getConfig(environment: any): Config {
-  return {
-    port: 3000,
-    logLevel: "debug",
-    sessionSecret: "0e199b23b15da57e8eedd482a956c535",
-    db: "mongodb://localhost/mascotas",
-    enableHttpRequestLogging: false,
-    corsServer: "http://localhost:4200"
-  };
+  if (!config) {
+    dotenv.config({ path: ".env.example" });
+
+    config = {
+      port: process.env.SERVER_PORT ||  "3000",
+      logLevel: process.env.LOG_LEVEL || "debug",
+      sessionSecret: process.env.SESSION_SECRET ||  "0e199b23b15da57e8eedd482a956c535",
+      db: process.env.MONGODB || "mongodb://localhost/mascotas",
+      enableHttpRequestLogging: false,
+      corsEnabled: process.env.CORS_ENABLED ||  "http://localhost:4200"
+    };
+  }
+  return config;
 }
 
 export interface Config {
@@ -17,5 +26,5 @@ export interface Config {
   sessionSecret: string;
   db: string;
   enableHttpRequestLogging: boolean;
-  corsServer: string;
+  corsEnabled: string;
 }

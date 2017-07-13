@@ -7,10 +7,8 @@ import * as appConfig from "./config/environment";
 import * as loggerFactory from "./utils/logger";
 import * as mongoose from "mongoose";
 import * as chalk from "chalk";
-import * as dotenv from "dotenv";
 
 // Variables de entorno
-dotenv.config({ path: ".env.example" });
 const conf: Config = appConfig.getConfig(process.env);
 
 // Checkear conexion con mongoose

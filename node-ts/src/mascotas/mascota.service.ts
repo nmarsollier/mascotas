@@ -45,9 +45,7 @@ export function update(req: IUpdateRequest, res: express.Response) {
 
   mascota.save(function (err: any) {
     if (err) {
-      return res.status(errorHandler.ERROR_INTERNAL_ERROR).send({
-        message: errorHandler.getErrorMessage(err)
-      });
+      return errorHandler.handleError(res, err);
     }
     res.json(mascota);
   });
@@ -64,12 +62,9 @@ export function remove(req: IRemoveRequest, res: express.Response) {
   const mascota = <IMascota>req.mascota;
   mascota.remove(function (err: any) {
     if (err) {
-      return res.status(errorHandler.ERROR_INTERNAL_ERROR).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(mascota);
+      return errorHandler.handleError(res, err);
     }
+    res.json(mascota);
   });
 }
 
