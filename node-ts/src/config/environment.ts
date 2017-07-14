@@ -21,7 +21,7 @@ export function getConfig(environment: any): Config {
 }
 
 export interface Config {
-  port: number;
+  port: string;
   logLevel: string; // 'debug' | 'verbose' | 'info' | 'warn' | 'error';
   sessionSecret: string;
   db: string;
