@@ -3,12 +3,13 @@
 import { NextFunction } from "express-serve-static-core";
 import { Perfil, IPerfil } from "./perfil.schema";
 import { Provincia, IProvincia } from "../provincias/provincias.schema";
+import { IUserSession, IUserSessionRequest } from "../seguridad/security.service";
 import * as mongoose from "mongoose";
 import * as errorHandler from "../utils/error.handler";
 import * as _ from "lodash";
 import * as express from "express";
 
-export interface IReadRequest extends express.Request {
+export interface IReadRequest extends IUserSessionRequest {
   perfil: IPerfil;
 }
 
@@ -25,7 +26,7 @@ export function read(req: IReadRequest, res: express.Response) {
 }
 
 
-export interface IUpdateRequest extends express.Request {
+export interface IUpdateRequest extends IUserSessionRequest {
   perfil: IPerfil;
   provincia: mongoose.Schema.Types.ObjectId;
 }
@@ -33,10 +34,10 @@ export interface IUpdateRequest extends express.Request {
  * Actualiza los datos del perfil
  */
 export function update(req: IUpdateRequest, res: express.Response) {
-  let perfil = <IPerfil>req.perfil;
+  let perfil: IPerfil = req.perfil;
   if (!perfil) {
     perfil = new Perfil();
-    perfil.usuario = req.user;
+    perfil.usuario = req.user._id;
   }
 
   if (!_.isEmpty(req.body.email)) {
@@ -95,9 +96,8 @@ export function findProvincia(req: IFindProvincia, res: express.Response, next: 
   });
 }
 
-export interface IFindByCurrentUserRequest extends express.Request {
+export interface IFindByCurrentUserRequest extends IUserSessionRequest {
   perfil: IPerfil;
-  user: mongoose.Schema.Types.ObjectId;
 }
 
 /**
@@ -105,7 +105,7 @@ export interface IFindByCurrentUserRequest extends express.Request {
  */
 export function findByCurrentUser(req: IFindByCurrentUserRequest, res: express.Response, next: NextFunction) {
   Perfil.findOne({
-    usuario: req.user
+    usuario: req.user._id
   }).exec(function (err, perfil) {
     if (err || !perfil) return next();
     req.perfil = perfil;

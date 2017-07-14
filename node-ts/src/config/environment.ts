@@ -9,12 +9,14 @@ export function getConfig(environment: any): Config {
     dotenv.config({ path: ".env.example" });
 
     config = {
-      port: process.env.SERVER_PORT ||  "3000",
+      port: process.env.SERVER_PORT || "3000",
       logLevel: process.env.LOG_LEVEL || "debug",
-      sessionSecret: process.env.SESSION_SECRET ||  "0e199b23b15da57e8eedd482a956c535",
+      sessionSecret: process.env.SESSION_SECRET || "0e199b23b15da57e8eedd482a956c535",
       db: process.env.MONGODB || "mongodb://localhost/mascotas",
       enableHttpRequestLogging: false,
-      corsEnabled: process.env.CORS_ENABLED ||  "http://localhost:4200"
+      corsEnabled: process.env.CORS_ENABLED || "http://localhost:4200",
+      jwtSecret: "OMu9dZUBNXMmwZHjlqb2",
+      passwordSalt: "as98shd9ASdiuahd8w7"
     };
   }
   return config;
@@ -27,4 +29,6 @@ export interface Config {
   db: string;
   enableHttpRequestLogging: boolean;
   corsEnabled: string;
+  jwtSecret: string;
+  passwordSalt: string;
 }

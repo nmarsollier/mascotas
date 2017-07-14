@@ -5,57 +5,20 @@ import { NextFunction } from "express-serve-static-core";
 import * as _ from "lodash";
 import * as mongoose from "mongoose";
 import * as express from "express";
-import * as passport from "passport";
 import * as errorHandler from "../utils/error.handler";
+import * as jwt from "jsonwebtoken";
 
-export interface IFindByIdRequest extends express.Request {
-  profile: IUsuario;
+import * as appConfig from "../config/environment";
+const conf = appConfig.getConfig(process.env);
+
+export interface IUserSession {
+  id: string;
+  _id: mongoose.Schema.Types.ObjectId;
 }
 
-/**
- * Filtro busca un usario y lo agrega al request
- */
-export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction, id: string) {
-  Usuario.findOne({
-    _id: id
-  }).exec(function (err: any, user: IUsuario) {
-    if (err) return next(err);
-    if (!user) return next(new Error("No se encontro el usuario " + id));
-    req.profile = user;
-    next();
-  });
+export interface IUserSessionRequest extends express.Request {
+  user: IUserSession;
 }
-
-/**
- * Verifica que exista un usuario lgueado
- */
-export function requiresLogin(req: express.Request, res: express.Response, next: NextFunction) {
-  if (!req.isAuthenticated()) {
-    return res.status(errorHandler.ERROR_UNATORIZED).send({
-      message: "Usuario no logueado"
-    });
-  }
-
-  next();
-}
-
-/**
- * Verifica que se tiene autorizacion para acceder, segun el rol
- */
-export function hasAuthorization(roles: string[]) {
-  return function (req: express.Request, res: express.Response, next: NextFunction) {
-    requiresLogin(req, res, function () {
-      if (_.intersection(req.user.roles, roles).length) {
-        return next();
-      } else {
-        return res.status(errorHandler.ERROR_UNAUTORIZED_METHOD).send({
-          message: "Usuario no autorizado"
-        });
-      }
-    });
-  };
-}
-
 
 /**
  * Signup
@@ -74,18 +37,9 @@ export function signup(req: express.Request, res: express.Response) {
       return errorHandler.handleError(res, err);
     }
 
-    // Esta informacion queda en la sesion, hay que limpiarlo
-    user.password = undefined;
-    user.salt = undefined;
-    user.resetPasswordToken = undefined;
-
-    req.login(user, function (err: any) {
-      if (err) {
-        return res.status(errorHandler.ERROR_INTERNAL_ERROR).send("Login error : " + err);
-      }
-
-      res.json(user);
-    });
+    const payload: IUserSession = { id: user.id, _id: user._id };
+    const token = jwt.sign(payload, conf.jwtSecret);
+    res.json({ token: token });
   });
 }
 
@@ -93,49 +47,54 @@ export function signup(req: express.Request, res: express.Response) {
  * Signin
  */
 export function signin(req: express.Request, res: express.Response, next: NextFunction) {
-  passport.authenticate("local", function (err: any, user: IUsuario, info: any) {
-    if (err || !user) {
-      return res.status(errorHandler.ERROR_BAD_REQUEST).send(info);
-    }
-
-    // Esta informacion queda en la sesion, hay que limpiarlo
-    user.password = undefined;
-    user.salt = undefined;
-    user.resetPasswordToken = undefined;
-
-    req.login(user, function (err: any) {
-      if (err) {
-        return res.status(errorHandler.ERROR_BAD_REQUEST).send(err);
-      } else {
-        return res.json(user);
+  Usuario.findOne({ login: req.body.login },
+    function (err: any, user: IUsuario) {
+      if (err || !user) {
+        return res.status(errorHandler.ERROR_BAD_REQUEST).send("Invalid username.");
       }
-    });
-  })(req, res, next);
+
+      if (!user.authenticate(req.body.password)) {
+        return res.status(errorHandler.ERROR_BAD_REQUEST).send("Invalid password.");
+      }
+
+      const payload: IUserSession = { id: user.id, _id: user._id };
+      const token = jwt.sign(payload, conf.jwtSecret);
+      res.json({ token: token });
+    }
+  );
 }
 
 /**
  * Signout
  */
-export function signout(req: express.Request, res: express.Response) {
-  req.logout();
+export function signout(req: IUserSessionRequest, res: express.Response) {
   res.redirect("/");
 }
 
 /**
  * Get current user
  */
-export function currentUser(req: express.Request, res: express.Response, next: NextFunction) {
-  if (!req.user) {
-    return res.status(errorHandler.ERROR_BAD_REQUEST).send("Usuario no logueado");
-  }
-  return res.json(req.user);
+export function currentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
+  Usuario.findById(req.user.id, function (err: any, user: IUsuario) {
+    if (err || !user) {
+      return res.status(errorHandler.ERROR_NOT_FOUND).send({
+        message: "El usuario no se encuentra"
+      });
+    }
+    return res.json({
+      id: user.id,
+      nombre: user.nombre,
+      login: user.login,
+      rol: user.rol
+    });
+  });
 }
 
 
 /**
  * Cambiar contraseña
  */
-export function cambiarPassword(req: express.Request, res: express.Response) {
+export function cambiarPassword(req: IUserSessionRequest, res: express.Response) {
   const passwordDetails = req.body;
 
   if (!req.user) {

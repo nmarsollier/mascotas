@@ -8,9 +8,7 @@ import * as bodyParser from "body-parser";
 import * as morgan from "morgan";
 import * as path from "path";
 import * as helmet from "helmet";
-import * as session from "express-session";
 import * as mongo from "connect-mongo";
-import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
 import * as compression from "compression";
 import * as passport from "passport";
@@ -23,6 +21,7 @@ import * as perfilModule from "../perfil/module";
 import * as provinciasModule from "../provincias/module";
 import * as seguridadModule from "../seguridad/module";
 import * as errorHandler from "../utils/error.handler";
+import * as pasportHanlder from "../seguridad/passport";
 
 export function init(appConfig: Config): express.Express {
   const app = express();
@@ -56,23 +55,6 @@ export function init(appConfig: Config): express.Express {
   // Configurar express para comprimir contenidos de text en http
   app.use(compression());
 
-  // Para que express entienda cookies
-  app.use(cookieParser());
-
-  // Configuracion de Mongo
-  const mongoStore = mongo(session);
-  app.use(
-    session({
-      saveUninitialized: true,
-      resave: true,
-      secret: appConfig.sessionSecret,
-      store: new mongoStore({
-        url: appConfig.db,
-        autoReconnect: true
-      })
-    })
-  );
-
   // Configuramos passport, ver passport.js es la configuracion de authenticacion por db
   app.use(passport.initialize());
   app.use(passport.session());
@@ -91,6 +73,7 @@ export function init(appConfig: Config): express.Express {
     express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 })
   );
 
+  pasportHanlder.init();
   indexModule.init(app);
   mascotasModule.init(app);
   perfilModule.init(app);

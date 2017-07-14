@@ -1,33 +1,34 @@
 "use strict";
 
+import { Usuario } from "./usuario.schema";
+import { Config } from "../config/environment";
+import * as appConfig from "../config/environment";
+import { remove } from "../mascotas/mascota.service";
+import { IUserSession } from "./security.service";
+
 import * as passport from "passport";
+import * as passportJwt from "passport-jwt";
 import * as mongoose from "mongoose";
-import * as path from "path";
-import * as local from "./local";
-import { Usuario, IUsuario } from "./usuario.schema";
+import * as _ from "lodash";
 
-/**
- * Module init function.
- */
+const conf = appConfig.getConfig(process.env);
+
 export function init() {
-  // Serialize sessions
-  passport.serializeUser(function(user: IUsuario, done: Function) {
-    done(undefined, user.id);
-  });
+    const Strategy = passportJwt.Strategy;
+    const ExtractJwt = passportJwt.ExtractJwt;
 
-  // Deserialize sessions
-  passport.deserializeUser(function(id: string, done: Function) {
-    Usuario.findOne(
-      {
-        _id: id
-      },
-      "-salt -password",
-      function(err, user) {
-        done(err, user);
-      }
-    );
-  });
+    const params = {
+        secretOrKey: conf.jwtSecret,
+        jwtFromRequest: ExtractJwt.fromAuthHeader()
+    };
 
-  // Initialize strategies
-  local.init();
+    passport.use(new Strategy(params, function (payload: IUserSession, done) {
+        if (!payload || _.isEmpty(payload.id)) {
+            return done(undefined, false, {
+                message: "Invalid Token"
+            });
+        }
+
+        return done(undefined, payload);
+    }));
 }

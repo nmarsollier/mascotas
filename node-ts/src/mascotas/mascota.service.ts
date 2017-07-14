@@ -2,6 +2,8 @@
 
 import { NextFunction } from "express-serve-static-core";
 import { Mascota, IMascota } from "./mascota.schema";
+import { IUserSession, IUserSessionRequest } from "../seguridad/security.service";
+
 import * as mongoose from "mongoose";
 import * as errorHandler from "../utils/error.handler";
 import * as _ from "lodash";
@@ -11,7 +13,7 @@ import * as express from "express";
 /**
  * Retorna los datos de la mascota
  */
-export interface IReadRequest extends express.Request {
+export interface IReadRequest extends IUserSessionRequest {
   mascota: IMascota;
 }
 export function read(req: IReadRequest, res: express.Response) {
@@ -23,14 +25,14 @@ export function read(req: IReadRequest, res: express.Response) {
 /**
  * Actualiza los datos de la mascota
  */
-export interface IUpdateRequest extends express.Request {
+export interface IUpdateRequest extends IUserSessionRequest {
   mascota: IMascota;
 }
 export function update(req: IUpdateRequest, res: express.Response) {
   let mascota = <IMascota>req.mascota;
   if (!mascota) {
     mascota = new Mascota();
-    mascota.usuario = req.user;
+    mascota.usuario = req.user._id;
   }
 
   if (!_.isEmpty(req.body.nombre)) {
@@ -55,7 +57,7 @@ export function update(req: IUpdateRequest, res: express.Response) {
 /**
  * Elimina una mascota
  */
-export interface IRemoveRequest extends express.Request {
+export interface IRemoveRequest extends IUserSessionRequest {
   mascota: IMascota;
 }
 export function remove(req: IRemoveRequest, res: express.Response) {
@@ -68,15 +70,9 @@ export function remove(req: IRemoveRequest, res: express.Response) {
   });
 }
 
-/**
- * Filtro, busca las mascotas del usuario logueado
- */
-export interface IFindByCurrentUserRequest extends express.Request {
-  user: mongoose.Schema.Types.ObjectId;
-}
-export function findByCurrentUser(req: IFindByCurrentUserRequest, res: express.Response, next: NextFunction) {
+export function findByCurrentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
   Mascota.find({
-    usuario: req.user
+    usuario: req.user._id
   }).exec(function (err, mascotas) {
     if (err) return next();
     res.json(mascotas);
@@ -102,11 +98,11 @@ export function findByID(req: IFindByIdRequest, res: express.Response, next: Nex
 /**
  * Autorizacion, el unico que puede modificar el mascota es el dueño
  */
-export interface IValidateOwnerRequest extends express.Request {
+export interface IValidateOwnerRequest extends IUserSessionRequest {
   mascota: IMascota;
 }
 export function validateOwner(req: IValidateOwnerRequest, res: express.Response, next: NextFunction) {
-  if (!req.user._id.equals(req.mascota.usuario)) {
+  if (!((req.mascota.usuario as any).equals(req.user._id))) {
     return res.status(errorHandler.ERROR_UNAUTORIZED_METHOD).send({
       message: "User is not authorized"
     });
