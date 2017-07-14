@@ -9,6 +9,6 @@ import * as passport from "passport";
 export function init(app: Express) {
   app
     .route("/perfil")
-    .get(passport.authenticate("jwt", { session: false }), perfil.findByCurrentUser, perfil.read)
-    .post(passport.authenticate("jwt", { session: false }), perfil.findProvincia, perfil.findByCurrentUser, perfil.update);
+    .get(passport.authenticate("jwt", { session: false }), perfil.fillForCurrentUser, perfil.read)
+    .post(passport.authenticate("jwt", { session: false }), perfil.fillProvinciaIfPresent, perfil.fillForCurrentUser, perfil.update);
 }

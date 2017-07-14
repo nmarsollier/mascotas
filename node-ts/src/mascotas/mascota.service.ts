@@ -46,9 +46,8 @@ export function update(req: IUpdateRequest, res: express.Response) {
   }
 
   mascota.save(function (err: any) {
-    if (err) {
-      return errorHandler.handleError(res, err);
-    }
+    if (err) return errorHandler.handleError(res, err);
+
     res.json(mascota);
   });
 }
@@ -63,9 +62,8 @@ export interface IRemoveRequest extends IUserSessionRequest {
 export function remove(req: IRemoveRequest, res: express.Response) {
   const mascota = <IMascota>req.mascota;
   mascota.remove(function (err: any) {
-    if (err) {
-      return errorHandler.handleError(res, err);
-    }
+    if (err) return errorHandler.handleError(res, err);
+
     res.json(mascota);
   });
 }
@@ -88,8 +86,12 @@ export interface IFindByIdRequest extends express.Request {
 }
 export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction, id: string) {
   Mascota.findById(id).exec(function (err, mascota) {
-    if (err) return next(err);
-    if (!mascota) return next(new Error("No se pudo cargar la mascota " + id));
+    if (err) return errorHandler.handleError(res, err);
+
+    if (!mascota) {
+      return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se pudo cargar la mascota " + id);
+    }
+
     req.mascota = mascota;
     next();
   });
@@ -103,9 +105,7 @@ export interface IValidateOwnerRequest extends IUserSessionRequest {
 }
 export function validateOwner(req: IValidateOwnerRequest, res: express.Response, next: NextFunction) {
   if (!((req.mascota.usuario as any).equals(req.user._id))) {
-    return res.status(errorHandler.ERROR_UNAUTORIZED_METHOD).send({
-      message: "User is not authorized"
-    });
+    return errorHandler.sendError(res, errorHandler.ERROR_UNAUTORIZED_METHOD, "User is not authorized");
   }
   next();
 }

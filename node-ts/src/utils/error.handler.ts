@@ -74,3 +74,9 @@ export function handleError(res: express.Response, err: any): express.Response {
     return res.send(processUnknownError(res, err));
   }
 }
+
+export function sendError(res: express.Response, code: number, err: string) {
+  res.status(code);
+  res.header("X-Status-Reason: " + err);
+  return { error: err };
+}

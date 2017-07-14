@@ -6,6 +6,10 @@ import * as crypto from "crypto";
 import * as appConfig from "../config/environment";
 const conf = appConfig.getConfig(process.env);
 
+/*
+  Por definicion es el usuario que permite el login.
+*/
+
 export interface IUsuario extends mongoose.Document {
   nombre: string;
   login: string;
