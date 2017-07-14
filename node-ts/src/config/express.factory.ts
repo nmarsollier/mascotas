@@ -10,7 +10,6 @@ import * as path from "path";
 import * as helmet from "helmet";
 import * as session from "express-session";
 import * as mongo from "connect-mongo";
-import * as methodOverride from "method-override";
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
 import * as compression from "compression";
@@ -53,7 +52,6 @@ export function init(appConfig: Config): express.Express {
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
-  app.use(methodOverride());
 
   // Configurar express para comprimir contenidos de text en http
   app.use(compression());
