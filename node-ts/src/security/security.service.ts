@@ -1,6 +1,6 @@
 "use strict";
 
-import { Usuario, IUsuario } from "./usuario.schema";
+import { User, IUser } from "./user.schema";
 import { Token, IToken } from "./token.schema";
 import { NextFunction } from "express-serve-static-core";
 import * as mongoose from "mongoose";
@@ -27,8 +27,8 @@ export interface IUserSessionRequest extends express.Request {
  */
 
 export function validateSignUp(req: express.Request, res: express.Response, next: NextFunction) {
-  req.check("nombre", "No puede quedar vac&iacute;o.").notEmpty();
-  req.check("nombre", "Hasta 1024 caracteres solamente.").isLength({ max: 1024 });
+  req.check("name", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("name", "Hasta 1024 caracteres solamente.").isLength({ max: 1024 });
 
   req.check("password", "No puede quedar vac&iacute;o.").notEmpty();
   req.check("password", "Mas de 4 caracteres.").isLength({ min: 4 });
@@ -39,7 +39,7 @@ export function validateSignUp(req: express.Request, res: express.Response, next
   req.check("login", "Hasta 256 caracteres solamente.").isLength({ max: 64 });
   req.check("login", "S&oacute;lo letras y n&uacute;meros.").isAlphanumeric();
 
-  req.sanitize("nombre").escape();
+  req.sanitize("name").escape();
   req.sanitize("password").escape();
   req.sanitize("login").escape();
 
@@ -51,11 +51,11 @@ export function validateSignUp(req: express.Request, res: express.Response, next
   });
 }
 export function signup(req: express.Request, res: express.Response) {
-  const user = <IUsuario>new Usuario();
-  user.nombre = req.body.nombre;
+  const user = <IUser>new User();
+  user.name = req.body.name;
   user.login = req.body.login;
   user.password = req.body.password;
-  user.rol = ["user"];
+  user.roles = ["user"];
 
   // Then save the user
   user.save(function (err: any) {
@@ -86,11 +86,11 @@ export function validateSignIn(req: express.Request, res: express.Response, next
   });
 }
 export function signin(req: express.Request, res: express.Response, next: NextFunction) {
-  Usuario.findOne({
+  User.findOne({
     login: escape(req.body.login),
     enabled: true
   },
-    function (err: any, user: IUsuario) {
+    function (err: any, user: IUser) {
       if (err) return errorHandler.handleError(res, err);
 
       if (!user) {
@@ -110,7 +110,7 @@ export function signin(req: express.Request, res: express.Response, next: NextFu
  * Crea un token de sesion, lo guarda en la base de Tokens, luego inicializa passport
  * con el token, para que se ingrese en el cache y se encripte correctamente
  */
-function createToken(res: express.Response, user: IUsuario) {
+function createToken(res: express.Response, user: IUser) {
   const sessionToken = new Token();
   sessionToken.usuario = user._id;
   sessionToken.valid = true;
@@ -149,11 +149,11 @@ export function signout(req: IUserSessionRequest, res: express.Response) {
  * Get current user
  */
 export function currentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
-  Usuario.findOne({
+  User.findOne({
     _id: req.user.id,
     enabled: true
   },
-    function (err: any, user: IUsuario) {
+    function (err: any, user: IUser) {
       if (err) return errorHandler.handleError(res, err);
 
       if (!user) {
@@ -161,9 +161,9 @@ export function currentUser(req: IUserSessionRequest, res: express.Response, nex
       }
       return res.json({
         id: user.id,
-        nombre: user.nombre,
+        name: user.name,
         login: user.login,
-        rol: user.rol
+        rol: user.roles
       });
     });
 }
@@ -173,7 +173,7 @@ export function currentUser(req: IUserSessionRequest, res: express.Response, nex
  * Cambiar contraseña
  */
 export interface ICambiarPasswordRequest extends IUserSessionRequest {
-  usuario: IUsuario;
+  usuario: IUser;
 }
 export function validateCambiarPassword(req: ICambiarPasswordRequest, res: express.Response, next: NextFunction) {
   req.check("currentPassword", "No puede quedar vac&iacute;o.").notEmpty();
@@ -201,12 +201,12 @@ export function validateCambiarPassword(req: ICambiarPasswordRequest, res: expre
     }
 
 
-    Usuario.findOne(
+    User.findOne(
       {
         _id: req.user.id,
         enabled: true
       },
-      function (err: any, user: IUsuario) {
+      function (err: any, user: IUser) {
         if (err) return errorHandler.handleError(res, err);
 
         if (!user) {
@@ -227,7 +227,7 @@ export function validateCambiarPassword(req: ICambiarPasswordRequest, res: expre
       });
   });
 }
-export function cambiarPassword(req: ICambiarPasswordRequest, res: express.Response) {
+export function changePassword(req: ICambiarPasswordRequest, res: express.Response) {
   req.usuario.password = req.body.newPassword;
 
   req.usuario.save(function (err: any) {
@@ -241,19 +241,19 @@ export function cambiarPassword(req: ICambiarPasswordRequest, res: express.Respo
 
 
 export function validateAdminRole(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
-  Usuario.findOne(
+  User.findOne(
     {
       _id: req.user.id,
       enabled: true
     },
-    function (err: any, user: IUsuario) {
+    function (err: any, user: IUser) {
       if (err) return errorHandler.handleError(res, err);
 
       if (!user) {
         return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "El usuario no se encuentra.");
       }
 
-      if (!(user.rol.indexOf("admin") >= 0)) {
+      if (!(user.roles.indexOf("admin") >= 0)) {
         return errorHandler.sendError(res, errorHandler.ERROR_UNATORIZED, "No autorizado.");
       }
 

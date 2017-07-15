@@ -31,7 +31,7 @@ export class PerfilComponent implements OnInit, IErrorController {
   ) {
     this.form = fb.group({
       id: [null, null],
-      provincia: [
+      province: [
         null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
       ],
@@ -39,20 +39,20 @@ export class PerfilComponent implements OnInit, IErrorController {
         null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
       ],
-      nombre: [
+      name: [
         null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
       ],
-      direccion: [null, Validators.required],
-      telefono: [null, Validators.required]
+      address: [null, Validators.required],
+      phone: [null, Validators.required]
     });
     this.form.patchValue({
       id: null,
-      nombre: '',
+      name: '',
       email: '',
-      provincia: '',
-      direccion: '',
-      telefono: ''
+      province: '',
+      address: '',
+      phone: ''
     });
   }
 

@@ -3,15 +3,15 @@
 import * as mongoose from "mongoose";
 
 
-export interface IPerfil extends mongoose.Document {
-  nombre: string;
-  telefono: string;
+export interface IProfile extends mongoose.Document {
+  name: string;
+  phone: string;
   email: string;
-  direccion: string;
-  imagen: string;
+  address: string;
+  picture: string;
   valid: Boolean;
-  provincia: mongoose.Schema.Types.ObjectId;
-  usuario: mongoose.Schema.Types.ObjectId;
+  province: mongoose.Schema.Types.ObjectId;
+  user: mongoose.Schema.Types.ObjectId;
   updated: Date;
   created: Date;
   enabled: Boolean;
@@ -19,14 +19,14 @@ export interface IPerfil extends mongoose.Document {
 /**
  * Esquema del Perfil
  */
-export let PerfilSchema = new mongoose.Schema({
-  nombre: {
+export let ProfileSchema = new mongoose.Schema({
+  name: {
     type: String,
     default: "",
     trim: true,
     required: "Nombre es requerido"
   },
-  telefono: {
+  phone: {
     type: String,
     default: "",
     trim: true
@@ -37,12 +37,12 @@ export let PerfilSchema = new mongoose.Schema({
     trim: true,
     required: "Email es requerido"
   },
-  direccion: {
+  address: {
     type: String,
     default: "",
     trim: true
   },
-  imagen: {
+  picture: {
     type: String,
     default: "",
     trim: true
@@ -51,11 +51,11 @@ export let PerfilSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
-  provincia: {
+  province: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Provincia"
   },
-  usuario: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Usuario",
     required: "Usuario es requerido"
@@ -72,16 +72,16 @@ export let PerfilSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
-}, {collection: "perfiles"});
+}, {collection: "profiles"});
 
 
 /**
- * Hook a pre save method to hash the password
+ * Antes de guardar
  */
-PerfilSchema.pre("save", function (next: Function) {
+ProfileSchema.pre("save", function (next: Function) {
   this.updated = Date.now;
 
   next();
 });
 
-export let Perfil = mongoose.model<IPerfil>("Perfil", PerfilSchema);
+export let Profile = mongoose.model<IProfile>("Profile", ProfileSchema);

@@ -27,9 +27,9 @@ export class NuevaMascotaComponent implements OnInit, IErrorController {
   ) {
     this.mascota = {
       _id: null,
-      nombre: '',
-      fechaNacimiento: '',
-      descripcion: ''
+      name: '',
+      birthDate: '',
+      description: ''
     };
   }
 

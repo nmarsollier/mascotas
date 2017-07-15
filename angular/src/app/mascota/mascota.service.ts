@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { Http, Headers, Response } from "@angular/http";
-import { RestBaseService } from "../tools/rest.tools";
-import "rxjs/add/operator/toPromise";
+import { Injectable } from '@angular/core';
+import { Http, Headers, Response } from '@angular/http';
+import { RestBaseService } from '../tools/rest.tools';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class MascotaService extends RestBaseService {
-  private url = "/mascota";
+  private url = '/pet';
 
   constructor(private http: Http) {
     super();
@@ -23,7 +23,7 @@ export class MascotaService extends RestBaseService {
 
   buscarMascota(id: number): Promise<Mascota> {
     return this.http
-      .get(MascotaService.serverUrl + this.url + "/" + id, this.getRestHeader())
+      .get(MascotaService.serverUrl + this.url + '/' + id, this.getRestHeader())
       .toPromise()
       .then(response => {
         return response.json() as Mascota;
@@ -35,9 +35,9 @@ export class MascotaService extends RestBaseService {
     if (value._id) {
       return this.http
         .post(
-          MascotaService.serverUrl + this.url + "/" + value._id,
-          JSON.stringify(value),
-          this.getRestHeader()
+        MascotaService.serverUrl + this.url + '/' + value._id,
+        JSON.stringify(value),
+        this.getRestHeader()
         )
         .toPromise()
         .then(response => {
@@ -47,9 +47,9 @@ export class MascotaService extends RestBaseService {
     } else {
       return this.http
         .put(
-          MascotaService.serverUrl + this.url,
-          JSON.stringify(value),
-          this.getRestHeader()
+        MascotaService.serverUrl + this.url,
+        JSON.stringify(value),
+        this.getRestHeader()
         )
         .toPromise()
         .then(response => {
@@ -63,12 +63,12 @@ export class MascotaService extends RestBaseService {
     if (id) {
       return this.http
         .delete(
-          MascotaService.serverUrl + this.url + "/" + id,
-          this.getRestHeader()
+        MascotaService.serverUrl + this.url + '/' + id,
+        this.getRestHeader()
         )
         .toPromise()
         .then(response => {
-          return "";
+          return '';
         })
         .catch(this.handleError);
     }
@@ -77,7 +77,7 @@ export class MascotaService extends RestBaseService {
 
 export interface Mascota {
   _id: string;
-  nombre: string;
-  fechaNacimiento: string;
-  descripcion: string;
+  name: string;
+  birthDate: string;
+  description: string;
 }

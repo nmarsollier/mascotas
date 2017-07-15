@@ -4,14 +4,14 @@
     <div class="form-group">
         <label>Nombre:</label>
 
-        <input name="nombre" formControlName="nombre" type="text" placeholder="Nombre" size="60" />
+        <input name="name" formControlName="name" type="text" placeholder="Nombre" size="60" />
 
-        <div class="error" *ngIf="(form.controls.nombre.dirty || formSubmitted) && form.controls.nombre.invalid">
+        <div class="error" *ngIf="(form.controls.name.dirty || formSubmitted) && form.controls.name.invalid">
             Valor no v&aacute;lido.
         </div>
 
-        <div *ngIf="errors.nombre" class="error">
-            {{errors.nombre}}
+        <div *ngIf="errors.name" class="error">
+            {{errors.name}}
         </div>
     </div>
 
@@ -32,44 +32,44 @@
     <div class="form-group">
         <label>Provincia:</label>
 
-        <select name='provincia' formControlName="provincia">
-			<option *ngFor="let item of provincias" [value]="item._id" >{{item.nombre}}</option>
+        <select name='province' formControlName="province">
+			<option *ngFor="let item of provincias" [value]="item._id" >{{item.name}}</option>
 		</select>
 
-        <div class="error" *ngIf="(form.controls.provincia.dirty || formSubmitted) && form.controls.provincia.invalid">
+        <div class="error" *ngIf="(form.controls.province.dirty || formSubmitted) && form.controls.province.invalid">
             Valor no v&aacute;lido.
         </div>
 
-        <div *ngIf="errors.provincia" class="error">
-            {{errors.provincia}}
+        <div *ngIf="errors.province" class="error">
+            {{errors.province}}
         </div>
     </div>
 
     <div class="form-group">
         <label>Direcci&oacute;n:</label>
 
-        <input name="direccion" formControlName="direccion" type="text" placeholder="Direcci&oacute;n" size="60" />
+        <input name="address" formControlName="address" type="text" placeholder="Direcci&oacute;n" size="60" />
 
-        <div class="error" *ngIf="(form.controls.direccion.dirty || formSubmitted) && form.controls.direccion.invalid">
+        <div class="error" *ngIf="(form.controls.address.dirty || formSubmitted) && form.controls.address.invalid">
             Valor no v&aacute;lido.
         </div>
 
-        <div *ngIf="errors.direccion" class="error">
-            {{errors.direccion}}
+        <div *ngIf="errors.address" class="error">
+            {{errors.address}}
         </div>
     </div>
 
     <div class="form-group">
         <label>Tel&eacute;fono:</label>
 
-        <input name="telefono" formControlName="telefono" type="text" placeholder="Tel&eacute;fono" size="60" />
+        <input name="phone" formControlName="phone" type="text" placeholder="Tel&eacute;fono" size="60" />
 
-        <div class="error" *ngIf="(form.controls.telefono.dirty || formSubmitted) && form.controls.telefono.invalid">
+        <div class="error" *ngIf="(form.controls.phone.dirty || formSubmitted) && form.controls.phone.invalid">
             Valor no v&aacute;lido.
         </div>
 
-        <div *ngIf="errors.telefono" class="error">
-            {{errors.telefono}}
+        <div *ngIf="errors.phone" class="error">
+            {{errors.phone}}
         </div>
     </div>
 

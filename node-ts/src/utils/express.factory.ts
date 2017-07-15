@@ -16,12 +16,12 @@ import * as expressValidator from "express-validator";
 
 // Modulos de la aplicacion
 import * as indexModule from "../index/module";
-import * as mascotasModule from "../mascotas/module";
-import * as perfilModule from "../perfil/module";
-import * as provinciasModule from "../provincias/module";
-import * as seguridadModule from "../seguridad/module";
+import * as mascotasModule from "../pet/module";
+import * as perfilModule from "../profile/module";
+import * as provinciasModule from "../provinces/module";
+import * as seguridadModule from "../security/module";
 import * as errorHandler from "../utils/error.handler";
-import * as pasportHanlder from "../seguridad/passport";
+import * as pasportHanlder from "../security/passport";
 
 export function init(appConfig: Config): express.Express {
   const app = express();

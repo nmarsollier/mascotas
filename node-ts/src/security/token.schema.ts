@@ -12,9 +12,6 @@ export interface IToken extends mongoose.Document {
   usuario: mongoose.Schema.Types.ObjectId;
 }
 
-/**
- * Esquema de Mascotas
- */
 export let TokenSchema = new mongoose.Schema({
   valid: {
     type: Boolean,

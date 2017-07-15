@@ -10,11 +10,11 @@ const conf = appConfig.getConfig(process.env);
   Por definicion es el usuario que permite el login.
 */
 
-export interface IUsuario extends mongoose.Document {
-  nombre: string;
+export interface IUser extends mongoose.Document {
+  name: string;
   login: string;
   password: string;
-  rol: string[];
+  roles: string[];
   updated: Date;
   created: Date;
   enabled: Boolean;
@@ -31,8 +31,8 @@ const validateLocalStrategyPassword = function (password: string) {
 /**
  * Esquea de un usuario del sistema
  */
-export let UsuarioSchema = new mongoose.Schema({
-  nombre: {
+export let UserSchema = new mongoose.Schema({
+  name: {
     type: String,
     trim: true,
     default: "",
@@ -49,7 +49,7 @@ export let UsuarioSchema = new mongoose.Schema({
     default: "",
     required: "La contraseña es requerida"
   },
-  rol: {
+  roles: {
     type: [
       {
         type: String,
@@ -70,16 +70,16 @@ export let UsuarioSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
-}, { collection: "usuarios" });
+}, { collection: "users" });
 
-UsuarioSchema.path("password").validate(function (value: string) {
+UserSchema.path("password").validate(function (value: string) {
   return validateLocalStrategyPassword(value);
 }, "La contraseña debe ser mayor a 6 caracteres");
 
 /**
- * Hook a pre save method to hash the password
+ * Trigger antes de guardar, si el password se mofico hay que encriptarlo
  */
-UsuarioSchema.pre("save", function (next: Function) {
+UserSchema.pre("save", function (next: Function) {
   if (this.isModified("password") && this.password && this.password.length > 6) {
     this.password = this.hashPassword(this.password);
   }
@@ -92,7 +92,7 @@ UsuarioSchema.pre("save", function (next: Function) {
 /**
  * Crea un hash del passwrod
  */
-UsuarioSchema.methods.hashPassword = function (password: string) {
+UserSchema.methods.hashPassword = function (password: string) {
   return crypto
     .pbkdf2Sync(password, conf.passwordSalt, 10000, 64, "SHA1")
     .toString("base64");
@@ -101,8 +101,8 @@ UsuarioSchema.methods.hashPassword = function (password: string) {
 /**
  * Authentica un usuario
  */
-UsuarioSchema.methods.authenticate = function (password: string) {
+UserSchema.methods.authenticate = function (password: string) {
   return this.password && this.password === this.hashPassword(password);
 };
 
-export let Usuario = mongoose.model<IUsuario>("Usuario", UsuarioSchema);
+export let User = mongoose.model<IUser>("User", UserSchema);

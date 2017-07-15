@@ -76,16 +76,14 @@ export class UsuarioService extends RestBaseService {
 
 export interface RegistrarUsuario {
   login: string;
-  nombre: string;
+  name: string;
   password: string;
 }
 
 export interface Usuario {
   login: string;
-  nombre: string;
+  name: string;
   email: string;
-  finVigencia: string;
-  inicioVigencia: string;
-  activo: boolean;
+  enabled: boolean;
   roles: string[];
 }

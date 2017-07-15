@@ -30,7 +30,7 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
         null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
       ],
-      nombre: [
+      name: [
         null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
       ],
@@ -39,7 +39,7 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
     });
     this.form.patchValue({
       id: null,
-      nombre: '',
+      name: '',
       password: '',
       password2: '',
       login: ''
@@ -55,7 +55,7 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
         .registrarUsuario({
           login: this.form.value.login,
           password: this.form.value.password,
-          nombre: this.form.value.nombre
+          name: this.form.value.name
         })
         .then(usuario => this.router.navigate(['/']))
         .catch(error => errorHanlder.procesarValidacionesRest(this, error));

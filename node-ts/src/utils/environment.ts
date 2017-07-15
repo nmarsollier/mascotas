@@ -18,7 +18,7 @@ export function getConfig(environment: any): Config {
     config = {
       port: process.env.SERVER_PORT || "3000",
       logLevel: process.env.LOG_LEVEL || "debug",
-      db: process.env.MONGODB || "mongodb://localhost/mascotas",
+      db: process.env.MONGODB || "mongodb://localhost/petdb",
       jwtSecret: process.env.JWT_SECRET || "+b59WQF+kUDr0TGxevzpRV3ixMvyIQuD1O",
       passwordSalt: process.env.PASSWORD_SALT || "DP3whK1fL7kKvhWm6pZomM/y8tZ92mkEBtj29A4M+b8"
     };

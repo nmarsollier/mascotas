@@ -1,9 +1,9 @@
 "use strict";
 
-import { Usuario, IUsuario } from "./usuario.schema";
+import { User, IUser } from "./user.schema";
 import { Config } from "../utils/environment";
 import * as appConfig from "../utils/environment";
-import { remove } from "../mascotas/mascota.service";
+import { remove } from "../pet/pet.service";
 import { IUserSession } from "./security.service";
 import { Token, IToken } from "./token.schema";
 
@@ -75,7 +75,7 @@ export function invalidateSessionToken(token: IUserSession) {
 /**
  * Crea un token lo pone en el cache, lo encripta y lo devuelve.
  */
-export function createToken(user: IUsuario, sessionToken: IToken): string {
+export function createToken(user: IUser, sessionToken: IToken): string {
     const payload: IUserSession = { id: user.id, _id: user._id, token_id: sessionToken.id };
     const token = jwt.sign(payload, conf.jwtSecret);
     sessionCache.set(sessionToken.id, sessionToken.usuario.toString());
