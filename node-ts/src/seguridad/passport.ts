@@ -10,7 +10,6 @@ import { Token, IToken } from "./token.schema";
 import * as passport from "passport";
 import * as passportJwt from "passport-jwt";
 import * as mongoose from "mongoose";
-import * as _ from "lodash";
 import * as nodeCache from "node-cache";
 import * as jwt from "jsonwebtoken";
 

@@ -49,7 +49,7 @@ export let MascotaSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
-});
+}, { collection: "mascotas" });
 
 /**
  * Hook a pre save method to hash the password

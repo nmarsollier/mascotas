@@ -6,10 +6,8 @@ import { IUserSession, IUserSessionRequest } from "../seguridad/security.service
 
 import * as mongoose from "mongoose";
 import * as errorHandler from "../utils/error.handler";
-import * as _ from "lodash";
 import * as express from "express";
 import * as escape from "escape-html";
-
 
 /**
  * Retorna los datos de la mascota

@@ -3,11 +3,11 @@
 import { Usuario, IUsuario } from "./usuario.schema";
 import { Token, IToken } from "./token.schema";
 import { NextFunction } from "express-serve-static-core";
-import * as _ from "lodash";
 import * as mongoose from "mongoose";
 import * as express from "express";
 import * as errorHandler from "../utils/error.handler";
 import * as passport from "./passport";
+import * as escape from "escape-html";
 
 import * as appConfig from "../utils/environment";
 const conf = appConfig.getConfig(process.env);
@@ -55,7 +55,7 @@ export function signup(req: express.Request, res: express.Response) {
   user.nombre = req.body.nombre;
   user.login = req.body.login;
   user.password = req.body.password;
-  user.rol = "user";
+  user.rol = ["user"];
 
   // Then save the user
   user.save(function (err: any) {
@@ -87,7 +87,7 @@ export function validateSignIn(req: express.Request, res: express.Response, next
 }
 export function signin(req: express.Request, res: express.Response, next: NextFunction) {
   Usuario.findOne({
-    login: req.body.login,
+    login: escape(req.body.login),
     enabled: true
   },
     function (err: any, user: IUsuario) {
@@ -237,4 +237,26 @@ export function cambiarPassword(req: ICambiarPasswordRequest, res: express.Respo
       message: "Contraseña cambiada"
     });
   });
+}
+
+
+export function validateAdminRole(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
+  Usuario.findOne(
+    {
+      _id: req.user.id,
+      enabled: true
+    },
+    function (err: any, user: IUsuario) {
+      if (err) return errorHandler.handleError(res, err);
+
+      if (!user) {
+        return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "El usuario no se encuentra.");
+      }
+
+      if (!(user.rol.indexOf("admin") >= 0)) {
+        return errorHandler.sendError(res, errorHandler.ERROR_UNATORIZED, "No autorizado.");
+      }
+
+      next();
+    });
 }

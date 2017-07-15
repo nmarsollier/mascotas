@@ -11,7 +11,7 @@ import * as chalk from "chalk";
 // Variables de entorno
 const conf: Config = appConfig.getConfig(process.env);
 
-// Checkear conexion con mongoose
+// Conexion con MongoDD
 mongoose.connect(conf.db, function(err: string) {
   if (err) {
     console.error(chalk.red("No se pudo conectar a MongoDB!"));

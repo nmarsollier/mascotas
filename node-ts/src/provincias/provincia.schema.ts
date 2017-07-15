@@ -22,6 +22,6 @@ export let ProvinciaSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
-});
+}, {collection: "provincias"});
 
 export let Provincia = mongoose.model<IProvincia>("Provincia", ProvinciaSchema);

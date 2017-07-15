@@ -72,7 +72,7 @@ export let PerfilSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
-});
+}, {collection: "perfiles"});
 
 
 /**

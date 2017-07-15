@@ -2,14 +2,13 @@
 
 import { NextFunction } from "express-serve-static-core";
 import { Perfil, IPerfil } from "./perfil.schema";
-import { IProvincia, Provincia } from "../provincias/provincias.schema";
+import { IProvincia, Provincia } from "../provincias/provincia.schema";
 import { IUserSession, IUserSessionRequest } from "../seguridad/security.service";
 import { Usuario } from "../seguridad/usuario.schema";
 import * as errorHandler from "../utils/error.handler";
 import * as mongoose from "mongoose";
 import * as escape from "escape-html";
 import * as express from "express";
-import * as _ from "lodash";
 
 /**
  * Retorna los datos del perfil
@@ -97,13 +96,14 @@ export function update(req: IUpdateRequest, res: express.Response) {
       Usuario.findOne({
         _id: req.user.id,
         enabled: true
-      }, function (err, usuario) {
-        if (err) return errorHandler.handleError(res, err);
-        usuario.nombre = req.body.nombre;
-        usuario.save(function (err: any) {
-          return res.json(perfil);
+      },
+        function (err, usuario) {
+          if (err) return errorHandler.handleError(res, err);
+          usuario.nombre = req.body.nombre;
+          usuario.save(function (err: any) {
+            return res.json(perfil);
+          });
         });
-      });
     } else {
       return res.json(perfil);
     }
@@ -120,12 +120,13 @@ export function fillForCurrentUser(req: IFindByCurrentUserRequest, res: express.
   Perfil.findOne({
     usuario: req.user._id,
     enabled: true
-  }, function (err, perfil) {
-    if (err || !perfil) return next();
+  },
+    function (err, perfil) {
+      if (err || !perfil) return next();
 
-    req.perfil = perfil;
-    next();
-  });
+      req.perfil = perfil;
+      next();
+    });
 }
 
 /**
@@ -144,14 +145,15 @@ export function fillProvinciaIfPresent(req: IFindProvincia, res: express.Respons
   Provincia.findOne({
     _id: escape(req.body.provincia),
     enabled: true
-  }, function (err, provincia) {
-    if (err) return errorHandler.handleError(res, err);
+  },
+    function (err, provincia) {
+      if (err) return errorHandler.handleError(res, err);
 
-    if (!provincia) {
-      return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se encuentra la provincia " + req.body.provincia);
-    }
+      if (!provincia) {
+        return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se encuentra la provincia " + req.body.provincia);
+      }
 
-    req.provincia = provincia;
-    next();
-  });
+      req.provincia = provincia;
+      next();
+    });
 }

@@ -54,20 +54,6 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label>Nombre</label>
-
-        <input name="email" formControlName="email" type="text" placeholder="Email" size="60" class="form-control" />
-
-        <div *ngIf="(form.controls.email.dirty || formSubmitted) && form.controls.email.invalid" class="error">
-            Dato invalido
-        </div>
-
-        <div *ngIf="errors.email" class="error">
-            {{errors['email']}}
-        </div>
-    </div>
-
     <div *ngIf="errorMessage" class="error">
         {{errorMessage}}
     </div>

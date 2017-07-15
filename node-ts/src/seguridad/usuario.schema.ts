@@ -14,7 +14,7 @@ export interface IUsuario extends mongoose.Document {
   nombre: string;
   login: string;
   password: string;
-  rol: string;
+  rol: string[];
   updated: Date;
   created: Date;
   enabled: Boolean;
@@ -70,7 +70,7 @@ export let UsuarioSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
-});
+}, { collection: "usuarios" });
 
 UsuarioSchema.path("password").validate(function (value: string) {
   return validateLocalStrategyPassword(value);

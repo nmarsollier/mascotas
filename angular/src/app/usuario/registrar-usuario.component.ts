@@ -30,10 +30,6 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
         null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
       ],
-      email: [
-        null,
-        [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
-      ],
       nombre: [
         null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
@@ -46,8 +42,7 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
       nombre: '',
       password: '',
       password2: '',
-      login: '',
-      email: ''
+      login: ''
     });
   }
 
@@ -60,7 +55,6 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
         .registrarUsuario({
           login: this.form.value.login,
           password: this.form.value.password,
-          email: this.form.value.email,
           nombre: this.form.value.nombre
         })
         .then(usuario => this.router.navigate(['/']))

@@ -26,6 +26,6 @@ export let TokenSchema = new mongoose.Schema({
     ref: "User",
     required: "Usuario es requerido"
   }
-});
+}, {collection: "tokens"});
 
 export let Token = mongoose.model<IToken>("Token", TokenSchema);
