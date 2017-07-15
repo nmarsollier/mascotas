@@ -15,15 +15,15 @@ export class DatePickerPipe implements PipeTransform {
   transform(value: string, args?: any): any {
     return new DateModel(this.toIDateModel(value));
   }
-  
+
   private toIDateModel(value: string): any {
-    let d = moment(value, "DD/MM/YYYY");
+    const d = moment(value);
     return {
-        day: d.date(),
-        month: d.month(),
-        year: d.year(),
-        formatted: value,
-        momentObj: d
+      day: d.date(),
+      month: d.month(),
+      year: d.year(),
+      formatted: d.format("DD/MM/YYYY"),
+      momentObj: d
     }
   }
 }
