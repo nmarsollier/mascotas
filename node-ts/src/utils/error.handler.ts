@@ -34,14 +34,14 @@ function processMongooseErrorCode(res: express.Response, err: any): ValidationEr
       case 11001:
         res.header("X-Status-Reason: Unique constraint");
 
-        const fieldName = err.err.substring(
-          err.err.lastIndexOf(".$") + 2,
-          err.err.lastIndexOf("_1")
+        const fieldName = err.errmsg.substring(
+          err.errmsg.lastIndexOf("index:") + 7,
+          err.errmsg.lastIndexOf("_1")
         );
         return {
           message: [{
             path: fieldName,
-            message: fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + " ya existe"
+            message: "Este registro ya existe."
           }]
         };
       default:
@@ -60,8 +60,15 @@ function processMongooseErrorCode(res: express.Response, err: any): ValidationEr
 function processValidationError(res: express.Response, err: any): ValidationErrorMessage {
   res.header("X-Status-Reason: Validation failed");
   res.status(ERROR_BAD_REQUEST);
+  const messages: ValidationErrorItem[] = [];
+  for (const key in err.errors) {
+    messages.push({
+      path: key,
+      message: err.errors[key].message
+    });
+  }
   return {
-    message: <ValidationErrorItem[]>err.errors
+    message: messages
   };
 }
 
@@ -78,5 +85,5 @@ export function handleError(res: express.Response, err: any): express.Response {
 export function sendError(res: express.Response, code: number, err: string) {
   res.status(code);
   res.header("X-Status-Reason: " + err);
-  return { error: err };
+  return res.send({ error: err });
 }

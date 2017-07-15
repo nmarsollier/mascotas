@@ -5,14 +5,18 @@ import { ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs/Rx";
 import { Router } from "@angular/router";
 
+import { IErrorController } from '../tools/error-handler';
+import * as errorHanlder from '../tools/error-handler';
+
 @Component({
   selector: "app-registrar-usuario",
-  templateUrl: "./registrar-usuario.component.html"
+  templateUrl: './registrar-usuario.component.html'
 })
-export class RegistrarUsuarioComponent implements OnInit {
+export class RegistrarUsuarioComponent implements OnInit, IErrorController {
   form: FormGroup;
-  errorMessage: string;
   formSubmitted: boolean;
+
+  errorMessage: string;
   errors: string[] = [];
 
   constructor(
@@ -39,18 +43,18 @@ export class RegistrarUsuarioComponent implements OnInit {
     });
     this.form.patchValue({
       id: null,
-      nombre: "",
-      password: "",
-      password2: "",
-      login: "",
-      email: ""
+      nombre: '',
+      password: '',
+      password2: '',
+      login: '',
+      email: ''
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   submitForm() {
-    this.cleanRestValidations();
+    errorHanlder.cleanRestValidations(this);
     if (this.form.valid) {
       this.usuarioService
         .registrarUsuario({
@@ -59,8 +63,8 @@ export class RegistrarUsuarioComponent implements OnInit {
           email: this.form.value.email,
           nombre: this.form.value.nombre
         })
-        .then(usuario => this.router.navigate(["/"]))
-        .catch(error => this.procesarValidacionesRest(error));
+        .then(usuario => this.router.navigate(['/']))
+        .catch(error => errorHanlder.procesarValidacionesRest(this, error));
     } else {
       this.formSubmitted = true;
     }

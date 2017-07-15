@@ -1,66 +1,78 @@
 <h1>Perfil</h1>
 
 <form name="form" [formGroup]="form" novalidate>
-	<div class="form-group">
-		<label>Nombre:</label> 
+    <div class="form-group">
+        <label>Nombre:</label>
 
-		<input name="nombre" [formControl]="form.controls['nombre']"
-				type="text" placeholder="Nombre" size="60" />
+        <input name="nombre" formControlName="nombre" type="text" placeholder="Nombre" size="60" />
 
-		<div class="error"
-			*ngIf="(form.controls['nombre'].dirty || formSubmitted) && form.controls['nombre'].invalid">
-			Valor no v&aacute;lido.
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label>Email:</label> 
+        <div class="error" *ngIf="(form.controls.nombre.dirty || formSubmitted) && form.controls.nombre.invalid">
+            Valor no v&aacute;lido.
+        </div>
 
-		<input name="email" [formControl]="form.controls['email']"
-				type="text" placeholder="Email" size="60" />
+        <div *ngIf="errors.nombre" class="error">
+            {{errors.nombre}}
+        </div>
+    </div>
 
-		<div class="error"
-					*ngIf="(form.controls['email'].dirty || formSubmitted) && form.controls['email'].invalid">
-			Valor no v&aacute;lido.
-		</div>
-	</div>
+    <div class="form-group">
+        <label>Email:</label>
 
-	<div class="form-group">
-		<label>Provincia:</label> 
+        <input name="email" formControlName="email" type="text" placeholder="Email" size="60" />
 
-		<br />
-		<select name='provincia' [formControl]="form.controls['provincia']" >
+        <div class="error" *ngIf="(form.controls.email.dirty || formSubmitted) && form.controls.email.invalid">
+            Valor no v&aacute;lido.
+        </div>
+
+        <div *ngIf="errors.email" class="error">
+            {{errors.email}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Provincia:</label>
+
+        <select name='provincia' formControlName="provincia">
 			<option *ngFor="let item of provincias" [value]="item._id" >{{item.nombre}}</option>
-		</select>	
+		</select>
 
-		<div class="error"
-			*ngIf="(form.controls['provincia'].dirty || formSubmitted) && form.controls['provincia'].invalid">
-				Valor no v&aacute;lido.
-		</div>
-	</div>
+        <div class="error" *ngIf="(form.controls.provincia.dirty || formSubmitted) && form.controls.provincia.invalid">
+            Valor no v&aacute;lido.
+        </div>
 
-	<div class="form-group">
-		<label>Direcci&oacute;n:</label> 
+        <div *ngIf="errors.provincia" class="error">
+            {{errors.provincia}}
+        </div>
+    </div>
 
-		<input name="direccion" [formControl]="form.controls['direccion']" type="text" placeholder="Direcci&oacute;n" size="60" />	
+    <div class="form-group">
+        <label>Direcci&oacute;n:</label>
 
-		<div class="error"
-			*ngIf="(form.controls['direccion'].dirty || formSubmitted) && form.controls['direccion'].invalid">
-				Valor no v&aacute;lido.
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label>Tel&eacute;fono:</label> 
+        <input name="direccion" formControlName="direccion" type="text" placeholder="Direcci&oacute;n" size="60" />
 
-		<input name="telefono" [formControl]="form.controls['telefono']" type="text" placeholder="Tel&eacute;fono" size="60" />
-		
-		<div class="error"
-			*ngIf="(form.controls['telefono'].dirty || formSubmitted) && form.controls['telefono'].invalid">
-				Valor no v&aacute;lido.
-		</div>
-	</div>
-		
-	<button class="btn btn-success"  (click)="submitForm()"  [disabled]="form.invalid">Guardar</button>
-	<button class="btn btn-default" [routerLink]="['/']" >Cancelar</button>		
+        <div class="error" *ngIf="(form.controls.direccion.dirty || formSubmitted) && form.controls.direccion.invalid">
+            Valor no v&aacute;lido.
+        </div>
+
+        <div *ngIf="errors.direccion" class="error">
+            {{errors.direccion}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Tel&eacute;fono:</label>
+
+        <input name="telefono" formControlName="telefono" type="text" placeholder="Tel&eacute;fono" size="60" />
+
+        <div class="error" *ngIf="(form.controls.telefono.dirty || formSubmitted) && form.controls.telefono.invalid">
+            Valor no v&aacute;lido.
+        </div>
+
+        <div *ngIf="errors.telefono" class="error">
+            {{errors.telefono}}
+        </div>
+    </div>
+
+    <button class="btn btn-success" (click)="submitForm()" [disabled]="form.invalid">Guardar</button>
+    <button class="btn btn-default" [routerLink]="['/']">Cancelar</button>
 </form>

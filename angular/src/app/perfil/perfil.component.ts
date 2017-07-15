@@ -6,14 +6,19 @@ import { ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs/Rx";
 import { Router } from "@angular/router";
 
+import { IErrorController } from '../tools/error-handler';
+import * as errorHanlder from '../tools/error-handler';
+
 @Component({
-  selector: "app-perfil",
-  templateUrl: "./perfil.component.html"
+  selector: 'app-perfil',
+  templateUrl: './perfil.component.html'
 })
-export class PerfilComponent implements OnInit {
+export class PerfilComponent implements OnInit, IErrorController {
   form: FormGroup;
-  errorMessage: string;
   formSubmitted: boolean;
+
+  errorMessage: string;
+  errors: string[] = [];
 
   provincias: Provincia[];
 
@@ -43,11 +48,11 @@ export class PerfilComponent implements OnInit {
     });
     this.form.patchValue({
       id: null,
-      nombre: "",
-      email: "",
-      provincia: "",
-      direccion: "",
-      telefono: ""
+      nombre: '',
+      email: '',
+      provincia: '',
+      direccion: '',
+      telefono: ''
     });
   }
 
@@ -55,43 +60,23 @@ export class PerfilComponent implements OnInit {
     this.provinciaService
       .getProvincias()
       .then(provincias => (this.provincias = provincias))
-      .catch(error => (this.errorMessage = <any>error));
+      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
 
     this.perfilService
       .buscarPerfil()
       .then(perfil => this.form.patchValue(perfil))
-      .catch(error => (this.errorMessage = <any>error));
+      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
   }
 
   submitForm() {
-    this.cleanRestValidations();
+    errorHanlder.cleanRestValidations(this);
     if (this.form.valid) {
       this.perfilService
         .guardarPerfil(this.form.value)
-        .then(usuario => this.router.navigate(["/"]))
-        .catch(error => (this.errorMessage = <any>error));
+        .then(usuario => this.router.navigate(['/']))
+        .catch(error => errorHanlder.procesarValidacionesRest(this, error));
     } else {
       this.formSubmitted = true;
     }
-  }
-
-  cleanRestValidations() {
-    //    this.form.controls['nombre'].setValidity( "rest", true );
-    //    $scope.form.fechaNacimiento.$setValidity( "rest", true );
-    //    $scope.form.descripcion.$setValidity( "rest", true );
-  }
-
-  procesarValidacionesRest(data) {
-    /*   if ( data.message ) {
-           for ( var i in data.message ) {
-               var error = data.message[i];
-               if ( $scope.form[error.path] ) {
-                   $scope.form[error.path].$setValidity( "rest", false );
-                   $scope.form[error.path].$error.restMessage = error.message;
-               }
-           }
-       } else {
-           toastr.error( "Error al grabar el perfil.", data.message );
-       }*/
   }
 }

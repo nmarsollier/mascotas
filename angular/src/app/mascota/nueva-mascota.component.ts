@@ -3,17 +3,21 @@ import { MascotaService, Mascota } from "./mascota.service";
 import { ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs/Rx";
 import { Router } from "@angular/router";
-import { DatePickerPipe } from "../tools/common-pipes.pipe";
-import { DatePickerModule } from "ng2-datepicker";
+import { DatePickerPipe } from '../tools/common-pipes.pipe';
+import { DatePickerModule } from 'ng2-datepicker';
+
+import { IErrorController } from '../tools/error-handler';
+import * as errorHanlder from '../tools/error-handler';
 
 @Component({
-  selector: "app-nueva-mascota",
-  templateUrl: "./nueva-mascota.component.html"
+  selector: 'app-nueva-mascota',
+  templateUrl: './nueva-mascota.component.html'
 })
-export class NuevaMascotaComponent implements OnInit {
+export class NuevaMascotaComponent implements OnInit, IErrorController {
   mascota: Mascota;
-  errorMessage: string;
   formSubmitted: boolean;
+
+  errorMessage: string;
   errors: string[] = [];
 
   constructor(
@@ -23,52 +27,37 @@ export class NuevaMascotaComponent implements OnInit {
   ) {
     this.mascota = {
       _id: null,
-      nombre: "",
-      fechaNacimiento: "",
-      descripcion: ""
+      nombre: '',
+      fechaNacimiento: '',
+      descripcion: ''
     };
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      let id = params["id"];
+      const id = params['id'];
       if (id) {
         this.mascotasService
           .buscarMascota(id)
           .then(mascota => (this.mascota = mascota))
-          .catch(error => (this.errorMessage = <any>error));
+          .catch(error => errorHanlder.procesarValidacionesRest(this, error));
       }
     });
   }
 
   submitForm() {
-    this.cleanRestValidations();
+    errorHanlder.cleanRestValidations(this);
     this.mascotasService
       .guardarMascota(this.mascota)
-      .then(mascota => this.router.navigate(["/mascotas"]))
-      .catch(error => this.procesarValidacionesRest(error));
+      .then(mascota => this.router.navigate(['/mascotas']))
+      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
   }
 
   onDelete() {
-    this.cleanRestValidations();
+    errorHanlder.cleanRestValidations(this);
     this.mascotasService
       .eliminarMascota(this.mascota._id)
-      .then(any => this.router.navigate(["/mascotas"]))
-      .catch(error => this.procesarValidacionesRest(error));
-  }
-
-  cleanRestValidations() {
-    this.errorMessage = undefined;
-    this.errors = [];
-  }
-
-  procesarValidacionesRest(data: any) {
-    if (data.message) {
-      for (const error of data.message) {
-        this.errors[error.path] = error.message;
-      }
-    } else {
-      this.errorMessage = data.message;
-    }
+      .then(any => this.router.navigate(['/mascotas']))
+      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
   }
 }

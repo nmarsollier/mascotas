@@ -20,7 +20,7 @@ export function read(req: IReadRequest, res: express.Response) {
  * Lista todas las Provincias
  */
 export function list(req: express.Request, res: express.Response) {
-  Provincia.find().sort("-created").exec(function (err, provincia) {
+  Provincia.find().sort("-created").exec(function (err, provincia: IProvincia) {
     if (err) return errorHandler.handleError(res, err);
 
     return res.json(provincia);
@@ -36,7 +36,7 @@ export interface IFindByIdRequest extends express.Request {
   provincia: IProvincia;
 }
 export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction, id: string) {
-  Provincia.findById(id).exec(function (err, provincia) {
+  Provincia.findById(id).exec(function (err, provincia: IProvincia) {
     if (err) return errorHandler.handleError(res, err);
 
     if (!provincia) {
