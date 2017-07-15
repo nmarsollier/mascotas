@@ -1,9 +1,9 @@
 "use strict";
 
 import { Express } from "express";
-import { Config } from "./config/environment";
-import * as expressApp from "./config/express.factory";
-import * as appConfig from "./config/environment";
+import { Config } from "./utils/environment";
+import * as expressApp from "./utils/express.factory";
+import * as appConfig from "./utils/environment";
 import * as loggerFactory from "./utils/logger";
 import * as mongoose from "mongoose";
 import * as chalk from "chalk";

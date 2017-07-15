@@ -7,6 +7,9 @@ export interface IMascota extends mongoose.Document {
   fechaNacimiento: Date;
   descripcion: string;
   usuario: mongoose.Schema.Types.ObjectId;
+  updated: Date;
+  created: Date;
+  enabled: Boolean;
 }
 
 /**
@@ -33,7 +36,28 @@ export let MascotaSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: "Usuario es requerido"
+  },
+  updated: {
+    type: Date,
+    default: Date.now
+  },
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  enabled: {
+    type: Boolean,
+    default: true
   }
+});
+
+/**
+ * Hook a pre save method to hash the password
+ */
+MascotaSchema.pre("save", function (next: Function) {
+  this.updated = Date.now;
+
+  next();
 });
 
 export let Mascota = mongoose.model<IMascota>("Mascota", MascotaSchema);

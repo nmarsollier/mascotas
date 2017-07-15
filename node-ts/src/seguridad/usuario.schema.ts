@@ -3,7 +3,7 @@
 import * as mongoose from "mongoose";
 import * as passport from "passport";
 import * as crypto from "crypto";
-import * as appConfig from "../config/environment";
+import * as appConfig from "../utils/environment";
 const conf = appConfig.getConfig(process.env);
 
 /*
@@ -17,6 +17,7 @@ export interface IUsuario extends mongoose.Document {
   rol: string;
   updated: Date;
   created: Date;
+  enabled: Boolean;
   authenticate: Function;
 }
 
@@ -64,6 +65,10 @@ export let UsuarioSchema = new mongoose.Schema({
   created: {
     type: Date,
     default: Date.now
+  },
+  enabled: {
+    type: Boolean,
+    default: true
   }
 });
 
@@ -75,9 +80,10 @@ UsuarioSchema.path("password").validate(function (value: string) {
  * Hook a pre save method to hash the password
  */
 UsuarioSchema.pre("save", function (next: Function) {
-  if (this.password && this.password.length > 6) {
+  if (this.isModified("password") && this.password && this.password.length > 6) {
     this.password = this.hashPassword(this.password);
   }
+
   this.updated = Date.now;
 
   next();
@@ -87,13 +93,9 @@ UsuarioSchema.pre("save", function (next: Function) {
  * Crea un hash del passwrod
  */
 UsuarioSchema.methods.hashPassword = function (password: string) {
-  if (this.salt && password) {
-    return crypto
-      .pbkdf2Sync(password, this.salt, 10000, 64, "SHA1")
-      .toString("base64");
-  } else {
-    return password;
-  }
+  return crypto
+    .pbkdf2Sync(password, conf.passwordSalt, 10000, 64, "SHA1")
+    .toString("base64");
 };
 
 /**

@@ -1,8 +1,8 @@
 "use strict";
 
 import { Usuario, IUsuario } from "./usuario.schema";
-import { Config } from "../config/environment";
-import * as appConfig from "../config/environment";
+import { Config } from "../utils/environment";
+import * as appConfig from "../utils/environment";
 import { remove } from "../mascotas/mascota.service";
 import { IUserSession } from "./security.service";
 import { Token, IToken } from "./token.schema";

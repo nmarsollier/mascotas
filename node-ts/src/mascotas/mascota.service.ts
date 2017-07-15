@@ -8,6 +8,7 @@ import * as mongoose from "mongoose";
 import * as errorHandler from "../utils/error.handler";
 import * as _ from "lodash";
 import * as express from "express";
+import * as escape from "escape-html";
 
 
 /**
@@ -28,6 +29,27 @@ export function read(req: IReadRequest, res: express.Response) {
 export interface IUpdateRequest extends IUserSessionRequest {
   mascota: IMascota;
 }
+export function validateUpdate(req: IUpdateRequest, res: express.Response, next: NextFunction) {
+  if (req.body.nombre) {
+    req.check("nombre", "Hasta 256 caracteres solamente.").isLength({ max: 256 });
+    req.sanitize("nombre").escape();
+  }
+  if (req.body.descripcion) {
+    req.check("descripcion", "Hasta 1024 caracteres solamente.").isLength({ max: 1024 });
+    req.sanitize("descripcion").escape();
+  }
+  if (req.body.fechaNacimiento) {
+    req.check("fechaNacimiento", "No es v&aacute;lido").isLength({ min: 1 });
+    req.sanitize("fechaNacimiento").escape();
+  }
+
+  req.getValidationResult().then(function (result) {
+    if (!result.isEmpty()) {
+      return errorHandler.handleExpressValidationError(res, result);
+    }
+    next();
+  });
+}
 export function update(req: IUpdateRequest, res: express.Response) {
   let mascota = <IMascota>req.mascota;
   if (!mascota) {
@@ -35,13 +57,13 @@ export function update(req: IUpdateRequest, res: express.Response) {
     mascota.usuario = req.user._id;
   }
 
-  if (!_.isEmpty(req.body.nombre)) {
+  if (req.body.nombre) {
     mascota.nombre = req.body.nombre;
   }
-  if (!_.isEmpty(req.body.descripcion)) {
+  if (req.body.descripcion) {
     mascota.descripcion = req.body.descripcion;
   }
-  if (!_.isEmpty(req.body.fechaNacimiento)) {
+  if (req.body.fechaNacimiento) {
     mascota.fechaNacimiento = req.body.fechaNacimiento;
   }
 
@@ -61,7 +83,9 @@ export interface IRemoveRequest extends IUserSessionRequest {
 }
 export function remove(req: IRemoveRequest, res: express.Response) {
   const mascota = <IMascota>req.mascota;
-  mascota.remove(function (err: any) {
+
+  mascota.enabled = false;
+  mascota.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
 
     res.json(mascota);
@@ -70,7 +94,8 @@ export function remove(req: IRemoveRequest, res: express.Response) {
 
 export function findByCurrentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
   Mascota.find({
-    usuario: req.user._id
+    usuario: req.user._id,
+    enabled: true
   }).exec(function (err, mascotas) {
     if (err) return next();
     res.json(mascotas);
@@ -85,16 +110,20 @@ export interface IFindByIdRequest extends express.Request {
   mascota: IMascota;
 }
 export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction, id: string) {
-  Mascota.findById(id).exec(function (err, mascota) {
-    if (err) return errorHandler.handleError(res, err);
+  Mascota.findOne({
+    _id: escape(id),
+    enabled: true
+  },
+    function (err, mascota) {
+      if (err) return errorHandler.handleError(res, err);
 
-    if (!mascota) {
-      return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se pudo cargar la mascota " + id);
-    }
+      if (!mascota) {
+        return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se pudo cargar la mascota " + id);
+      }
 
-    req.mascota = mascota;
-    next();
-  });
+      req.mascota = mascota;
+      next();
+    });
 }
 
 /**

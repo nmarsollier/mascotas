@@ -10,12 +10,12 @@ export function init(app: Express) {
   app
     .route("/mascota")
     .get(passport.authenticate("jwt", { session: false }), mascota.findByCurrentUser)
-    .put(passport.authenticate("jwt", { session: false }), mascota.update);
+    .put(passport.authenticate("jwt", { session: false }), mascota.validateUpdate, mascota.update);
 
   app
     .route("/mascota/:mascotaId")
     .get(mascota.read)
-    .post(passport.authenticate("jwt", { session: false }), mascota.validateOwner, mascota.update)
+    .post(passport.authenticate("jwt", { session: false }), mascota.validateOwner, mascota.validateUpdate, mascota.update)
     .delete(passport.authenticate("jwt", { session: false }), mascota.validateOwner, mascota.remove);
 
   // Filtro que agrega la mascota cuando se pasa como parametro el id

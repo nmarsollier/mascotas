@@ -9,7 +9,7 @@ import * as express from "express";
 import * as errorHandler from "../utils/error.handler";
 import * as passport from "./passport";
 
-import * as appConfig from "../config/environment";
+import * as appConfig from "../utils/environment";
 const conf = appConfig.getConfig(process.env);
 
 export interface IUserSession {
@@ -25,9 +25,33 @@ export interface IUserSessionRequest extends express.Request {
 /**
  * Signup
  */
+
+export function validateSignUp(req: express.Request, res: express.Response, next: NextFunction) {
+  req.check("nombre", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("nombre", "Hasta 1024 caracteres solamente.").isLength({ max: 1024 });
+
+  req.check("password", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("password", "Mas de 4 caracteres.").isLength({ min: 4 });
+  req.check("password", "Hasta 256 caracteres solamente.").isLength({ max: 256 });
+  req.check("password", "S&oacute;lo letras y n&uacute;meros.").isAlphanumeric();
+
+  req.check("login", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("login", "Hasta 256 caracteres solamente.").isLength({ max: 64 });
+  req.check("login", "S&oacute;lo letras y n&uacute;meros.").isAlphanumeric();
+
+  req.sanitize("nombre").escape();
+  req.sanitize("password").escape();
+  req.sanitize("login").escape();
+
+  req.getValidationResult().then(function (result) {
+    if (!result.isEmpty()) {
+      return errorHandler.handleExpressValidationError(res, result);
+    }
+    next();
+  });
+}
 export function signup(req: express.Request, res: express.Response) {
   const user = <IUsuario>new Usuario();
-  console.log(req.body);
   user.nombre = req.body.nombre;
   user.login = req.body.login;
   user.password = req.body.password;
@@ -44,8 +68,28 @@ export function signup(req: express.Request, res: express.Response) {
 /**
  * Signin
  */
+export function validateSignIn(req: express.Request, res: express.Response, next: NextFunction) {
+  req.check("password", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("password", "S&oacute;lo letras y n&uacute;meros.").isAlphanumeric();
+
+  req.check("login", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("login", "S&oacute;lo letras y n&uacute;meros.").isAlphanumeric();
+
+  req.sanitize("password").escape();
+  req.sanitize("login").escape();
+
+  req.getValidationResult().then(function (result) {
+    if (!result.isEmpty()) {
+      return errorHandler.handleExpressValidationError(res, result);
+    }
+    next();
+  });
+}
 export function signin(req: express.Request, res: express.Response, next: NextFunction) {
-  Usuario.findOne({ login: req.body.login },
+  Usuario.findOne({
+    login: req.body.login,
+    enabled: true
+  },
     function (err: any, user: IUsuario) {
       if (err) return errorHandler.handleError(res, err);
 
@@ -105,59 +149,92 @@ export function signout(req: IUserSessionRequest, res: express.Response) {
  * Get current user
  */
 export function currentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
-  Usuario.findById(req.user.id, function (err: any, user: IUsuario) {
-    if (err) return errorHandler.handleError(res, err);
+  Usuario.findOne({
+    _id: req.user.id,
+    enabled: true
+  },
+    function (err: any, user: IUsuario) {
+      if (err) return errorHandler.handleError(res, err);
 
-    if (!user) {
-      return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "El usuario no se encuentra");
-    }
-    return res.json({
-      id: user.id,
-      nombre: user.nombre,
-      login: user.login,
-      rol: user.rol
+      if (!user) {
+        return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "El usuario no se encuentra");
+      }
+      return res.json({
+        id: user.id,
+        nombre: user.nombre,
+        login: user.login,
+        rol: user.rol
+      });
     });
-  });
 }
 
 
 /**
  * Cambiar contraseña
  */
-export function cambiarPassword(req: IUserSessionRequest, res: express.Response) {
-  const passwordDetails = req.body;
+export interface ICambiarPasswordRequest extends IUserSessionRequest {
+  usuario: IUsuario;
+}
+export function validateCambiarPassword(req: ICambiarPasswordRequest, res: express.Response, next: NextFunction) {
+  req.check("currentPassword", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("currentPassword", "Mas de 4 caracteres.").isLength({ min: 4 });
+  req.check("currentPassword", "Hasta 256 caracteres solamente.").isLength({ max: 256 });
+  req.check("currentPassword", "S&oacute;lo letras y n&uacute;meros.").isAlphanumeric();
 
-  if (!req.user) {
-    return errorHandler.sendError(res, errorHandler.ERROR_BAD_REQUEST, "El usuario no se encuentra.");
-  }
+  req.check("newPassword", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("newPassword", "Mas de 4 caracteres.").isLength({ min: 4 });
+  req.check("newPassword", "Hasta 256 caracteres solamente.").isLength({ max: 256 });
+  req.check("newPassword", "S&oacute;lo letras y n&uacute;meros.").isAlphanumeric();
 
-  if (!passwordDetails.newPassword) {
-    return errorHandler.sendError(res, errorHandler.ERROR_BAD_REQUEST, "Debe proporcionar la contraseña nueva.");
-  }
+  req.check("verifyPassword", "No puede quedar vac&iacute;o.").notEmpty();
+  req.check("verifyPassword", "Mas de 4 caracteres.").isLength({ min: 4 });
+  req.check("verifyPassword", "Hasta 256 caracteres solamente.").isLength({ max: 256 });
+  req.check("verifyPassword", "S&oacute;lo letras y n&uacute;meros.").isAlphanumeric();
 
-  Usuario.findById(req.user.id, function (err: any, user: IUsuario) {
+  req.sanitize("currentPassword").escape();
+  req.sanitize("newPassword").escape();
+  req.sanitize("verifyPassword").escape();
+
+  req.getValidationResult().then(function (result) {
+    if (!result.isEmpty()) {
+      return errorHandler.handleExpressValidationError(res, result);
+    }
+
+
+    Usuario.findOne(
+      {
+        _id: req.user.id,
+        enabled: true
+      },
+      function (err: any, user: IUsuario) {
+        if (err) return errorHandler.handleError(res, err);
+
+        if (!user) {
+          return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "El usuario no se encuentra.");
+        }
+
+        if (req.body.newPassword !== req.body.verifyPassword) {
+          return errorHandler.sendError(res, errorHandler.ERROR_BAD_REQUEST, "Las contraseñas no coinciden.");
+        }
+
+        if (!user.authenticate(req.body.currentPassword)) {
+          return errorHandler.sendError(res, errorHandler.ERROR_BAD_REQUEST, "El password actual es incorrecto.");
+        }
+
+        req.usuario = user;
+
+        next();
+      });
+  });
+}
+export function cambiarPassword(req: ICambiarPasswordRequest, res: express.Response) {
+  req.usuario.password = req.body.newPassword;
+
+  req.usuario.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
 
-    if (!user) {
-      return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "El usuario no se encuentra.");
-    }
-
-    if (!user.authenticate(passwordDetails.currentPassword)) {
-      return errorHandler.sendError(res, errorHandler.ERROR_BAD_REQUEST, "El password actual es incorrecto.");
-    }
-
-    if (passwordDetails.newPassword !== passwordDetails.verifyPassword) {
-      return errorHandler.sendError(res, errorHandler.ERROR_BAD_REQUEST, "Las contraseñas no coinciden.");
-    }
-
-    user.password = passwordDetails.newPassword;
-
-    user.save(function (err: any) {
-      if (err) return errorHandler.handleError(res, err);
-
-      return res.send({
-        message: "Contraseña cambiada"
-      });
+    return res.send({
+      message: "Contraseña cambiada"
     });
   });
 }

@@ -2,13 +2,14 @@
 
 import { NextFunction } from "express-serve-static-core";
 import { Perfil, IPerfil } from "./perfil.schema";
-import { Provincia, IProvincia } from "../provincias/provincias.schema";
+import { IProvincia, Provincia } from "../provincias/provincias.schema";
 import { IUserSession, IUserSessionRequest } from "../seguridad/security.service";
-import * as mongoose from "mongoose";
+import { Usuario } from "../seguridad/usuario.schema";
 import * as errorHandler from "../utils/error.handler";
-import * as _ from "lodash";
+import * as mongoose from "mongoose";
+import * as escape from "escape-html";
 import * as express from "express";
-
+import * as _ from "lodash";
 
 /**
  * Retorna los datos del perfil
@@ -32,6 +33,35 @@ export interface IUpdateRequest extends IUserSessionRequest {
   perfil: IPerfil;
   provincia: mongoose.Schema.Types.ObjectId;
 }
+export function validateUpdate(req: IUpdateRequest, res: express.Response, next: NextFunction) {
+  if (req.body.email) {
+    req.check("email", "No es un email.").isEmail();
+    req.sanitize("email").escape();
+  }
+  if (req.body.nombre) {
+    req.check("nombre", "Hasta 1024 caracteres solamente.").isLength({ max: 1024 });
+    req.sanitize("nombre").escape();
+  }
+  if (req.body.direccion) {
+    req.check("direccion", "Hasta 1024 caracteres solamente.").isLength({ max: 1024 });
+    req.sanitize("direccion").escape();
+  }
+  if (req.body.telefono) {
+    req.check("telefono", "No es válido").isLength({ min: 1, max: 32 });
+    req.sanitize("telefono").escape();
+  }
+  if (req.body.imagen) {
+    req.check("imagen", "No parece ser una imagen.").isBase64();
+    req.sanitize("imagen").escape();
+  }
+
+  req.getValidationResult().then(function (result) {
+    if (!result.isEmpty()) {
+      return errorHandler.handleExpressValidationError(res, result);
+    }
+    next();
+  });
+}
 export function update(req: IUpdateRequest, res: express.Response) {
   let perfil: IPerfil = req.perfil;
   if (!perfil) {
@@ -39,22 +69,22 @@ export function update(req: IUpdateRequest, res: express.Response) {
     perfil.usuario = req.user._id;
   }
 
-  if (!_.isEmpty(req.body.email)) {
+  if (req.body.email) {
     perfil.email = req.body.email;
   }
-  if (!_.isEmpty(req.body.nombre)) {
+  if (req.body.nombre) {
     perfil.nombre = req.body.nombre;
   }
-  if (!_.isUndefined(req.body.direccion)) {
+  if (req.body.direccion) {
     perfil.direccion = req.body.direccion;
   }
-  if (!_.isUndefined(req.body.telefono)) {
+  if (req.body.telefono) {
     perfil.telefono = req.body.telefono;
   }
-  if (!_.isUndefined(req.body.imagen)) {
+  if (req.body.imagen) {
     perfil.imagen = req.body.imagen;
   }
-  if (!_.isUndefined(req.provincia)) {
+  if (req.provincia) {
     perfil.provincia = req.provincia;
   } else {
     perfil.provincia = undefined;
@@ -63,7 +93,20 @@ export function update(req: IUpdateRequest, res: express.Response) {
   perfil.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
 
-    return res.json(perfil);
+    if (req.body.nombre) {
+      Usuario.findOne({
+        _id: req.user.id,
+        enabled: true
+      }, function (err, usuario) {
+        if (err) return errorHandler.handleError(res, err);
+        usuario.nombre = req.body.nombre;
+        usuario.save(function (err: any) {
+          return res.json(perfil);
+        });
+      });
+    } else {
+      return res.json(perfil);
+    }
   });
 }
 
@@ -75,8 +118,9 @@ export interface IFindByCurrentUserRequest extends IUserSessionRequest {
 }
 export function fillForCurrentUser(req: IFindByCurrentUserRequest, res: express.Response, next: NextFunction) {
   Perfil.findOne({
-    usuario: req.user._id
-  }).exec(function (err, perfil) {
+    usuario: req.user._id,
+    enabled: true
+  }, function (err, perfil) {
     if (err || !perfil) return next();
 
     req.perfil = perfil;
@@ -97,7 +141,10 @@ export function fillProvinciaIfPresent(req: IFindProvincia, res: express.Respons
     return next();
   }
 
-  Provincia.findById(req.body.provincia).exec(function (err, provincia) {
+  Provincia.findOne({
+    _id: escape(req.body.provincia),
+    enabled: true
+  }, function (err, provincia) {
     if (err) return errorHandler.handleError(res, err);
 
     if (!provincia) {

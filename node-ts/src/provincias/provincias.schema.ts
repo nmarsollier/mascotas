@@ -8,6 +8,7 @@ import * as mongoose from "mongoose";
 
 export interface IProvincia extends mongoose.Document {
   nombre: string;
+  enabled: Boolean;
 }
 
 export let ProvinciaSchema = new mongoose.Schema({
@@ -16,6 +17,10 @@ export let ProvinciaSchema = new mongoose.Schema({
     default: "",
     trim: true,
     required: "Nombre no puede estar vacio."
+  },
+  enabled: {
+    type: Boolean,
+    default: true
   }
 });
 

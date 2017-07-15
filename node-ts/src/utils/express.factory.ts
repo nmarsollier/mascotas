@@ -27,42 +27,34 @@ export function init(appConfig: Config): express.Express {
   const app = express();
   app.set("port", appConfig.port);
 
-  // Passing the request url to environment locals
-  app.use(function (req, res, next) {
-    res.locals.url = req.protocol + "://" + req.headers.host + req.url;
-    next();
-  });
-
-  // Permitir cualquier origen en CORS
-  const corsOptions = {
-    origin: appConfig.corsEnabled,
+  // Habilitar Cors
+  app.use(cors({
+    origin: true,
     optionsSuccessStatus: 200,
     credentials: true
-  };
-  app.use(cors(corsOptions));
-
-  // Mostrar errors de stack en la consola
-  app.set("showStackError", true);
+  }));
 
   // Si estamos en level debug, debaguear los request
   if (appConfig.logLevel == "debug") {
     app.use(morgan("dev"));
   }
 
+  // Configuramos el server para que tome los json correctamente
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
 
   // Configurar express para comprimir contenidos de text en http
   app.use(compression());
 
-  // Configuramos passport, ver passport.js es la configuracion de authenticacion por db
+  // Configuramos passport, authenticacion por tokens y db
   app.use(passport.initialize());
   app.use(passport.session());
 
-  // helmet le da seguridad al sistema para prevenir hacks
+  // Permite hacer validaciones de parametros req.assert
   app.use(expressValidator());
 
-  app.use(helmet.xssFilter());
+  // helmet le da seguridad al sistema para prevenir hacks
+  app.use(helmet.xssFilter());  // Previene inyeccion de javascript
   app.use(helmet.noSniff());
   app.use(helmet.ieNoOpen());
   app.disable("x-powered-by");

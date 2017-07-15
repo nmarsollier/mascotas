@@ -10,5 +10,5 @@ export function init(app: Express) {
   app
     .route("/perfil")
     .get(passport.authenticate("jwt", { session: false }), perfil.fillForCurrentUser, perfil.read)
-    .post(passport.authenticate("jwt", { session: false }), perfil.fillProvinciaIfPresent, perfil.fillForCurrentUser, perfil.update);
+    .post(passport.authenticate("jwt", { session: false }), perfil.fillProvinciaIfPresent, perfil.fillForCurrentUser, perfil.validateUpdate, perfil.update);
 }
