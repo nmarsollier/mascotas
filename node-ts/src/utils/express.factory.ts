@@ -22,6 +22,7 @@ import * as provinciasModule from "../provinces/module";
 import * as seguridadModule from "../security/module";
 import * as errorHandler from "../utils/error.handler";
 import * as pasportHanlder from "../security/passport";
+import * as imageModule from "../image/module";
 
 export function init(appConfig: Config): express.Express {
   const app = express();
@@ -40,8 +41,8 @@ export function init(appConfig: Config): express.Express {
   }
 
   // Configuramos el server para que tome los json correctamente
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true, limit: "20mb" }));
+  app.use(bodyParser.json({ limit: "5mb" }));
 
   // Configurar express para comprimir contenidos de text en http
   app.use(compression());
@@ -71,6 +72,7 @@ export function init(appConfig: Config): express.Express {
   perfilModule.init(app);
   provinciasModule.init(app);
   seguridadModule.init(app);
+  imageModule.init(app);
 
   // Para el manejo de errores, para que los loguee en la consola
   app.use(function (err: any, req: express.Request, res: express.Response, next: NextFunction) {

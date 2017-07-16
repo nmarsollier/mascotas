@@ -1,12 +1,12 @@
 <h1>Perfil</h1>
 
-<form name="form" [formGroup]="form" novalidate>
+<form #f="ngForm" novalidate>
     <div class="form-group">
         <label>Nombre:</label>
 
-        <input name="name" formControlName="name" type="text" placeholder="Nombre" size="60" />
+        <input name="name" [(ngModel)]="perfil.name" type="text" placeholder="Nombre" size="60" />
 
-        <div class="error" *ngIf="(form.controls.name.dirty || formSubmitted) && form.controls.name.invalid">
+        <div *ngIf="f.controls.name?.invalid && f.controls.name?.touched" class="error">
             Valor no v&aacute;lido.
         </div>
 
@@ -16,27 +16,32 @@
     </div>
 
     <div class="form-group">
+        <label>Imagen:</label>
+        <file-upload name="imagen" allowedTypes="image/*" uploadButtonText="Upload File" [ngModel]="imagenPerfil.image" (ngModelChange)="actualizarImagen($event)"></file-upload>
+    </div>
+
+    <div class="form-group">
         <label>Email:</label>
 
-        <input name="email" formControlName="email" type="text" placeholder="Email" size="60" />
+        <input name="email" [(ngModel)]="perfil.email" type="text" placeholder="Email" size="60" />
 
-        <div class="error" *ngIf="(form.controls.email.dirty || formSubmitted) && form.controls.email.invalid">
+        <div *ngIf="f.controls.email?.invalid && f.controls.email?.touched" class="error">
             Valor no v&aacute;lido.
         </div>
 
-        <div *ngIf="errors.email" class="error">
-            {{errors.email}}
+        <div *ngIf="errors.name" class="error">
+            {{errors.name}}
         </div>
     </div>
 
     <div class="form-group">
         <label>Provincia:</label>
 
-        <select name='province' formControlName="province">
+        <select name='province' [(ngModel)]="perfil.province">
 			<option *ngFor="let item of provincias" [value]="item._id" >{{item.name}}</option>
 		</select>
 
-        <div class="error" *ngIf="(form.controls.province.dirty || formSubmitted) && form.controls.province.invalid">
+        <div *ngIf="f.controls.province?.invalid && f.controls.province?.touched" class="error">
             Valor no v&aacute;lido.
         </div>
 
@@ -48,9 +53,9 @@
     <div class="form-group">
         <label>Direcci&oacute;n:</label>
 
-        <input name="address" formControlName="address" type="text" placeholder="Direcci&oacute;n" size="60" />
+        <input name="address" [(ngModel)]="perfil.address" type="text" placeholder="Direcci&oacute;n" size="60" />
 
-        <div class="error" *ngIf="(form.controls.address.dirty || formSubmitted) && form.controls.address.invalid">
+        <div *ngIf="f.controls.address?.invalid && f.controls.address?.touched" class="error">
             Valor no v&aacute;lido.
         </div>
 
@@ -62,9 +67,9 @@
     <div class="form-group">
         <label>Tel&eacute;fono:</label>
 
-        <input name="phone" formControlName="phone" type="text" placeholder="Tel&eacute;fono" size="60" />
+        <input name="phone" [(ngModel)]="perfil.phone" type="text" placeholder="Tel&eacute;fono" size="60" />
 
-        <div class="error" *ngIf="(form.controls.phone.dirty || formSubmitted) && form.controls.phone.invalid">
+        <div *ngIf="f.controls.phone?.invalid && f.controls.phone?.touched" class="error">
             Valor no v&aacute;lido.
         </div>
 
@@ -73,6 +78,6 @@
         </div>
     </div>
 
-    <button class="btn btn-success" (click)="submitForm()" [disabled]="form.invalid">Guardar</button>
+    <button class="btn btn-success" (click)="submitForm()" [disabled]="f.invalid">Guardar</button>
     <button class="btn btn-default" [routerLink]="['/']">Cancelar</button>
 </form>

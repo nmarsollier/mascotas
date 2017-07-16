@@ -43,9 +43,8 @@ export let ProfileSchema = new mongoose.Schema({
     trim: true
   },
   picture: {
-    type: String,
-    default: "",
-    trim: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Image"
   },
   valid: {
     type: Boolean,
@@ -53,11 +52,11 @@ export let ProfileSchema = new mongoose.Schema({
   },
   province: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Provincia"
+    ref: "Province"
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Usuario",
+    ref: "User",
     required: "Usuario es requerido"
   },
   updated: {

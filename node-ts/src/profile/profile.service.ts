@@ -50,7 +50,6 @@ export function validateUpdate(req: IUpdateRequest, res: express.Response, next:
     req.sanitize("phone").escape();
   }
   if (req.body.picture) {
-    req.check("picture", "No parece ser una imagen.").isBase64();
     req.sanitize("picture").escape();
   }
 

@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  serverBase: "http://localhost:3000",
-  baseHref: "/"
+  serverBase: 'http://localhost:3000',
+  baseHref: '/'
 };

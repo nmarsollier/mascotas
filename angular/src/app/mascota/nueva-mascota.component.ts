@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { MascotaService, Mascota } from "./mascota.service";
-import { ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs/Rx";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { MascotaService, Mascota } from './mascota.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
+import { Router } from '@angular/router';
 import { DatePickerPipe } from '../tools/common-pipes.pipe';
 import { DatePickerModule } from 'ng2-datepicker';
 
