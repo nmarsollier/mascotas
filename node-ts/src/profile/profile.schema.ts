@@ -43,7 +43,7 @@ export let ProfileSchema = new mongoose.Schema({
     trim: true
   },
   picture: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "Image"
   },
   valid: {

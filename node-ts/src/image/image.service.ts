@@ -1,13 +1,22 @@
 "use strict";
 
 import { NextFunction } from "express-serve-static-core";
-import { Image, IImage } from "./image.schema";
+import { IImage } from "./image.schema";
 import { IUserSession, IUserSessionRequest } from "../security/security.service";
 
-import * as mongoose from "mongoose";
 import * as errorHandler from "../utils/error.handler";
 import * as express from "express";
 import * as escape from "escape-html";
+import * as uuid from "uuid/v1";
+import * as redis from "ioredis";
+import * as appConfig from "../utils/environment";
+
+const conf = appConfig.getConfig(process.env);
+const redisClient = new redis(conf.redisPort, conf.redisHost);
+redisClient.on("connect", function () {
+  console.log("connected");
+});
+
 
 /**
  * Busca una imagen
@@ -25,7 +34,7 @@ export function read(req: IReadRequest, res: express.Response) {
 export function validateCreate(req: express.Request, res: express.Response, next: NextFunction) {
   if (req.body.image) {
     req.check("image", "Debe especificar la imagen.").isLength({ min: 1 });
-    req.check("image", "Imagen invalida").contains("data:image/jpeg;base64");
+    req.check("image", "Imagen invalida").contains("data:image/");
   }
 
   req.getValidationResult().then(function (result) {
@@ -36,13 +45,12 @@ export function validateCreate(req: express.Request, res: express.Response, next
   });
 }
 export function create(req: express.Request, res: express.Response) {
-  const image = new Image();
+  const image: IImage = {
+    id: uuid(),
+    image: req.body.image
+  };
 
-  if (req.body.image) {
-    image.image = req.body.image;
-  }
-
-  image.save(function (err: any) {
+  redisClient.set(image.id, image.image, function (err, reply) {
     if (err) return errorHandler.handleError(res, err);
 
     res.json({ id: image.id });
@@ -53,17 +61,17 @@ export interface IFindByIdRequest extends express.Request {
   image: IImage;
 }
 export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction, id: string) {
-  Image.findOne({
-    _id: escape(id),
-  },
-    function (err, image) {
-      if (err) return errorHandler.handleError(res, err);
+  redisClient.get(escape(id), function (err, reply) {
+    if (err) return errorHandler.handleError(res, err);
 
-      if (!image) {
-        return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se pudo cargar la imagen " + id);
-      }
+    if (!reply) {
+      return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se pudo cargar la imagen " + id);
+    }
 
-      req.image = image;
-      next();
-    });
+    req.image = {
+      id: escape(id),
+      image: reply
+    };
+    next();
+  });
 }

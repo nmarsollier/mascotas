@@ -45,7 +45,7 @@ export class PerfilComponent implements OnInit, IErrorController {
       image: ''
     }
     this.imagenPerfil = {
-      image: ''
+      image: PerfilService.serverUrl + '/profile.png'
     }
   }
 

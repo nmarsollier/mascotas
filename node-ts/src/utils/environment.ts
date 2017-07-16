@@ -18,7 +18,9 @@ export function getConfig(environment: any): Config {
     config = {
       port: process.env.SERVER_PORT || "3000",
       logLevel: process.env.LOG_LEVEL || "debug",
-      db: process.env.MONGODB || "mongodb://localhost/petdb",
+      mongoDb: process.env.MONGODB || "mongodb://localhost/petdb",
+      redisHost: process.env.REDIS_HOST || "127.0.0.1",
+      redisPort: Number(process.env.REDIS_PORT || "6379"),
       jwtSecret: process.env.JWT_SECRET || "+b59WQF+kUDr0TGxevzpRV3ixMvyIQuD1O",
       passwordSalt: process.env.PASSWORD_SALT || "DP3whK1fL7kKvhWm6pZomM/y8tZ92mkEBtj29A4M+b8"
     };
@@ -29,7 +31,9 @@ export function getConfig(environment: any): Config {
 export interface Config {
   port: string;
   logLevel: string; // 'debug' | 'verbose' | 'info' | 'warn' | 'error';
-  db: string;
+  mongoDb: string;
+  redisHost: string;
+  redisPort: number;
   passwordSalt: string;
   jwtSecret: string;
 }
