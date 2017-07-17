@@ -45,7 +45,7 @@ export class PerfilComponent implements OnInit, IErrorController {
       image: ''
     }
     this.imagenPerfil = {
-      image: PerfilService.serverUrl + '/profile.png'
+      image: '/assets/loading.gif'
     }
   }
 
@@ -70,10 +70,15 @@ export class PerfilComponent implements OnInit, IErrorController {
             .buscarImagen(this.perfil.picture)
             .then(imagen => {
               this.imagenPerfil = imagen;
-            });
+            }).catch( error => this.imagenPerfil.image = '/assets/profile.png');
+        } else {
+          this.imagenPerfil.image = '/assets/profile.png';
         }
       })
-      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+      .catch(error => {
+        errorHanlder.procesarValidacionesRest(this, error);
+        this.imagenPerfil.image = '/assets/profile.png';
+      });
   }
 
   submitForm() {

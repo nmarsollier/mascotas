@@ -33,8 +33,7 @@ Instalar Redis
 
 Ejecucion
 =========
-
-	Pasos para ejecutar el proyecto :
+Pasos para ejecutar el proyecto :
 	Abrir el folder node del proyecto mascotas y ejecutar : 
 		npm update
 		npm start
