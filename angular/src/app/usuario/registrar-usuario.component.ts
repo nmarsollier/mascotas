@@ -5,12 +5,12 @@ import { ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs/Rx";
 import { Router } from "@angular/router";
 
-import { IErrorController } from '../tools/error-handler';
-import * as errorHanlder from '../tools/error-handler';
+import { IErrorController } from "../tools/error-handler";
+import * as errorHanlder from "../tools/error-handler";
 
 @Component({
   selector: "app-registrar-usuario",
-  templateUrl: './registrar-usuario.component.html'
+  templateUrl: "./registrar-usuario.component.html"
 })
 export class RegistrarUsuarioComponent implements OnInit, IErrorController {
   form: FormGroup;
@@ -27,22 +27,22 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
   ) {
     this.form = fb.group({
       login: [
-        null,
+        undefined,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
       ],
       name: [
-        null,
+        undefined,
         [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
       ],
-      password: [null, Validators.required],
-      password2: [null, Validators.required]
+      password: [undefined, Validators.required],
+      password2: [undefined, Validators.required]
     });
     this.form.patchValue({
-      id: null,
-      name: '',
-      password: '',
-      password2: '',
-      login: ''
+      id: undefined,
+      name: "",
+      password: "",
+      password2: "",
+      login: ""
     });
   }
 
@@ -57,7 +57,7 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
           password: this.form.value.password,
           name: this.form.value.name
         })
-        .then(usuario => this.router.navigate(['/']))
+        .then(usuario => this.router.navigate(["/"]))
         .catch(error => errorHanlder.procesarValidacionesRest(this, error));
     } else {
       this.formSubmitted = true;

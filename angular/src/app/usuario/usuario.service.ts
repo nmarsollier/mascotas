@@ -10,7 +10,7 @@ export class UsuarioService extends RestBaseService {
   private principalUrl = "/auth/currentUser";
   private registrarUrl = "/auth/signup";
 
-  private usuarioLogueado;
+  public usuarioLogueado;
 
   constructor(private http: Http) {
     super();
@@ -21,7 +21,7 @@ export class UsuarioService extends RestBaseService {
       login: username,
       password: password
     };
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem("auth_token");
 
     return this.http
       .post(
@@ -38,7 +38,8 @@ export class UsuarioService extends RestBaseService {
   }
 
   logout(): Promise<Usuario> {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem("auth_token");
+    this.usuarioLogueado = undefined;
 
     return this.http
       .get(UsuarioService.serverUrl + this.logoutUrl, this.getRestHeader())
@@ -54,6 +55,7 @@ export class UsuarioService extends RestBaseService {
       .get(UsuarioService.serverUrl + this.principalUrl, this.getRestHeader())
       .toPromise()
       .then(response => {
+        this.usuarioLogueado = response;
         return response.json() as Usuario;
       })
       .catch(this.handleError);
@@ -68,7 +70,8 @@ export class UsuarioService extends RestBaseService {
       )
       .toPromise()
       .then(response => {
-        return response.json() as Usuario;
+        localStorage.setItem("auth_token", response.json().token);
+        return this.getPrincipal();
       })
       .catch(this.handleError);
   }
