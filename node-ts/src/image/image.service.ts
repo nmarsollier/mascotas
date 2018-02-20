@@ -50,8 +50,10 @@ export function create(req: express.Request, res: express.Response) {
     image: req.body.image
   };
 
-  redisClient.set(image.id, image.image, function (err, reply) {
-    if (err) return errorHandler.handleError(res, err);
+  redisClient.set(image.id, image.image, function (err: any, reply: any) {
+    if (err) {
+      return errorHandler.handleError(res, err);
+    }
 
     res.json({ id: image.id });
   });

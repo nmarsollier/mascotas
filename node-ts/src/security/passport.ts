@@ -24,7 +24,7 @@ export function init() {
 
     const params = {
         secretOrKey: conf.jwtSecret,
-        jwtFromRequest: ExtractJwt.fromAuthHeader()
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     };
 
     /*

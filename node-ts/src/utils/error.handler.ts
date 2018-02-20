@@ -2,6 +2,7 @@
 
 import * as express from "express";
 import * as expressValidator from "express-validator";
+import { Result } from "express-validator/shared-typings";
 
 export const ERROR_UNATORIZED = 401;
 export const ERROR_NOT_FOUND = 404;
@@ -90,11 +91,11 @@ export function sendError(res: express.Response, code: number, err: string) {
 }
 
 
-export function handleExpressValidationError(res: express.Response, err: ExpressValidator.Result): express.Response {
+export function handleExpressValidationError(res: express.Response, err: Result): express.Response {
   res.header("X-Status-Reason: Validation failed");
   res.status(ERROR_BAD_REQUEST);
   const messages: ValidationErrorItem[] = [];
-  for (const error of err.useFirstErrorOnly().array()) {
+  for (const error of err.array({ onlyFirstError: true })) {
     messages.push({
       path: error.param,
       message: error.msg
