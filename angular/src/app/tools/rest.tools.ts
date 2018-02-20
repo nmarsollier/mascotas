@@ -26,7 +26,7 @@ export class RestBaseService {
   protected getRestHeader(): RequestOptions {
     const headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': 'JWT ' + localStorage.getItem("auth_token")
+      'Authorization': 'bearer ' + localStorage.getItem("auth_token")
     });
     const options = new RequestOptions({ headers: headers, withCredentials: true });
     return options;
