@@ -29,17 +29,6 @@ Instalar Redis
 
 	Para navegar los documentos conviene instalar FastoRedis
 
-
-
-Ejecucion
-=========
-Pasos para ejecutar el proyecto :
-	Abrir el folder node del proyecto mascotas y ejecutar :
-		npm update
-		npm start
-
-		Deberia abrir el servidor de backend en el puerto 3000
-
 Levantar mongodb y redis manualmente
 ===================================
 	en bin de mongodb
@@ -47,4 +36,15 @@ Levantar mongodb y redis manualmente
 
 	en src de redis
 	redis-server
+
+
+
+Ejecucion
+=========
+Pasos para ejecutar el proyecto :
+	Abrir el folder node del proyecto mascotas y ejecutar :
+		npm install
+		npm start
+
+		Deberia abrir el servidor de backend en el puerto 3000
 
