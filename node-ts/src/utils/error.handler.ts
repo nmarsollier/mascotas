@@ -3,6 +3,7 @@
 import * as express from "express";
 import * as expressValidator from "express-validator";
 import { Result } from "express-validator/shared-typings";
+import { NextFunction } from "express-serve-static-core";
 
 export const ERROR_UNATORIZED = 401;
 export const ERROR_NOT_FOUND = 404;
@@ -102,4 +103,25 @@ export function handleExpressValidationError(res: express.Response, err: Result)
     });
   }
   return res.send({ message: messages });
+}
+
+// Controla errores
+export function logErrors(err: any, req: express.Request, res: express.Response, next: NextFunction) {
+  if (!err) return next();
+
+  console.error(err.message);
+
+  res.status(err.status || ERROR_INTERNAL_ERROR);
+  res.json({
+    message: err.message
+  });
+}
+
+
+export function handle404(req: express.Request, res: express.Response) {
+  res.status(ERROR_NOT_FOUND);
+  res.json({
+    url: req.originalUrl,
+    error: "Not Found"
+  });
 }

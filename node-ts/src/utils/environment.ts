@@ -6,7 +6,8 @@ import { ConnectionOptions } from "mongoose";
 let config: Config;
 
 /*
-Todas las configuraciones del servidor se encuentran aca.
+Todas las configuraciones del servidor se encuentran en este modulo, si se quien
+acceder desde cualquier parte del sistema, se deben acceder llamando a este metodo.
 */
 export function getConfig(environment: any): Config {
   if (!config) {

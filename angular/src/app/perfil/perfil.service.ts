@@ -35,7 +35,7 @@ export class PerfilService extends RestBaseService {
 
   guardarImagen(value: Image): Promise<Image> {
     return this.http
-      .put(
+      .post(
       PerfilService.serverUrl + this.imagenUrl,
       JSON.stringify(value),
       this.getRestHeader()
@@ -49,7 +49,7 @@ export class PerfilService extends RestBaseService {
 
   guardarPerfil(value: Perfil): Promise<Perfil> {
     return this.http
-      .post(
+      .put(
       PerfilService.serverUrl + this.perfilUrl,
       JSON.stringify(value),
       this.getRestHeader()

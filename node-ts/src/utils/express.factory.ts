@@ -25,6 +25,7 @@ import * as pasportHanlder from "../security/passport";
 import * as imageModule from "../image/module";
 
 export function init(appConfig: Config): express.Express {
+  // Notas de configuracion de express http://expressjs.com/es/guide/using-middleware.html#middleware.application
   const app = express();
   app.set("port", appConfig.port);
 
@@ -66,7 +67,11 @@ export function init(appConfig: Config): express.Express {
     express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 })
   );
 
+  // Inicializamos nuestros modulos
   pasportHanlder.init();
+
+  // Inicializamos las rutas del directorio
+  // mas sobre rutas http://expressjs.com/es/guide/routing.html
   indexModule.init(app);
   mascotasModule.init(app);
   perfilModule.init(app);
@@ -75,26 +80,11 @@ export function init(appConfig: Config): express.Express {
   imageModule.init(app);
 
   // Para el manejo de errores, para que los loguee en la consola
-  app.use(function (err: any, req: express.Request, res: express.Response, next: NextFunction) {
-    if (!err) return next();
-
-    console.error(err.message);
-
-    res.status(err.status || errorHandler.ERROR_INTERNAL_ERROR);
-    res.json({
-      message: err.message
-    });
-  });
+  app.use(errorHandler.logErrors);
 
   // Responder con JSON cuando hay un error 404, sino responde con un html
   // Esto tiene que ir al final porque sino nos sobreescribe las otras rutas
-  app.use(function (req, res) {
-    res.status(errorHandler.ERROR_NOT_FOUND);
-    res.json({
-      url: req.originalUrl,
-      error: "Not Found"
-    });
-  });
+  app.use(errorHandler.handle404);
 
   return app;
 }

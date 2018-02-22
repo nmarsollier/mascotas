@@ -34,10 +34,10 @@ export class MascotaService extends RestBaseService {
   guardarMascota(value: Mascota): Promise<Mascota> {
     if (value._id) {
       return this.http
-        .post(
-        MascotaService.serverUrl + this.url + '/' + value._id,
-        JSON.stringify(value),
-        this.getRestHeader()
+        .put(
+          MascotaService.serverUrl + this.url + '/' + value._id,
+          JSON.stringify(value),
+          this.getRestHeader()
         )
         .toPromise()
         .then(response => {
@@ -46,10 +46,10 @@ export class MascotaService extends RestBaseService {
         .catch(this.handleError);
     } else {
       return this.http
-        .put(
-        MascotaService.serverUrl + this.url,
-        JSON.stringify(value),
-        this.getRestHeader()
+        .post(
+          MascotaService.serverUrl + this.url,
+          JSON.stringify(value),
+          this.getRestHeader()
         )
         .toPromise()
         .then(response => {
@@ -63,8 +63,8 @@ export class MascotaService extends RestBaseService {
     if (id) {
       return this.http
         .delete(
-        MascotaService.serverUrl + this.url + '/' + id,
-        this.getRestHeader()
+          MascotaService.serverUrl + this.url + '/' + id,
+          this.getRestHeader()
         )
         .toPromise()
         .then(response => {

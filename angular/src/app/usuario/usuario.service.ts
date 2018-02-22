@@ -25,9 +25,9 @@ export class UsuarioService extends RestBaseService {
 
     return this.http
       .post(
-      UsuarioService.serverUrl + this.loginUrl,
-      JSON.stringify(data),
-      this.getRestHeader()
+        UsuarioService.serverUrl + this.loginUrl,
+        JSON.stringify(data),
+        this.getRestHeader()
       )
       .toPromise()
       .then(response => {
@@ -63,10 +63,10 @@ export class UsuarioService extends RestBaseService {
 
   registrarUsuario(value: RegistrarUsuario): Promise<Usuario> {
     return this.http
-      .put(
-      UsuarioService.serverUrl + this.registrarUrl,
-      JSON.stringify(value),
-      this.getRestHeader()
+      .post(
+        UsuarioService.serverUrl + this.registrarUrl,
+        JSON.stringify(value),
+        this.getRestHeader()
       )
       .toPromise()
       .then(response => {

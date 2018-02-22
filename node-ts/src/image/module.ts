@@ -9,7 +9,7 @@ export function init(app: Express) {
   // Routas de acceso a mascotas
   app
     .route("/image")
-    .put(passport.authenticate("jwt", { session: false }), image.validateCreate, image.create);
+    .post(passport.authenticate("jwt", { session: false }), image.validateCreate, image.create);
 
   app
     .route("/image/:imageId")

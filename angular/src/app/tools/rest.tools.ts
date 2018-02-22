@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch'
-import { environment } from '../../environments/environment';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Rx";
+import { Http, Headers, Response, RequestOptions } from "@angular/http";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/catch";
+import { environment } from "../../environments/environment";
 
 export class RestBaseService {
   public static serverUrl = environment.serverBase;
@@ -15,7 +15,7 @@ export class RestBaseService {
 
     let errMsg: string;
     if (error instanceof Response) {
-      const body = error.json() || '';
+      const body = error.json() || "";
       return Promise.reject(body);
     } else {
       errMsg = error.message ? error.message : error.toString();
@@ -25,8 +25,8 @@ export class RestBaseService {
 
   protected getRestHeader(): RequestOptions {
     const headers = new Headers({
-      'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + localStorage.getItem("auth_token")
+      "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem("auth_token")
     });
     const options = new RequestOptions({ headers: headers, withCredentials: true });
     return options;
