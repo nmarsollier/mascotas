@@ -24,11 +24,8 @@ mongoose.connect(conf.mongoDb, {}, function (err: MongoError) {
 // Se configura e inicializa express
 const app = expressApp.init(conf);
 
-// Se loguea en la consola el estado del servidor
-const logger = loggerFactory.getLogger();
-
 app.listen(conf.port, () => {
-  logger.info(chalk.default.green("Mascotas Server escuchando en puerto ${conf.port}"));
+  console.log(chalk.default.green(`Mascotas Server escuchando en puerto ${conf.port}`));
 });
 
 module.exports = app;
