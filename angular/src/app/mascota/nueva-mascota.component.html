@@ -17,7 +17,7 @@
 
     <div class="form-group">
         <label>Fecha de Nacimiento:</label>
-        <ng2-datepicker class="form-control" name="birthDate" [options]="{ format: 'DD/MM/YYYY'}" [ngModel]="mascota.birthDate | datePicker" [class.errorBorder]="!mascota.birthDate || errors['birthDate']" (ngModelChange)="mascota.birthDate=$event.momentObj.utc();"></ng2-datepicker>
+        <ng-datepicker class="form-control" name="birthDate" [options]="{ displayFormat: 'DD/MM/YYYY', locale : arLocale, barTitleIfEmpty: 'Click para seleccionar'}" [(ngModel)]="mascota.birthDate" [class.errorBorder]="!mascota.birthDate || errors['birthDate']"></ng-datepicker>
 
         <div *ngIf="errors.birthDate" class="error">
             {{errors.birthDate}}

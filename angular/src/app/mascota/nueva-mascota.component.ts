@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { MascotaService, Mascota } from './mascota.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { Router } from '@angular/router';
-import { DatePickerPipe } from '../tools/common-pipes.pipe';
-import { DatePickerModule } from 'ng2-datepicker';
+import { Component, OnInit } from "@angular/core";
+import { MascotaService, Mascota } from "./mascota.service";
+import { ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs/Rx";
+import { Router } from "@angular/router";
+import { NgDatepickerModule } from "ng2-datepicker";
+import * as esLocale from "date-fns/locale/es";
 
-import { IErrorController } from '../tools/error-handler';
-import * as errorHanlder from '../tools/error-handler';
+import { IErrorController } from "../tools/error-handler";
+import * as errorHanlder from "../tools/error-handler";
 
 @Component({
-  selector: 'app-nueva-mascota',
-  templateUrl: './nueva-mascota.component.html'
+  selector: "app-nueva-mascota",
+  styles: [ "/deep/ .ngx-datepicker-input {margin: -6px; margin-left: -10px;} "],
+  templateUrl: "./nueva-mascota.component.html"
 })
 export class NuevaMascotaComponent implements OnInit, IErrorController {
   mascota: Mascota;
+  arLocale = esLocale;
   formSubmitted: boolean;
 
   errorMessage: string;
@@ -26,16 +28,16 @@ export class NuevaMascotaComponent implements OnInit, IErrorController {
     private router: Router
   ) {
     this.mascota = {
-      _id: null,
-      name: '',
-      birthDate: '',
-      description: ''
+      _id: undefined,
+      name: "",
+      birthDate: "",
+      description: ""
     };
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const id = params['id'];
+      const id = params["id"];
       if (id) {
         this.mascotasService
           .buscarMascota(id)
@@ -49,7 +51,7 @@ export class NuevaMascotaComponent implements OnInit, IErrorController {
     errorHanlder.cleanRestValidations(this);
     this.mascotasService
       .guardarMascota(this.mascota)
-      .then(mascota => this.router.navigate(['/mascotas']))
+      .then(mascota => this.router.navigate(["/mascotas"]))
       .catch(error => errorHanlder.procesarValidacionesRest(this, error));
   }
 
@@ -57,7 +59,7 @@ export class NuevaMascotaComponent implements OnInit, IErrorController {
     errorHanlder.cleanRestValidations(this);
     this.mascotasService
       .eliminarMascota(this.mascota._id)
-      .then(any => this.router.navigate(['/mascotas']))
+      .then(any => this.router.navigate(["/mascotas"]))
       .catch(error => errorHanlder.procesarValidacionesRest(this, error));
   }
 }

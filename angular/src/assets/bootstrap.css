@@ -3050,7 +3050,7 @@ fieldset[disabled] .btn {
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
           box-shadow: none;
-  opacity: .65;
+  background:  rgb(205,205,205);
 }
 a.btn.disabled,
 fieldset[disabled] a.btn {
