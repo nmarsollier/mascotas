@@ -5,8 +5,9 @@ Este proyecto es un ejemplo de como armar un proyect Node 6 con Typescript como 
 
 El proyecto tiene 2 carpetas
 
-angular     - Frontend desarrollado en node
-node-ts     - Node con typescript para backend
+angular :  Frontend desarrollado en angular 4.
+
+node-ts : Node con typescript para backend.
 
 
 Guia de Instalacion del Backend :
