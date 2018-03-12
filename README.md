@@ -10,8 +10,14 @@ angular :  Frontend desarrollado en angular 4.
 node-ts : Node con typescript para backend.
 
 
-Guia de Instalacion del Backend :
----------------------------------
+Guia de Instalacion :
+---------------------
+
+Instalar Node npm verison 8
+===========================
+
+https://nodejs.org/en/
+
 
 Instalar MongoDB
 ================
