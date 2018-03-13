@@ -13,8 +13,8 @@ node-ts : Node con typescript para backend.
 Guia de Instalacion :
 ---------------------
 
-Instalar Node npm verison 8
-===========================
+Instalar Node con npm verison 8
+===============================
 
 https://nodejs.org/en/
 
