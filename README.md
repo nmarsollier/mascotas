@@ -31,6 +31,8 @@ Instalar Redis
 ==============
 
 Seguir los pasos de instalacion desde la pagina oficial https://redis.io/download
+Para windows conviene un ejecutable : https://sourceforge.net/projects/redis/
+	Ejecutar redis-server-exe (windows)
 
 Recomiendo instalar FastoRedis para navegar la base de datos https://fastoredis.com/
 
