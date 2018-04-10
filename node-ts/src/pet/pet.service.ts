@@ -49,7 +49,7 @@ export function validateUpdate(req: IUpdateRequest, res: express.Response, next:
   });
 }
 export function update(req: IUpdateRequest, res: express.Response) {
-  let pet = <IPet>req.pet;
+  let pet = req.pet;
   if (!pet) {
     pet = new Pet();
     pet.user = req.user._id;
