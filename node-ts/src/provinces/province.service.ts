@@ -23,10 +23,10 @@ export function read(req: IReadRequest, res: express.Response) {
  * Lista todas las Provincias
  */
 export function list(req: express.Request, res: express.Response) {
-  Province.find({ enabled: true }).exec(function (err, provincia: IProvince) {
+  Province.find({ enabled: true }).exec(function (err, provincias: IProvince[]) {
     if (err) return errorHandler.handleError(res, err);
 
-    return res.json(provincia);
+    return res.json(provincias);
   });
 }
 

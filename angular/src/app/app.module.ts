@@ -44,6 +44,8 @@ import { FileUploadComponent } from "./tools/image.base64";
     UsuarioService,
     ProvinciaService,
     PerfilService,
+    /* Los providers son @Inyectable, la siguiente es una forma de definit un
+     provider con un valor constante para poder inyectarlo*/
     { provide: APP_BASE_HREF, useValue: environment.baseHref }
   ],
   bootstrap: [AppComponent]
