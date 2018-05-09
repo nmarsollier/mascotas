@@ -1,19 +1,19 @@
 <div class="pageHeader">
-    <div class='inlineContent menu' *ngIf="usuarioLogueado()">
+    <div class='inlineContent menu' *ngIf="usuarioLogueado">
         <input type="button" class="menuButton" [routerLink]="['/perfilUsuario']" value="Perfil" />
     </div>
 
 
-    <div class='inlineContent menu' *ngIf="usuarioLogueado()">
+    <div class='inlineContent menu' *ngIf="usuarioLogueado">
         <input type="button" class="menuButton" [routerLink]="['/mascotas']" value="Mascotas" />
     </div>
 
-    <div class='inlineContent userLoggedIn' *ngIf="usuarioLogueado()">
-        <img src="assets/logout.png" class="errorIcon" alt="Cerrar sesi&oacute;n" title="Cerrar sesi&oacute;n" (click)="logout()" /> <label> {{ usuarioLogueado().name }}
+    <div class='inlineContent userLoggedIn' *ngIf="usuarioLogueado">
+        <img src="assets/logout.png" class="errorIcon" alt="Cerrar sesi&oacute;n" title="Cerrar sesi&oacute;n" (click)="logout()" /> <label> {{ usuarioLogueado.name }}
 		</label>
     </div>
 
-    <form name="form" [formGroup]="loginForm" *ngIf="!usuarioLogueado()">
+    <form name="form" [formGroup]="loginForm" *ngIf="!usuarioLogueado">
         <div class='inlineContent'>
             <label> Login </label>
         </div>

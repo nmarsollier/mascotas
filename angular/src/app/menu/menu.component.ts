@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit, IErrorController {
     this.usuarioService.usuarioLogueado = undefined;
   }
 
-  usuarioLogueado(): Usuario {
+  get usuarioLogueado(): Usuario {
     return this.usuarioService.usuarioLogueado;
   }
 

@@ -55,7 +55,7 @@ export class UsuarioService extends RestBaseService {
       .get(UsuarioService.serverUrl + this.principalUrl, this.getRestHeader())
       .toPromise()
       .then(response => {
-        this.usuarioLogueado = response;
+        this.usuarioLogueado = response.json();
         return response.json() as Usuario;
       })
       .catch(this.handleError);
