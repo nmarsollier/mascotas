@@ -16,6 +16,19 @@ import * as express from "express";
 export interface IReadRequest extends IUserSessionRequest {
   profile: IProfile;
 }
+/**
+ * @api {get} /profile Obtener Perfil
+ * @apiName Obtener Perfil
+ * @apiGroup Perfil
+ *
+ * @apiDescription Obtiene el perfil del usuario logueado.
+ *
+ * @apiUse IProfileResponse
+ *
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
+ */
 export function read(req: IReadRequest, res: express.Response) {
   if (!req.profile) {
     return errorHandler.sendError(res, errorHandler.ERROR_NOT_FOUND, "No se encuentra el perfil del usuario logueado.");
@@ -23,10 +36,47 @@ export function read(req: IReadRequest, res: express.Response) {
   res.json(req.profile);
 }
 
-
+/**
+ * @apiDefine IProfileResponse
+ *
+ * @apiSuccessExample {json} Perfil
+ *    {
+ *      "name": "Nombre y Apellido",
+ *      "phone": "Telefono",
+ *      "email": "Email",
+ *      "address": "Direccion",
+ *      "picture": "Id de imagen",
+ *      "province": "Id de provincia",
+ *      "valid": [true|false],
+ *      "user": "Id de usuario",
+ *      "updated": date (DD/MM/YYYY),
+ *      "created": date (DD/MM/YYYY),
+ *      "enabled": [true|false]
+ *    }
+ */
 
 /**
- * Actualiza los datos del perfil
+ * @api {put} /profile Actualizar Perfil
+ * @apiName Actualizar Perfil
+ * @apiGroup Perfil
+ *
+ * @apiDescription Actualiza los datos del perfil de usuario.
+ *
+ * @apiParamExample {json} Perfil
+ *    {
+ *      "name": "Nombre y Apellido",
+ *      "phone": "Telefono",
+ *      "email": "Email",
+ *      "address": "Direccion",
+ *      "picture": "Id de imagen",
+ *      "province": "Id de provincia",
+ *    }
+ *
+ * @apiUse IProfileResponse
+ *
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export interface IUpdateRequest extends IUserSessionRequest {
   profile: IProfile;

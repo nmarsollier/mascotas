@@ -20,9 +20,61 @@ export function read(req: IReadRequest, res: express.Response) {
 }
 
 
+/**
+ * @apiDefine IMascotaResponse
+ *
+ * @apiSuccessExample {json} Mascota
+ *    {
+ *      "name": "Nombre de la masctoa",
+ *      "description": "Descripcion de la mascota",
+ *      "user": "Id de usuario",
+ *      "birthDate": date (DD/MM/YYYY),
+ *      "updated": date (DD/MM/YYYY),
+ *      "created": date (DD/MM/YYYY),
+ *      "enabled": [true|false]
+ *    }
+ */
 
 /**
- * Actualiza los datos de la mascota
+ * @api {post} /pet Crear Mascota
+ * @apiName Crear Mascota
+ * @apiGroup Mascotas
+ *
+ * @apiDescription Crea una mascota.
+ *
+ * @apiParamExample {json} Mascota
+ *    {
+ *      "name": "Nombre de la mascota",
+ *      "description": "Description de la mascota",
+ *      "birthDate": date (DD/MM/YYYY),
+ *    }
+ *
+ * @apiUse IMascotaResponse
+ *
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
+ */
+
+/**
+ * @api {put} /pet/:petId Actualizar Mascota
+ * @apiName Actualizar Mascota
+ * @apiGroup Mascotas
+ *
+ * @apiDescription Actualiza los datos de una mascota.
+ *
+ * @apiParamExample {json} Mascota
+ *    {
+ *      "name": "Nombre de la mascota",
+ *      "description": "Description de la mascota",
+ *      "birthDate": date (DD/MM/YYYY),
+ *    }
+ *
+ * @apiUse IMascotaResponse
+ *
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export interface IUpdateRequest extends IUserSessionRequest {
   pet: IPet;
@@ -72,9 +124,16 @@ export function update(req: IUpdateRequest, res: express.Response) {
   });
 }
 
-
 /**
- * Elimina una mascota
+ * @api {delete} /pet/:petId Eliminar Mascota
+ * @apiName Eliminar Mascota
+ * @apiGroup Mascotas
+ *
+ * @apiDescription Eliminar una mascota.
+ *
+ * @apiUse AuthHeader
+ * @apiUse 200OK
+ * @apiUse OtherErrors
  */
 export interface IRemoveRequest extends IUserSessionRequest {
   pet: IPet;
@@ -86,10 +145,34 @@ export function remove(req: IRemoveRequest, res: express.Response) {
   pet.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
 
-    res.json(pet);
+    res.send();
   });
 }
 
+/**
+ * @api {get} /pet Listar Mascota
+ * @apiName Listar Mascota
+ * @apiGroup Mascotas
+ *
+ * @apiDescription Obtiene un listado de las mascotas del usuario actual.
+ *
+ * @apiSuccessExample {json} Mascota
+ *  [
+ *    {
+ *      "name": "Nombre de la masctoa",
+ *      "description": "Descripcion de la mascota",
+ *      "user": "Id de usuario",
+ *      "birthDate": date (DD/MM/YYYY),
+ *      "updated": date (DD/MM/YYYY),
+ *      "created": date (DD/MM/YYYY),
+ *      "enabled": [true|false]
+ *    }, ...
+ *  ]
+ *
+ * @apiUse AuthHeader
+ * @apiUse 200OK
+ * @apiUse OtherErrors
+ */
 export function findByCurrentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
   Pet.find({
     user: req.user._id,
@@ -101,8 +184,17 @@ export function findByCurrentUser(req: IUserSessionRequest, res: express.Respons
 }
 
 /**
- * Filtro para buscar y popular una mascota por id.
- * El resultado de la busqueda se popula en req.
+ * @api {put} /pet/:petId Buscar Mascota
+ * @apiName Buscar Mascota
+ * @apiGroup Mascotas
+ *
+ * @apiDescription Busca una macota por id.
+ *
+ * @apiUse IMascotaResponse
+ *
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export interface IFindByIdRequest extends express.Request {
   pet: IPet;

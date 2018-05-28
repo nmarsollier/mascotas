@@ -23,9 +23,24 @@ export interface IUserSessionRequest extends express.Request {
 }
 
 /**
- * Signup
+ * @api {post} /auth/signup Crear Usuario
+ * @apiName CrearUsuario
+ * @apiGroup Seguridad
+ *
+ * @apiDescription Registra un nuevo usuario en el sistema.
+ *
+ * @apiParamExample {json} Usuario
+ *    {
+ *      "name": "Nombre Usuario",
+ *      "login": "login"
+ *      "password": "password"
+ *    }
+ *
+ * @apiUse TokenResponse
+ *
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
-
 export function validateSignUp(req: express.Request, res: express.Response, next: NextFunction) {
   req.check("name", "No puede quedar vac&iacute;o.").notEmpty();
   req.check("name", "Hasta 1024 caracteres solamente.").isLength({ max: 1024 });
@@ -66,7 +81,22 @@ export function signup(req: express.Request, res: express.Response) {
 }
 
 /**
- * Signin
+ * @api {post} /auth/signin Log In
+ * @apiName Log In
+ * @apiGroup Seguridad
+ *
+ * @apiDescription Login en el sistema.
+ *
+ * @apiParamExample {json} Usuario
+ *    {
+ *      "login": "login"
+ *      "password": "password"
+ *    }
+ *
+ * @apiUse TokenResponse
+ *
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export function validateSignIn(req: express.Request, res: express.Response, next: NextFunction) {
   req.check("password", "No puede quedar vac&iacute;o.").notEmpty();
@@ -107,6 +137,15 @@ export function signin(req: express.Request, res: express.Response, next: NextFu
 }
 
 /**
+ * @apiDefine TokenResponse
+ *
+ * @apiSuccessExample {json} Response
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "token": "tokenData"
+ *     }
+ */
+/**
  * Crea un token de sesion, lo guarda en la base de Tokens, luego inicializa passport
  * con el token, para que se ingrese en el cache y se encripte correctamente
  */
@@ -123,7 +162,18 @@ function createToken(res: express.Response, user: IUser) {
 }
 
 /**
- * Signout, limpia la sesion, e invalida el token.
+ * @api {get} /auth/signout Log Out
+ * @apiName Log Out
+ * @apiGroup Seguridad
+ *
+ * @apiDescription Desloguea al usuario y limpia el token de sesion.
+ *
+ * @apiSuccessExample {json} Response
+ *     HTTP/1.1 200 OK
+ *
+ * @apiUse AuthHeader
+ *
+ * @apiUse OtherErrors
  */
 export function signout(req: IUserSessionRequest, res: express.Response) {
   Token.findById(req.user.token_id, function (err: any, token: IToken) {
@@ -146,7 +196,23 @@ export function signout(req: IUserSessionRequest, res: express.Response) {
 }
 
 /**
- * Get current user
+ * @api {get} /auth/currentUser Usuario Actual
+ * @apiName Usuario Actual
+ * @apiGroup Seguridad
+ *
+ * @apiDescription Obtiene informacion del usuario logueado actualmente
+ *
+ * @apiSuccessExample {json} Usuario
+ *    {
+ *      "id": "Id de usuario"
+ *      "name": "Nombre Usuario",
+ *      "login": "login"
+ *      "roles": ["USER", "ADMIN"...]
+ *    }
+ *
+ * @apiUse AuthHeader
+ *
+ * @apiUse OtherErrors
  */
 export function currentUser(req: IUserSessionRequest, res: express.Response, next: NextFunction) {
   User.findOne({
@@ -170,7 +236,25 @@ export function currentUser(req: IUserSessionRequest, res: express.Response, nex
 
 
 /**
- * Cambiar contraseña
+ * @api {post} /auth/password Cambiar Contraseña
+ * @apiName Cambiar Contraseña
+ * @apiGroup Seguridad
+ *
+ * @apiDescription Permite cambiar la contraseña de usuario
+ *
+ * @apiParamExample {json} Body
+ * {
+ *      "currentPassword" : "currPass",
+ *      "newPassword" : "newPass",
+ *      "verifyPassword" : "newPass"
+ * }
+ *
+ * @apiUse 200OK
+ *
+ * @apiUse AuthHeader
+ *
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export interface ICambiarPasswordRequest extends IUserSessionRequest {
   usuario: IUser;

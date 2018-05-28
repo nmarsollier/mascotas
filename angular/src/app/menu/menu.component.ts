@@ -13,6 +13,7 @@ export class MenuComponent implements OnInit, IErrorController {
 
   errorMessage: string;
   errors: string[] = [];
+  usuarioLogueado: Usuario;
 
   constructor(fb: FormBuilder, public usuarioService: UsuarioService) {
     this.loginForm = fb.group({
@@ -22,17 +23,19 @@ export class MenuComponent implements OnInit, IErrorController {
   }
 
   ngOnInit() {
-    this.usuarioService.usuarioLogueado = undefined;
-  }
-
-  get usuarioLogueado(): Usuario {
-    return this.usuarioService.usuarioLogueado;
+    this.usuarioService.getPrincipal()
+      .then((usuario) => this.usuarioLogueado = usuario)
+      .catch((error) => this.usuarioLogueado = undefined);
   }
 
   login() {
     this.usuarioService
       .login(this.loginForm.value.username, this.loginForm.value.password)
-      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+      .then((usuario) => this.usuarioLogueado = usuario)
+      .catch(error => {
+        errorHanlder.procesarValidacionesRest(this, error);
+        this.usuarioLogueado = undefined;
+      });
   }
 
   logout() {
@@ -40,7 +43,10 @@ export class MenuComponent implements OnInit, IErrorController {
 
     this.usuarioService
       .logout()
-      .then(undefined)
-      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+      .then(this.usuarioLogueado = undefined)
+      .catch(error => {
+        errorHanlder.procesarValidacionesRest(this, error);
+        this.usuarioLogueado = undefined;
+      });
   }
 }

@@ -20,7 +20,21 @@ export function read(req: IReadRequest, res: express.Response) {
 }
 
 /**
- * Lista todas las Provincias
+ * @api {get} /province Listar Provincias
+ * @apiName Listar Provincias
+ * @apiGroup Porvincias
+ *
+ * @apiDescription Lista todas las provincias.
+ *
+ * @apiSuccessExample {json} Provincia
+ *   [ {
+ *      "name": "Nombre Provincia",
+ *      "enabled": [true|false]
+ *     }, ...
+ *   ]
+ *
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export function list(req: express.Request, res: express.Response) {
   Province.find({ enabled: true }).exec(function (err, provincias: IProvince[]) {
@@ -56,7 +70,27 @@ export function findByID(req: IFindByIdRequest, res: express.Response, next: Nex
 }
 
 /**
- * Crea o actualiza una provincia
+ * @api {put} /province Crear Provincia
+ * @apiName Crear Provincia
+ * @apiGroup Porvincias
+ *
+ * @apiDescription Crea o actualiza una provincia.
+ *
+ * @apiParamExample {json} Provincia
+ *    {
+ *      "name": "Nombre Provincia",
+ *      "enabled": [true|false]
+ *    }
+ *
+ * @apiSuccessExample {json} Provincia
+ *    {
+ *      "name": "Nombre Provincia",
+ *      "enabled": [true|false]
+ *    }
+ *
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export interface IUpdateRequest extends IUserSessionRequest {
   province: IProvince;
@@ -93,7 +127,16 @@ export function update(req: IUpdateRequest, res: express.Response) {
 
 
 /**
- * Elimina una mascota
+ * @api {delete} /province/:provinceId Eliminar Provincia
+ * @apiName Eliminar Provincia
+ * @apiGroup Porvincias
+ *
+ * @apiDescription Elimina una provincia.
+ *
+ * @apiUse 200OK
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export interface IRemoveRequest extends IUserSessionRequest {
   province: IProvince;
@@ -105,6 +148,6 @@ export function remove(req: IRemoveRequest, res: express.Response) {
   province.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);
 
-    res.json(province);
+    res.send();
   });
 }

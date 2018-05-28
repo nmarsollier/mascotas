@@ -18,6 +18,16 @@ import * as jwt from "jsonwebtoken";
 const sessionCache = new nodeCache({ stdTTL: 3600, checkperiod: 60 });
 const conf = appConfig.getConfig(process.env);
 
+
+/**
+ * @apiDefine AuthHeader
+ *
+ * @apiParamExample {String} Autorizacion
+ *    Authorization=bearer {token}
+ *
+ * @apiSuccessExample {json} 401 Unautorized
+ *    HTTP/1.1 401 Unautorized Method
+ */
 export function init() {
     const Strategy = passportJwt.Strategy;
     const ExtractJwt = passportJwt.ExtractJwt;

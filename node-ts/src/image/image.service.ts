@@ -28,8 +28,27 @@ export function read(req: IReadRequest, res: express.Response) {
   res.json(req.image);
 }
 
+
 /**
- * Crea una imagen
+ * @api {post} /image Guardar Imagen
+ * @apiName Guardar Imagen
+ * @apiGroup Imagen
+ *
+ * @apiDescription Guarda una imagen en la db
+ *
+ * @apiParamExample {json} Body
+ *    {
+ *      "image" : "Base 64 Image Text"
+ *    }
+ *
+ * @apiSuccessExample {json} Response
+ *    {
+ *      "id": "id de imagen"
+ *    }
+ *
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
  */
 export function validateCreate(req: express.Request, res: express.Response, next: NextFunction) {
   if (req.body.image) {
@@ -59,6 +78,24 @@ export function create(req: express.Request, res: express.Response) {
   });
 }
 
+
+/**
+ * @api {get} /image/:id Obtener Imagen
+ * @apiName Obtener Imagen
+ * @apiGroup Imagen
+ *
+ * @apiDescription Obtiene una imagen
+ *
+ * @apiSuccessExample {json} Response
+ *    {
+ *      "id": "id de imagen",
+ *      "image" : "Base 64 Image Text"
+ *    }
+ *
+ * @apiUse AuthHeader
+ * @apiUse ParamValidationErrors
+ * @apiUse OtherErrors
+ */
 export interface IFindByIdRequest extends express.Request {
   image: IImage;
 }
