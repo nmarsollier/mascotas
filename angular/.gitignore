@@ -7,3 +7,4 @@
 **/.settings
 **/.history
 **/*.log
+package-lock.json
