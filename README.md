@@ -1,4 +1,4 @@
-Proyecto Mascotas -- Programación Avanzada
+Proyecto Mascotas - Programación Avanzada
 =
 
 Proyecto Red social de Mascotas, ejemplo de código para la cátedra "Programación Avanzada" en la Universidad Tecnología Nacional, Facultad Regional Mendoza. Año 2018.
