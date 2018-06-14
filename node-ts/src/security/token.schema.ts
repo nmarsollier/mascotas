@@ -3,7 +3,7 @@
 import * as mongoose from "mongoose";
 
 /*
-Son tokens de sesion se guardan en la base de datos.
+Son tokens de sesión se guardan en la base de datos.
 Para deshabilitar un token hay que poner valida=false
 */
 

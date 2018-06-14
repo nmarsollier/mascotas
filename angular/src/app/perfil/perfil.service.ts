@@ -2,13 +2,14 @@ import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
 import "rxjs/add/operator/toPromise";
 import { RestBaseService } from "../tools/rest.tools";
+import { UsuarioService } from "../usuario/usuario.service";
 
 @Injectable()
 export class PerfilService extends RestBaseService {
   private perfilUrl = "/profile";
   private imagenUrl = "/image";
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private securityService: UsuarioService) {
     super();
   }
 
@@ -56,6 +57,7 @@ export class PerfilService extends RestBaseService {
       )
       .toPromise()
       .then(response => {
+        this.securityService.getPrincipal().then();
         return response.json() as Perfil;
       })
       .catch(this.handleError);

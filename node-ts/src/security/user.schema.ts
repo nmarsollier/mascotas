@@ -6,7 +6,7 @@ import * as appConfig from "../utils/environment";
 const conf = appConfig.getConfig(process.env);
 
 /*
-  Por definicion es el usuario que permite el login.
+  Por definición es el usuario que permite el login.
 */
 
 export interface IUser extends mongoose.Document {
@@ -18,10 +18,11 @@ export interface IUser extends mongoose.Document {
   created: Date;
   enabled: Boolean;
   authenticate: Function;
+  setPasswordText: Function;
 }
 
 /**
- * Validacion para tamaño de contraseña
+ * Validación para tamaño de contraseña
  */
 const validateLocalStrategyPassword = function (password: string) {
   return password && password.length > 6;
@@ -75,21 +76,19 @@ UserSchema.path("password").validate(function (value: string) {
   return validateLocalStrategyPassword(value);
 }, "La contraseña debe ser mayor a 6 caracteres");
 
+
+
 /**
- * Trigger antes de guardar, si el password se mofico hay que encriptarlo
+ * Trigger antes de guardar, si el password se modifico hay que encriptarlo
  */
 UserSchema.pre("save", function (next: Function) {
-  if (this.isModified("password") && this.password && this.password.length > 6) {
-    this.password = this.hashPassword(this.password);
-  }
-
-  this.updated = Date.now;
+  this.updated = Date.now();
 
   next();
 });
 
 /**
- * Crea un hash del passwrod
+ * Crea un hash del password
  */
 UserSchema.methods.hashPassword = function (password: string) {
   return crypto
@@ -97,8 +96,12 @@ UserSchema.methods.hashPassword = function (password: string) {
     .toString("base64");
 };
 
+UserSchema.methods.setPasswordText = function (password: string) {
+  this.password = this.hashPassword(password);
+};
+
 /**
- * Authentica un usuario
+ * Autentica un usuario
  */
 UserSchema.methods.authenticate = function (password: string) {
   return this.password && this.password === this.hashPassword(password);

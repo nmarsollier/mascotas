@@ -13,7 +13,7 @@ export let ProvinceSchema = new mongoose.Schema({
     type: String,
     default: "",
     trim: true,
-    required: "Nombre no puede estar vacio."
+    required: "Nombre no puede estar vacío."
   },
   enabled: {
     type: Boolean,

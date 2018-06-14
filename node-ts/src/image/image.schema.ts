@@ -1,10 +1,8 @@
 "use strict";
 
-
 /**
- * Permite almacenar imagenes
+ * Permite almacenar imágenes
  */
-
 export interface IImage {
   id: string;
   image: string;

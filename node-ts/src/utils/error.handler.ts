@@ -58,7 +58,7 @@ function processMongooseErrorCode(res: express.Response, err: any): ValidationEr
   }
 }
 
-// Error de validacion de datos
+// Error de validación de datos
 function processValidationError(res: express.Response, err: any): ValidationErrorMessage {
   res.setHeader("X-Status-Reason", "Validation failed");
   res.status(ERROR_BAD_REQUEST);
@@ -117,8 +117,8 @@ function processValidationError(res: express.Response, err: any): ValidationErro
  *        "error" : "Not Found"
  *     }
  *
- * @apiSuccessExample {json} 405 Unautorized
- *    HTTP/1.1 405 Unautorized Method
+ * @apiSuccessExample {json} 405 Unauthorized
+ *    HTTP/1.1 405 Unauthorized Method
  *    HTTP/1.1 Header X-Status-Reason: {Message}
  *    {
  *       "error" : "Not Found"
@@ -139,7 +139,6 @@ export function sendError(res: express.Response, code: number, err: string) {
   res.setHeader("X-Status-Reason", err);
   return res.send({ error: err });
 }
-
 
 export function handleExpressValidationError(res: express.Response, err: Result): express.Response {
   res.setHeader("X-Status-Reason", "Validation failed");

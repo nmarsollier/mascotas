@@ -64,10 +64,10 @@ export function init(appConfig: Config): express.Express {
     express.static(path.join(__dirname, "../public"), { maxAge: 31557600000 })
   );
 
-  // Inicializamos nuestros módulos
+  // Iniciamos nuestros módulos
   passportHandler.init();
 
-  // Inicializamos las rutas del directorio
+  // Iniciamos las rutas del directorio
   // mas sobre rutas http://expressjs.com/es/guide/routing.html
   indexModule.init(app);
   mascotasModule.init(app);

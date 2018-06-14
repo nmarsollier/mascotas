@@ -9,7 +9,6 @@ export class AppComponent {
   title = "Mascotas";
 
   constructor(public usuarioService: UsuarioService) {
-
   }
 
   get usuarioLogueado(): Usuario {

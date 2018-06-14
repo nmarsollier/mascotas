@@ -19,7 +19,6 @@ import { RegistrarUsuarioComponent } from "./usuario/registrar-usuario.component
 import { UsuarioService } from "./usuario/usuario.service";
 import { WelcomeComponent } from "./welcome/welcome.component";
 
-
 @NgModule({
   declarations: [
     AppComponent,

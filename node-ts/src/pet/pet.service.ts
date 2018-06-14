@@ -7,7 +7,6 @@ import { IUserSessionRequest } from "../security/security.service";
 import * as errorHandler from "../utils/error.handler";
 import { IPet, Pet } from "./pet.schema";
 
-
 /**
  * Retorna los datos de la mascota
  */
@@ -18,14 +17,13 @@ export function read(req: IReadRequest, res: express.Response) {
   res.json(req.pet);
 }
 
-
 /**
  * @apiDefine IMascotaResponse
  *
  * @apiSuccessExample {json} Mascota
  *    {
- *      "name": "Nombre de la masctoa",
- *      "description": "Descripcion de la mascota",
+ *      "name": "Nombre de la mascota",
+ *      "description": "Descripción de la mascota",
  *      "user": "Id de usuario",
  *      "birthDate": date (DD/MM/YYYY),
  *      "updated": date (DD/MM/YYYY),
@@ -88,7 +86,7 @@ export function validateUpdate(req: IUpdateRequest, res: express.Response, next:
     req.sanitize("description").escape();
   }
   if (req.body.birthDate) {
-    req.check("birthDate", "No es v&aacute;lido").isLength({ min: 1 });
+    req.check("birthDate", "No es válido").isLength({ min: 1 });
     req.sanitize("birthDate").escape();
   }
 
@@ -158,8 +156,8 @@ export function remove(req: IRemoveRequest, res: express.Response) {
  * @apiSuccessExample {json} Mascota
  *  [
  *    {
- *      "name": "Nombre de la masctoa",
- *      "description": "Descripcion de la mascota",
+ *      "name": "Nombre de la mascota",
+ *      "description": "Descripción de la mascota",
  *      "user": "Id de usuario",
  *      "birthDate": date (DD/MM/YYYY),
  *      "updated": date (DD/MM/YYYY),
@@ -187,7 +185,7 @@ export function findByCurrentUser(req: IUserSessionRequest, res: express.Respons
  * @apiName Buscar Mascota
  * @apiGroup Mascotas
  *
- * @apiDescription Busca una macota por id.
+ * @apiDescription Busca una mascota por id.
  *
  * @apiUse IMascotaResponse
  *
@@ -198,7 +196,9 @@ export function findByCurrentUser(req: IUserSessionRequest, res: express.Respons
 export interface IFindByIdRequest extends express.Request {
   pet: IPet;
 }
-export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction, id: string) {
+export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction) {
+  const id = req.params.get("petId");
+
   Pet.findOne({
     _id: escape(id),
     enabled: true
@@ -216,7 +216,7 @@ export function findByID(req: IFindByIdRequest, res: express.Response, next: Nex
 }
 
 /**
- * Autorizacion, el unico que puede modificar el mascota es el dueño
+ * Autorización, el único que puede modificar el mascota es el dueño
  */
 export interface IValidateOwnerRequest extends IUserSessionRequest {
   pet: IPet;

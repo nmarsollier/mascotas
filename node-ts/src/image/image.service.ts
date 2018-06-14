@@ -9,13 +9,11 @@ import * as appConfig from "../utils/environment";
 import * as errorHandler from "../utils/error.handler";
 import { IImage } from "./image.schema";
 
-
 const conf = appConfig.getConfig(process.env);
 const redisClient = new redis(conf.redisPort, conf.redisHost);
 redisClient.on("connect", function () {
   console.log("connected");
 });
-
 
 /**
  * Busca una imagen
@@ -26,7 +24,6 @@ export interface IReadRequest extends express.Request {
 export function read(req: IReadRequest, res: express.Response) {
   res.json(req.image);
 }
-
 
 /**
  * @api {post} /image Guardar Imagen
@@ -77,7 +74,6 @@ export function create(req: express.Request, res: express.Response) {
   });
 }
 
-
 /**
  * @api {get} /image/:id Obtener Imagen
  * @apiName Obtener Imagen
@@ -98,7 +94,9 @@ export function create(req: express.Request, res: express.Response) {
 export interface IFindByIdRequest extends express.Request {
   image: IImage;
 }
-export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction, id: string) {
+export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction) {
+  const id = req.params.get("imageId");
+
   redisClient.get(escape(id), function (err, reply) {
     if (err) return errorHandler.handleError(res, err);
 

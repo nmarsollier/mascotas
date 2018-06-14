@@ -2,7 +2,6 @@
 
 import * as mongoose from "mongoose";
 
-
 export interface IProfile extends mongoose.Document {
   name: string;
   phone: string;

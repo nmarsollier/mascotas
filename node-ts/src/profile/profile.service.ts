@@ -42,9 +42,9 @@ export function read(req: IReadRequest, res: express.Response) {
  * @apiSuccessExample {json} Perfil
  *    {
  *      "name": "Nombre y Apellido",
- *      "phone": "Telefono",
+ *      "phone": "Teléfono",
  *      "email": "Email",
- *      "address": "Direccion",
+ *      "address": "Dirección",
  *      "picture": "Id de imagen",
  *      "province": "Id de provincia",
  *      "valid": [true|false],
@@ -65,9 +65,9 @@ export function read(req: IReadRequest, res: express.Response) {
  * @apiParamExample {json} Perfil
  *    {
  *      "name": "Nombre y Apellido",
- *      "phone": "Telefono",
+ *      "phone": "Teléfono",
  *      "email": "Email",
- *      "address": "Direccion",
+ *      "address": "Dirección",
  *      "picture": "Id de imagen",
  *      "province": "Id de provincia",
  *    }
@@ -179,7 +179,7 @@ export function fillForCurrentUser(req: IFindByCurrentUserRequest, res: express.
 }
 
 /**
- * Filtro, busca una provincia que viene en el parametro del body al guardar el perfil.
+ * Filtro, busca una provincia que viene en el parámetro del body al guardar el perfil.
  * La provincia es agregada al request.
  */
 export interface IFindProvince extends express.Request {

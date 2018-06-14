@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as errorHandler from "../tools/error-handler";
 import { IErrorController } from "../tools/error-handler";
@@ -39,6 +39,7 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
     } else {
       errorHandler.cleanRestValidations(this);
     }
+    // tslint:disable-next-line:no-null-keyword
     return null;
   }
 

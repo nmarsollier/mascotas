@@ -11,7 +11,7 @@ import { IUser } from "./user.schema";
 
 
 // Este cache de sesiones en memoria va a evitar que tenga que ir a la base de datos
-// para verificar que la sesion sea valida. 1 hora de cache en memoria. Luego se vuelve a leer de la db
+// para verificar que la sesión sea valida. 1 hora de cache en memoria. Luego se vuelve a leer de la db
 const sessionCache = new nodeCache({ stdTTL: 3600, checkperiod: 60 });
 const conf = appConfig.getConfig(process.env);
 
@@ -19,11 +19,11 @@ const conf = appConfig.getConfig(process.env);
 /**
  * @apiDefine AuthHeader
  *
- * @apiParamExample {String} Autorizacion
+ * @apiParamExample {String} Autorización
  *    Authorization=bearer {token}
  *
- * @apiSuccessExample {json} 401 Unautorized
- *    HTTP/1.1 401 Unautorized Method
+ * @apiSuccessExample {json} 401 Unauthorized
+ *    HTTP/1.1 401 Unauthorized Method
  */
 export function init() {
     const Strategy = passportJwt.Strategy;
@@ -35,19 +35,13 @@ export function init() {
     };
 
     /*
-    Este metodo se utiliza para validar que el usuario se haya logueado.
-    passport.authenticate("jwt", { session: false })  termina llamando a este metodo.
-    El resultado de este metodo es puesto en el request, o sea el payload se pone en el request
+    Este método se utiliza para validar que el usuario se haya logueado.
+    passport.authenticate("jwt", { session: false })  termina llamando a este método.
+    El resultado de este método es puesto en el request, o sea el payload se pone en el request
 
     A esta altura el token fue desencriptado correctamente, pero hay que validar el contenido.
     */
     passport.use(new Strategy(params, function (payload: IUserSession, done) {
-        if (!payload) {
-            return done(undefined, false, {
-                message: "Invalid Token"
-            });
-        }
-
         /*
         La estrategia es tener un listado de Token validos en la db y validar contra eso.
         Podemos invalidar un token desde la db, usando Token.valid.

@@ -21,7 +21,7 @@ export function read(req: IReadRequest, res: express.Response) {
 /**
  * @api {get} /province Listar Provincias
  * @apiName Listar Provincias
- * @apiGroup Porvincias
+ * @apiGroup Provincias
  *
  * @apiDescription Lista todas las provincias.
  *
@@ -46,12 +46,14 @@ export function list(req: express.Request, res: express.Response) {
 
 /**
  * Filtro para buscar y popular una provincia por id.
- * El resultado de la busqueda se popula en req.
+ * El resultado de la búsqueda se agrega en req.
  */
 export interface IFindByIdRequest extends express.Request {
   province: IProvince;
 }
-export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction, id: string) {
+export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction) {
+  const id = req.params.get("provinceId");
+
   Province.findOne({
     _id: escape(id),
     enabled: true
@@ -71,7 +73,7 @@ export function findByID(req: IFindByIdRequest, res: express.Response, next: Nex
 /**
  * @api {put} /province Crear Provincia
  * @apiName Crear Provincia
- * @apiGroup Porvincias
+ * @apiGroup Provincias
  *
  * @apiDescription Crea o actualiza una provincia.
  *
@@ -128,7 +130,7 @@ export function update(req: IUpdateRequest, res: express.Response) {
 /**
  * @api {delete} /province/:provinceId Eliminar Provincia
  * @apiName Eliminar Provincia
- * @apiGroup Porvincias
+ * @apiGroup Provincias
  *
  * @apiDescription Elimina una provincia.
  *

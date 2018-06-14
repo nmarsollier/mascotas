@@ -7,10 +7,6 @@ export class RestBaseService {
   public static serverUrl = environment.serverBase;
 
   protected handleError(error: Response | any) {
-    /*    if (error && (error.status == 401 || error.status == 0) && window.location.pathname != "/") {
-          window.location.assign(RestBaseService.serverUrl);
-        }*/
-
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || "";

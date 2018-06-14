@@ -5,7 +5,7 @@ import * as passport from "passport";
 import * as pet from "./pet.service";
 
 export function init(app: Express) {
-  // Routas de acceso a mascotas
+  // Rutas de acceso a mascotas
   app
     .route("/pet")
     .get(passport.authenticate("jwt", { session: false }), pet.findByCurrentUser)
@@ -14,9 +14,6 @@ export function init(app: Express) {
   app
     .route("/pet/:petId")
     .get(pet.read)
-    .put(passport.authenticate("jwt", { session: false }), pet.validateOwner, pet.validateUpdate, pet.update)
-    .delete(passport.authenticate("jwt", { session: false }), pet.validateOwner, pet.remove);
-
-  // Filtro que agrega la mascota cuando se pasa como parametro el id
-  app.param("petId", pet.findByID);
+    .put(passport.authenticate("jwt", { session: false }), pet.findByID, pet.validateOwner, pet.validateUpdate, pet.update)
+    .delete(passport.authenticate("jwt", { session: false }), pet.findByID, pet.validateOwner, pet.remove);
 }

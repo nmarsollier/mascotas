@@ -69,7 +69,7 @@ export function signup(req: express.Request, res: express.Response) {
   const user = <IUser>new User();
   user.name = req.body.name;
   user.login = req.body.login;
-  user.password = req.body.password;
+  user.setPasswordText(req.body.password);
   user.roles = ["user"];
 
   // Then save the user
@@ -146,7 +146,7 @@ export function signin(req: express.Request, res: express.Response, next: NextFu
  *     }
  */
 /**
- * Crea un token de sesion, lo guarda en la base de Tokens, luego inicializa passport
+ * Crea un token de sesión, lo guarda en la base de Tokens, luego inicializa passport
  * con el token, para que se ingrese en el cache y se encripte correctamente
  */
 function createToken(res: express.Response, user: IUser) {
@@ -166,7 +166,7 @@ function createToken(res: express.Response, user: IUser) {
  * @apiName Log Out
  * @apiGroup Seguridad
  *
- * @apiDescription Desloguea al usuario y limpia el token de sesion.
+ * @apiDescription Desloguea al usuario y limpia el token de sesión.
  *
  * @apiSuccessExample {json} Response
  *     HTTP/1.1 200 OK
@@ -198,7 +198,7 @@ export function signout(req: IUserSessionRequest, res: express.Response) {
  * @apiName Usuario Actual
  * @apiGroup Seguridad
  *
- * @apiDescription Obtiene informacion del usuario logueado actualmente
+ * @apiDescription Obtiene información del usuario logueado actualmente
  *
  * @apiSuccessExample {json} Usuario
  *    {
@@ -310,7 +310,7 @@ export function validateCambiarPassword(req: ICambiarPasswordRequest, res: expre
   });
 }
 export function changePassword(req: ICambiarPasswordRequest, res: express.Response) {
-  req.usuario.password = req.body.newPassword;
+  req.usuario.setPasswordText(req.body.newPassword);
 
   req.usuario.save(function (err: any) {
     if (err) return errorHandler.handleError(res, err);

@@ -9,16 +9,12 @@ import * as province from "./province.service";
  * Configura e inicializa los contenidos del Modulo
  */
 export function init(app: Express) {
-  // Rutas del controler
+  // Rutas del controlador
   app.route("/province")
     .get(province.list)
     .put(passport.authenticate("jwt", { session: false }), security.validateAdminRole, province.validateUpdate, province.update);
 
   app.route("/province/:provinceId")
-    .get(province.read)
-    .delete(passport.authenticate("jwt", { session: false }), security.validateAdminRole, province.validateUpdate, province.remove);
-
-  // Filtro automatico para agregar la provincia en el request
-  // cuando se recibe como parametro provinciaId
-  app.param("provinceId", province.findByID);
+    .get(province.findByID, province.read)
+    .delete(passport.authenticate("jwt", { session: false }), security.validateAdminRole, province.findByID, province.validateUpdate, province.remove);
 }

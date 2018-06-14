@@ -10,7 +10,7 @@ import * as expressApp from "./utils/express.factory";
 // Variables de entorno
 const conf: Config = appConfig.getConfig(process.env);
 
-// Establecemos conexion con MongoDD
+// Establecemos conexión con MongoDD
 mongoose.connect(conf.mongoDb, {}, function (err: MongoError) {
   if (err) {
     console.error(chalk.default.red("No se pudo conectar a MongoDB!"));
