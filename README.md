@@ -1,9 +1,9 @@
 Proyecto Mascotas - Programación Avanzada
 =
 
-Proyecto Red social de Mascotas, ejemplo de código para la cátedra "Programación Avanzada" en la Universidad Tecnología Nacional, Facultad Regional Mendoza. Año 2018.
+Proyecto Red social de Mascotas, ejemplo de código para la cátedra "Programación Avanzada" en la Universidad Tecnología Nacional, Facultad Regional Mendoza.
 
-Este proyecto es un ejemplo de como armar un proyecto Node 6 con Typescript como backend, y Angular 4 como frontend.
+Este proyecto es un ejemplo de como armar un proyecto Node 6 con Typescript como backend, y Angular 6 como frontend.
 
 El proyecto tiene 2 carpetas
 
