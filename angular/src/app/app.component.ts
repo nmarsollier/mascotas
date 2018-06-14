@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-import { MenuComponent } from "./menu/menu.component";
-import { UsuarioService, Usuario } from "./usuario/usuario.service";
+import { Usuario, UsuarioService } from "./usuario/usuario.service";
 
 @Component({
   selector: "app-root",

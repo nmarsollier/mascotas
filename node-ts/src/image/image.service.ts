@@ -1,15 +1,14 @@
 "use strict";
 
-import { NextFunction } from "express-serve-static-core";
-import { IImage } from "./image.schema";
-import { IUserSession, IUserSessionRequest } from "../security/security.service";
-
-import * as errorHandler from "../utils/error.handler";
-import * as express from "express";
 import * as escape from "escape-html";
-import * as uuid from "uuid/v1";
+import * as express from "express";
+import { NextFunction } from "express-serve-static-core";
 import * as redis from "ioredis";
+import * as uuid from "uuid/v1";
 import * as appConfig from "../utils/environment";
+import * as errorHandler from "../utils/error.handler";
+import { IImage } from "./image.schema";
+
 
 const conf = appConfig.getConfig(process.env);
 const redisClient = new redis(conf.redisPort, conf.redisHost);

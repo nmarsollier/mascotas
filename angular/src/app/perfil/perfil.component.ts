@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ProvinciaService, Provincia } from '../provincia/provincia.service';
-import { PerfilService, Perfil, Image } from './perfil.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { Router } from '@angular/router';
-import { FileUploadComponent } from '../tools/image.base64';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Provincia, ProvinciaService } from "../provincia/provincia.service";
+import * as errorHandler from "../tools/error-handler";
+import { IErrorController } from "../tools/error-handler";
+import { Image, Perfil, PerfilService } from "./perfil.service";
 
-import { IErrorController } from '../tools/error-handler';
-import * as errorHanlder from '../tools/error-handler';
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.component.html'
+  selector: "app-perfil",
+  templateUrl: "./perfil.component.html"
 })
 export class PerfilComponent implements OnInit, IErrorController {
   formSubmitted: boolean;
@@ -33,20 +30,20 @@ export class PerfilComponent implements OnInit, IErrorController {
     private router: Router
   ) {
     this.perfil = {
-      _id: null,
-      name: '',
-      email: '',
-      province: '',
-      address: '',
-      picture: '',
-      phone: ''
+      _id: undefined,
+      name: "",
+      email: "",
+      province: "",
+      address: "",
+      picture: "",
+      phone: ""
     };
     this.imagen = {
-      image: ''
-    }
+      image: ""
+    };
     this.imagenPerfil = {
-      image: '/assets/loading.gif'
-    }
+      image: "/assets/loading.gif"
+    };
   }
 
   actualizarImagen(imagen: any) {
@@ -59,7 +56,7 @@ export class PerfilComponent implements OnInit, IErrorController {
     this.provinciaService
       .getProvincias()
       .then(provincias => (this.provincias = provincias))
-      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+      .catch(error => errorHandler.procesarValidacionesRest(this, error));
 
     this.perfilService
       .buscarPerfil()
@@ -70,19 +67,19 @@ export class PerfilComponent implements OnInit, IErrorController {
             .buscarImagen(this.perfil.picture)
             .then(imagen => {
               this.imagenPerfil = imagen;
-            }).catch( error => this.imagenPerfil.image = '/assets/profile.png');
+            }).catch(error => this.imagenPerfil.image = "/assets/profile.png");
         } else {
-          this.imagenPerfil.image = '/assets/profile.png';
+          this.imagenPerfil.image = "/assets/profile.png";
         }
       })
       .catch(error => {
-        errorHanlder.procesarValidacionesRest(this, error);
-        this.imagenPerfil.image = '/assets/profile.png';
+        errorHandler.procesarValidacionesRest(this, error);
+        this.imagenPerfil.image = "/assets/profile.png";
       });
   }
 
   submitForm() {
-    errorHanlder.cleanRestValidations(this);
+    errorHandler.cleanRestValidations(this);
 
     if (this.imagen.image && !this.perfil.picture) {
       this.perfilService
@@ -91,15 +88,15 @@ export class PerfilComponent implements OnInit, IErrorController {
           this.perfil.picture = image.id;
           this.perfilService
             .guardarPerfil(this.perfil)
-            .then(usuario => this.router.navigate(['/']))
-            .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+            .then(usuario => this.router.navigate(["/"]))
+            .catch(error => errorHandler.procesarValidacionesRest(this, error));
         })
-        .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+        .catch(error => errorHandler.procesarValidacionesRest(this, error));
     } else {
       this.perfilService
         .guardarPerfil(this.perfil)
-        .then(usuario => this.router.navigate(['/']))
-        .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+        .then(usuario => this.router.navigate(["/"]))
+        .catch(error => errorHandler.procesarValidacionesRest(this, error));
     }
   }
 }

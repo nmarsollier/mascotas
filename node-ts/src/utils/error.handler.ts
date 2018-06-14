@@ -1,13 +1,12 @@
 "use strict";
 
 import * as express from "express";
-import * as expressValidator from "express-validator";
-import { Result } from "express-validator/shared-typings";
 import { NextFunction } from "express-serve-static-core";
+import { Result } from "express-validator/shared-typings";
 
-export const ERROR_UNATORIZED = 401;
+export const ERROR_UNAUTHORIZED = 401;
 export const ERROR_NOT_FOUND = 404;
-export const ERROR_UNAUTORIZED_METHOD = 405;
+export const ERROR_UNAUTHORIZED_METHOD = 405;
 export const ERROR_BAD_REQUEST = 400;
 export const ERROR_INTERNAL_ERROR = 500;
 
@@ -17,7 +16,7 @@ export interface ValidationErrorItem {
 }
 export interface ValidationErrorMessage {
   error?: string;
-  message?: ValidationErrorItem[];
+  messages?: ValidationErrorItem[];
 }
 
 // Error desconocido
@@ -42,7 +41,7 @@ function processMongooseErrorCode(res: express.Response, err: any): ValidationEr
           err.errmsg.lastIndexOf("_1")
         );
         return {
-          message: [{
+          messages: [{
             path: fieldName,
             message: "Este registro ya existe."
           }]
@@ -71,7 +70,7 @@ function processValidationError(res: express.Response, err: any): ValidationErro
     });
   }
   return {
-    message: messages
+    messages: messages
   };
 }
 
@@ -152,7 +151,7 @@ export function handleExpressValidationError(res: express.Response, err: Result)
       message: error.msg
     });
   }
-  return res.send({ message: messages });
+  return res.send({ messages: messages });
 }
 
 // Controla errores
@@ -163,7 +162,7 @@ export function logErrors(err: any, req: express.Request, res: express.Response,
 
   res.status(err.status || ERROR_INTERNAL_ERROR);
   res.json({
-    message: err.message
+    error: err.message
   });
 }
 

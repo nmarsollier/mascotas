@@ -4,7 +4,7 @@ export interface ValidationErrorItem {
 }
 export interface ValidationErrorMessage {
     error?: string;
-    message?: ValidationErrorItem[];
+    messages?: ValidationErrorItem[];
 }
 export interface IErrorController {
     errorMessage: string;
@@ -15,8 +15,8 @@ export function procesarValidacionesRest(controller: IErrorController, data: Val
     if (!controller.errors) {
         cleanRestValidations(controller);
     }
-    if (data.message) {
-        for (const error of data.message) {
+    if (data.messages) {
+        for (const error of data.messages) {
             controller.errors[error.path] = error.message;
         }
     } else {

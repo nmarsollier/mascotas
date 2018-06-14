@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Usuario, UsuarioService } from "../usuario/usuario.service";
+import * as errorHandler from "../tools/error-handler";
 import { IErrorController } from "../tools/error-handler";
-import * as errorHanlder from "../tools/error-handler";
+import { Usuario, UsuarioService } from "../usuario/usuario.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-menu",
@@ -15,7 +16,7 @@ export class MenuComponent implements OnInit, IErrorController {
   errors: string[] = [];
   usuarioLogueado: Usuario;
 
-  constructor(fb: FormBuilder, public usuarioService: UsuarioService) {
+  constructor(fb: FormBuilder, private router: Router, public usuarioService: UsuarioService) {
     this.loginForm = fb.group({
       username: [undefined, Validators.required],
       password: [undefined, Validators.required]
@@ -33,20 +34,24 @@ export class MenuComponent implements OnInit, IErrorController {
       .login(this.loginForm.value.username, this.loginForm.value.password)
       .then((usuario) => this.usuarioLogueado = usuario)
       .catch(error => {
-        errorHanlder.procesarValidacionesRest(this, error);
+        errorHandler.procesarValidacionesRest(this, error);
         this.usuarioLogueado = undefined;
       });
   }
 
   logout() {
-    errorHanlder.cleanRestValidations(this);
+    errorHandler.cleanRestValidations(this);
 
     this.usuarioService
       .logout()
-      .then(this.usuarioLogueado = undefined)
-      .catch(error => {
-        errorHanlder.procesarValidacionesRest(this, error);
+      .then(result => {
         this.usuarioLogueado = undefined;
+        this.router.navigate(["/"]);
+      })
+      .catch(error => {
+        errorHandler.procesarValidacionesRest(this, error);
+        this.usuarioLogueado = undefined;
+        this.router.navigate(["/"]);
       });
   }
 }

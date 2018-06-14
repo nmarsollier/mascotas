@@ -1,13 +1,12 @@
 "use strict";
 
-import { NextFunction } from "express-serve-static-core";
-import { Province, IProvince } from "./province.schema";
-import { IUserSession, IUserSessionRequest } from "../security/security.service";
-
-import * as mongoose from "mongoose";
-import * as errorHandler from "../utils/error.handler";
-import * as express from "express";
 import * as escape from "escape-html";
+import * as express from "express";
+import { NextFunction } from "express-serve-static-core";
+import { IUserSessionRequest } from "../security/security.service";
+import * as errorHandler from "../utils/error.handler";
+import { IProvince, Province } from "./province.schema";
+
 
 /**
  * Busca una provincia

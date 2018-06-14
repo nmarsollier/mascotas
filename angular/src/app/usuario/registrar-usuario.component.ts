@@ -1,12 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UsuarioService, Usuario } from "./usuario.service";
-import { ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs/Rx";
-import { Router } from "@angular/router";
-
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import * as errorHandler from "../tools/error-handler";
 import { IErrorController } from "../tools/error-handler";
-import * as errorHanlder from "../tools/error-handler";
+import { UsuarioService } from "./usuario.service";
+
 
 @Component({
   selector: "app-registrar-usuario",
@@ -20,36 +18,34 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
   errors: string[] = [];
 
   constructor(
-    fb: FormBuilder,
     private usuarioService: UsuarioService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.form = fb.group({
-      login: [
-        undefined,
-        [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
-      ],
-      name: [
-        undefined,
-        [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
-      ],
-      password: [undefined, Validators.required],
-      password2: [undefined, Validators.required]
+    this.form = new FormGroup({
+      login: new FormControl("", Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),
+      name: new FormControl("", Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),
+      password: new FormControl("", Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),
+      password2: new FormControl("", Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),
+    }, (formGroup: FormGroup) => {
+      return this.validarPasswords(formGroup);
     });
-    this.form.patchValue({
-      id: undefined,
-      name: "",
-      password: "",
-      password2: "",
-      login: ""
-    });
+  }
+
+  validarPasswords(group: FormGroup) {
+    if (group.controls.password2.dirty && group.controls.password.value !== group.controls.password2.value) {
+      this.errors["password2"] = "Los passwords no son iguales";
+      return this.errors;
+    } else {
+      errorHandler.cleanRestValidations(this);
+    }
+    return null;
   }
 
   ngOnInit() { }
 
   submitForm() {
-    errorHanlder.cleanRestValidations(this);
+    errorHandler.cleanRestValidations(this);
     if (this.form.valid) {
       this.usuarioService
         .registrarUsuario({
@@ -58,7 +54,7 @@ export class RegistrarUsuarioComponent implements OnInit, IErrorController {
           name: this.form.value.name
         })
         .then(usuario => this.router.navigate(["/"]))
-        .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+        .catch(error => errorHandler.procesarValidacionesRest(this, error));
     } else {
       this.formSubmitted = true;
     }

@@ -1,14 +1,14 @@
 "use strict";
 
-import { NextFunction } from "express-serve-static-core";
-import { Profile, IProfile } from "./profile.schema";
-import { IProvince, Province } from "../provinces/province.schema";
-import { IUserSession, IUserSessionRequest } from "../security/security.service";
-import { User } from "../security/user.schema";
-import * as errorHandler from "../utils/error.handler";
-import * as mongoose from "mongoose";
 import * as escape from "escape-html";
 import * as express from "express";
+import { NextFunction } from "express-serve-static-core";
+import * as mongoose from "mongoose";
+import { IProvince, Province } from "../provinces/province.schema";
+import { IUserSessionRequest } from "../security/security.service";
+import { User } from "../security/user.schema";
+import * as errorHandler from "../utils/error.handler";
+import { IProfile, Profile } from "./profile.schema";
 
 /**
  * Retorna los datos del perfil

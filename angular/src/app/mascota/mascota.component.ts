@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MascotaService, Mascota } from "./mascota.service";
-import { Observable } from "rxjs/Rx";
+import { Mascota, MascotaService } from "./mascota.service";
 
 @Component({
   selector: "app-mascota",
@@ -10,7 +9,7 @@ export class MascotaComponent implements OnInit {
   errorMessage: string;
   mascotas: Mascota[];
 
-  constructor(private mascotasService: MascotaService) {}
+  constructor(private mascotasService: MascotaService) { }
 
   ngOnInit() {
     this.mascotasService

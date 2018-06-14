@@ -1,13 +1,11 @@
 "use strict";
 
-import { Express } from "express";
-import { Config } from "./utils/environment";
-import * as expressApp from "./utils/express.factory";
-import * as appConfig from "./utils/environment";
-import * as loggerFactory from "./utils/logger";
-import * as mongoose from "mongoose";
 import * as chalk from "chalk";
 import { MongoError } from "mongodb";
+import * as mongoose from "mongoose";
+import * as appConfig from "./utils/environment";
+import { Config } from "./utils/environment";
+import * as expressApp from "./utils/express.factory";
 
 // Variables de entorno
 const conf: Config = appConfig.getConfig(process.env);

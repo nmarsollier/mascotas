@@ -1,15 +1,15 @@
 "use strict";
 
-import { User, IUser } from "./user.schema";
-import { Token, IToken } from "./token.schema";
+import * as escape from "escape-html";
+import * as express from "express";
 import { NextFunction } from "express-serve-static-core";
 import * as mongoose from "mongoose";
-import * as express from "express";
+import * as appConfig from "../utils/environment";
 import * as errorHandler from "../utils/error.handler";
 import * as passport from "./passport";
-import * as escape from "escape-html";
+import { IToken, Token } from "./token.schema";
+import { IUser, User } from "./user.schema";
 
-import * as appConfig from "../utils/environment";
 const conf = appConfig.getConfig(process.env);
 
 export interface IUserSession {
@@ -188,9 +188,7 @@ export function signout(req: IUserSessionRequest, res: express.Response) {
       if (err) return errorHandler.handleError(res, err);
 
       passport.invalidateSessionToken(req.user);
-      return res.json({
-        result: "Logged out"
-      });
+      return res.send();
     });
   });
 }
@@ -338,7 +336,7 @@ export function validateAdminRole(req: IUserSessionRequest, res: express.Respons
       }
 
       if (!(user.roles.indexOf("admin") >= 0)) {
-        return errorHandler.sendError(res, errorHandler.ERROR_UNATORIZED, "No autorizado.");
+        return errorHandler.sendError(res, errorHandler.ERROR_UNAUTHORIZED, "No autorizado.");
       }
 
       next();

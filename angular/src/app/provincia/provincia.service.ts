@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, URLSearchParams } from "@angular/http";
-import { RestBaseService } from "../tools/rest.tools";
+import { Http } from "@angular/http";
 import "rxjs/add/operator/toPromise";
+import { RestBaseService } from "../tools/rest.tools";
 
 @Injectable()
 export class ProvinciaService extends RestBaseService {

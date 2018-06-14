@@ -1,13 +1,12 @@
 "use strict";
 
-import { NextFunction } from "express-serve-static-core";
-import { Pet, IPet } from "./pet.schema";
-import { IUserSession, IUserSessionRequest } from "../security/security.service";
-
-import * as mongoose from "mongoose";
-import * as errorHandler from "../utils/error.handler";
-import * as express from "express";
 import * as escape from "escape-html";
+import * as express from "express";
+import { NextFunction } from "express-serve-static-core";
+import { IUserSessionRequest } from "../security/security.service";
+import * as errorHandler from "../utils/error.handler";
+import { IPet, Pet } from "./pet.schema";
+
 
 /**
  * Retorna los datos de la mascota
@@ -224,7 +223,7 @@ export interface IValidateOwnerRequest extends IUserSessionRequest {
 }
 export function validateOwner(req: IValidateOwnerRequest, res: express.Response, next: NextFunction) {
   if (!((req.pet.user as any).equals(req.user._id))) {
-    return errorHandler.sendError(res, errorHandler.ERROR_UNAUTORIZED_METHOD, "User is not authorized");
+    return errorHandler.sendError(res, errorHandler.ERROR_UNAUTHORIZED_METHOD, "User is not authorized");
   }
   next();
 }

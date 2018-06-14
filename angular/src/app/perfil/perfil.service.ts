@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers, Response, URLSearchParams } from '@angular/http';
-import { RestBaseService } from '../tools/rest.tools';
-import 'rxjs/add/operator/toPromise';
+import { Injectable } from "@angular/core";
+import { Http } from "@angular/http";
+import "rxjs/add/operator/toPromise";
+import { RestBaseService } from "../tools/rest.tools";
 
 @Injectable()
 export class PerfilService extends RestBaseService {
-  private perfilUrl = '/profile';
-  private imagenUrl = '/image';
+  private perfilUrl = "/profile";
+  private imagenUrl = "/image";
 
   constructor(private http: Http) {
     super();
@@ -36,9 +36,9 @@ export class PerfilService extends RestBaseService {
   guardarImagen(value: Image): Promise<Image> {
     return this.http
       .post(
-      PerfilService.serverUrl + this.imagenUrl,
-      JSON.stringify(value),
-      this.getRestHeader()
+        PerfilService.serverUrl + this.imagenUrl,
+        JSON.stringify(value),
+        this.getRestHeader()
       )
       .toPromise()
       .then(response => {
@@ -50,9 +50,9 @@ export class PerfilService extends RestBaseService {
   guardarPerfil(value: Perfil): Promise<Perfil> {
     return this.http
       .put(
-      PerfilService.serverUrl + this.perfilUrl,
-      JSON.stringify(value),
-      this.getRestHeader()
+        PerfilService.serverUrl + this.perfilUrl,
+        JSON.stringify(value),
+        this.getRestHeader()
       )
       .toPromise()
       .then(response => {

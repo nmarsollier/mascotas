@@ -71,7 +71,7 @@ export let ProfileSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
-}, {collection: "profiles"});
+}, { collection: "profiles" });
 
 
 /**

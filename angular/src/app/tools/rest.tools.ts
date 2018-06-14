@@ -1,8 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs/Rx";
-import { Http, Headers, Response, RequestOptions } from "@angular/http";
-import "rxjs/add/operator/map";
+import { Headers, RequestOptions, Response } from "@angular/http";
 import "rxjs/add/operator/catch";
+import "rxjs/add/operator/map";
 import { environment } from "../../environments/environment";
 
 export class RestBaseService {

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, URLSearchParams } from "@angular/http";
-import { RestBaseService } from "../tools/rest.tools";
+import { Http } from "@angular/http";
 import "rxjs/add/operator/toPromise";
+import { RestBaseService } from "../tools/rest.tools";
 
 @Injectable()
 export class UsuarioService extends RestBaseService {
@@ -38,16 +38,20 @@ export class UsuarioService extends RestBaseService {
   }
 
   logout(): Promise<Usuario> {
-    localStorage.removeItem("auth_token");
-    this.usuarioLogueado = undefined;
-
     return this.http
       .get(UsuarioService.serverUrl + this.logoutUrl, this.getRestHeader())
       .toPromise()
       .then(response => {
+        localStorage.removeItem("auth_token");
+        this.usuarioLogueado = undefined;
         return response.json() as Usuario;
       })
-      .catch(this.handleError);
+      .catch(error => {
+        localStorage.removeItem("auth_token");
+        this.usuarioLogueado = undefined;
+        this.handleError(error);
+        return undefined;
+      });
   }
 
   getPrincipal(): Promise<Usuario> {

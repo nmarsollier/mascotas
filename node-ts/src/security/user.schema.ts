@@ -1,8 +1,7 @@
 "use strict";
 
-import * as mongoose from "mongoose";
-import * as passport from "passport";
 import * as crypto from "crypto";
+import * as mongoose from "mongoose";
 import * as appConfig from "../utils/environment";
 const conf = appConfig.getConfig(process.env);
 

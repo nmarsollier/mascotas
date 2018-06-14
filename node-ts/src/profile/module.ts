@@ -1,10 +1,9 @@
 "use strict";
 
 import { Express } from "express";
-
-import * as security from "../security/security.service";
-import * as profile from "./profile.service";
 import * as passport from "passport";
+import * as profile from "./profile.service";
+
 
 export function init(app: Express) {
   app

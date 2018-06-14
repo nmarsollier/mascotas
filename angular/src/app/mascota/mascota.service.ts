@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response } from "@angular/http";
-import { RestBaseService } from "../tools/rest.tools";
+import { Http } from "@angular/http";
 import "rxjs/add/operator/toPromise";
+import { RestBaseService } from "../tools/rest.tools";
 
 @Injectable()
 export class MascotaService extends RestBaseService {

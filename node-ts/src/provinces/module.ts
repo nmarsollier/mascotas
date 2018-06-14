@@ -1,9 +1,9 @@
 "use strict";
 
 import { Express } from "express";
-import * as province from "./province.service";
 import * as passport from "passport";
 import * as security from "../security/security.service";
+import * as province from "./province.service";
 
 /**
  * Configura e inicializa los contenidos del Modulo

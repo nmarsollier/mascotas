@@ -1,6 +1,6 @@
 <h1>Reg&iacute;strate</h1>
 
-<form name="form" [formGroup]="form" novalidate>
+<form name="form" [formGroup]="form">
 
     <div class="form-group">
         <label>Login</label>
@@ -13,6 +13,20 @@
 
         <div *ngIf="errors.login" class="error">
             {{errors.login}}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Nombre</label>
+
+        <input name="name" formControlName="name" type="text" placeholder="Nombre" size="60" class="form-control" />
+
+        <div *ngIf="(form.controls.name.dirty || formSubmitted) && form.controls.name.invalid" class="error">
+            Dato invalido
+        </div>
+
+        <div *ngIf="errors.name" class="error">
+            {{errors['name']}}
         </div>
     </div>
 
@@ -38,21 +52,12 @@
         <div *ngIf="(form.controls.password2.dirty || formSubmitted) && form.controls.password2.invalid" class="error">
             Dato invalido
         </div>
-    </div>
 
-    <div class="form-group">
-        <label>Nombre</label>
-
-        <input name="name" formControlName="name" type="text" placeholder="Nombre" size="60" class="form-control" />
-
-        <div *ngIf="(form.controls.name.dirty || formSubmitted) && form.controls.name.invalid" class="error">
-            Dato invalido
-        </div>
-
-        <div *ngIf="errors.name" class="error">
-            {{errors['name']}}
+        <div *ngIf="errors.password2" class="error">
+            {{errors.password2}}
         </div>
     </div>
+
 
     <div *ngIf="errorMessage" class="error">
         {{errorMessage}}

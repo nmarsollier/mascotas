@@ -1,9 +1,8 @@
 "use strict";
 
 import { Express } from "express";
-import * as pet from "./pet.service";
-import * as security from "../security/security.service";
 import * as passport from "passport";
+import * as pet from "./pet.service";
 
 export function init(app: Express) {
   // Routas de acceso a mascotas

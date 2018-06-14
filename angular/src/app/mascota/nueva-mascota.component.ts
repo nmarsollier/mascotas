@@ -1,17 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { MascotaService, Mascota } from "./mascota.service";
-import { ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs/Rx";
-import { Router } from "@angular/router";
-import { NgDatepickerModule } from "ng2-datepicker";
+import { ActivatedRoute, Router } from "@angular/router";
 import * as esLocale from "date-fns/locale/es";
-
+import * as errorHandler from "../tools/error-handler";
 import { IErrorController } from "../tools/error-handler";
-import * as errorHanlder from "../tools/error-handler";
+import { Mascota, MascotaService } from "./mascota.service";
+
 
 @Component({
   selector: "app-nueva-mascota",
-  styles: [ "/deep/ .ngx-datepicker-input {margin: -6px; margin-left: -10px;} "],
+  styles: ["/deep/ .ngx-datepicker-input {margin: -6px; margin-left: -10px;} "],
   templateUrl: "./nueva-mascota.component.html"
 })
 export class NuevaMascotaComponent implements OnInit, IErrorController {
@@ -42,24 +39,24 @@ export class NuevaMascotaComponent implements OnInit, IErrorController {
         this.mascotasService
           .buscarMascota(id)
           .then(mascota => (this.mascota = mascota))
-          .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+          .catch(error => errorHandler.procesarValidacionesRest(this, error));
       }
     });
   }
 
   submitForm() {
-    errorHanlder.cleanRestValidations(this);
+    errorHandler.cleanRestValidations(this);
     this.mascotasService
       .guardarMascota(this.mascota)
       .then(mascota => this.router.navigate(["/mascotas"]))
-      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+      .catch(error => errorHandler.procesarValidacionesRest(this, error));
   }
 
   onDelete() {
-    errorHanlder.cleanRestValidations(this);
+    errorHandler.cleanRestValidations(this);
     this.mascotasService
       .eliminarMascota(this.mascota._id)
       .then(any => this.router.navigate(["/mascotas"]))
-      .catch(error => errorHanlder.procesarValidacionesRest(this, error));
+      .catch(error => errorHandler.procesarValidacionesRest(this, error));
   }
 }

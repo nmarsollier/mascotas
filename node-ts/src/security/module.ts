@@ -1,8 +1,8 @@
 "use strict";
 
 import { Express } from "express";
-import * as security from "./security.service";
 import * as passport from "passport";
+import * as security from "./security.service";
 
 /**
  * Modulo de seguridad, login/logout, cambio de contraseñas, etc

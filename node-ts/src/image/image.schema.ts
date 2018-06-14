@@ -1,6 +1,5 @@
 "use strict";
 
-import * as mongoose from "mongoose";
 
 /**
  * Permite almacenar imagenes
