@@ -14,8 +14,8 @@ export interface IUser extends mongoose.Document {
   login: string;
   password: string;
   roles: string[];
-  updated: Date;
-  created: Date;
+  updated: Number;
+  created: Number;
   enabled: Boolean;
   authenticate: Function;
   setPasswordText: Function;
@@ -60,11 +60,11 @@ export let UserSchema = new mongoose.Schema({
   },
   updated: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   created: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   enabled: {
     type: Boolean,
@@ -81,7 +81,7 @@ UserSchema.path("password").validate(function (value: string) {
 /**
  * Trigger antes de guardar, si el password se modifico hay que encriptarlo
  */
-UserSchema.pre("save", function (next: Function) {
+UserSchema.pre("save", function (this: IUser, next) {
   this.updated = Date.now();
 
   next();

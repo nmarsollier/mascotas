@@ -197,7 +197,7 @@ export interface IFindByIdRequest extends express.Request {
   pet: IPet;
 }
 export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction) {
-  const id = req.params.get("petId");
+  const id = req.params.petId;
 
   Pet.findOne({
     _id: escape(id),

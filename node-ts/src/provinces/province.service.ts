@@ -52,7 +52,7 @@ export interface IFindByIdRequest extends express.Request {
   province: IProvince;
 }
 export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction) {
-  const id = req.params.get("provinceId");
+  const id = req.params.provinceId;
 
   Province.findOne({
     _id: escape(id),

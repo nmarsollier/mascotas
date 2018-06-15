@@ -7,8 +7,8 @@ export interface IPet extends mongoose.Document {
   birthDate: Date;
   description: string;
   user: mongoose.Schema.Types.ObjectId;
-  updated: Date;
-  created: Date;
+  updated: Number;
+  created: Number;
   enabled: Boolean;
 }
 
@@ -39,11 +39,11 @@ export let PetSchema = new mongoose.Schema({
   },
   updated: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   created: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   enabled: {
     type: Boolean,
@@ -54,8 +54,8 @@ export let PetSchema = new mongoose.Schema({
 /**
  * Antes de guardar
  */
-PetSchema.pre("save", function (next: Function) {
-  this.updated = Date.now;
+PetSchema.pre("save", function (this: IPet, next) {
+  this.updated = Date.now();
 
   next();
 });

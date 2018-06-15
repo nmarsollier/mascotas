@@ -11,8 +11,8 @@ export interface IProfile extends mongoose.Document {
   valid: Boolean;
   province: mongoose.Schema.Types.ObjectId;
   user: mongoose.Schema.Types.ObjectId;
-  updated: Date;
-  created: Date;
+  updated: Number;
+  created: Number;
   enabled: Boolean;
 }
 /**
@@ -60,11 +60,11 @@ export let ProfileSchema = new mongoose.Schema({
   },
   updated: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   created: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   enabled: {
     type: Boolean,
@@ -76,8 +76,8 @@ export let ProfileSchema = new mongoose.Schema({
 /**
  * Antes de guardar
  */
-ProfileSchema.pre("save", function (next: Function) {
-  this.updated = Date.now;
+ProfileSchema.pre("save", function (this: IProfile, next) {
+  this.updated = Date.now();
 
   next();
 });

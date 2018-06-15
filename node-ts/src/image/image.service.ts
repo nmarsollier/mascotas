@@ -95,7 +95,7 @@ export interface IFindByIdRequest extends express.Request {
   image: IImage;
 }
 export function findByID(req: IFindByIdRequest, res: express.Response, next: NextFunction) {
-  const id = req.params.get("imageId");
+  const id = req.params.imageId;
 
   redisClient.get(escape(id), function (err, reply) {
     if (err) return errorHandler.handleError(res, err);
