@@ -13,7 +13,7 @@ export function init(app: Express) {
 
   app
     .route("/pet/:petId")
-    .get(pet.read)
+    .get(pet.findByID, pet.read)
     .put(passport.authenticate("jwt", { session: false }), pet.findByID, pet.validateOwner, pet.validateUpdate, pet.update)
     .delete(passport.authenticate("jwt", { session: false }), pet.findByID, pet.validateOwner, pet.remove);
 }

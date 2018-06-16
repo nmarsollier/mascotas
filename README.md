@@ -1,5 +1,4 @@
-Proyecto Mascotas - Programación Avanzada
-=
+# Proyecto Mascotas - Programación Avanzada
 
 Proyecto Red social de Mascotas, ejemplo de código para la cátedra "Programación Avanzada" en la Universidad Tecnología Nacional, Facultad Regional Mendoza.
 
@@ -11,43 +10,31 @@ angular :  Frontend desarrollado en angular 6.
 
 node-ts : Node con typescript para backend.
 
-Guía de Instalación
--
+## Guía de Instalación
 
-Instalar Node con npm versión 8
--
+### Node con npm versión 8
 
-https://nodejs.org/
+Seguir la guia de instalacion desde el sitio oficial [nodejs.org](https://nodejs.org/)
 
-Instalar MongoDB
--
+### MongoDB
 
-Recomiendo seguir las guiás de instalación de mongo desde el sitio oficial:
+Recomiendo seguir las guiás de instalación de mongo desde el sitio oficial: [mongodb.com](https://www.mongodb.com/download-center#community)
 
-https://www.mongodb.com/download-center#community
 
-Crear una carpeta donde se guardara la db de mongo : C:\data por ejemplo
+Sugiero instalar Mongodb Compass para poder navegar la base de datos en forma visual [Compass](https://www.mongodb.com/products/compass)
 
-Ejecución :
+### Redis
 
-```bash
-"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe" --dbpath C:\data
-````
 
-Sugiero instalar Mongodb Compass para poder navegar la base de datos en forma visual :
-https://www.mongodb.com/products/compass
+Seguir los pasos de instalación desde la pagina oficial [redis.io](https://redis.io/download)
 
-Instalar Redis
--
+Para windows conviene un ejecutable : [Redis Windows](https://sourceforge.net/projects/redis/)
 
-Seguir los pasos de instalación desde la pagina oficial https://redis.io/download
+Recomiendo instalar FastoRedis para navegar la base de datos [fastoredis.com](https://fastoredis.com/)
 
-Para windows conviene un ejecutable : https://sourceforge.net/projects/redis/
+## Ejecución
 
-Recomiendo instalar FastoRedis para navegar la base de datos https://fastoredis.com/
-
-Ejecución
--
+### Backend
 
 Abrir ventana de comandos en el folder node-ts y ejecutar :
 
@@ -56,10 +43,11 @@ npm install
 npm start
 ```
 
-El backend expone la documentación de las api abriendo http://localhost:3000/
+El backend expone la documentación de las api abriendo [localhost:3000](http://localhost:3000/)
 
-Front-end en angular
--
+También se pueden ver las apis desde [Api](./node-ts/README-API.md)
+
+### Angular
 
 Abrir ventana de comandos en la carpeta angular, ejecutar:
 
@@ -68,4 +56,5 @@ npm install
 npm start
 ```
 
-Desde un browser debemos abrir http://localhost:4200/
+Desde un browser debemos abrir [localhost:4200](http://localhost:4200/)
+

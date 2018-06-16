@@ -78,7 +78,7 @@ function processValidationError(res: express.Response, err: any): ValidationErro
 /**
  * @apiDefine ParamValidationErrors
  *
- * @apiSuccessExample {json} 400 Bad Request
+ * @apiErrorExample {json} 400 Bad Request
  *     HTTP/1.1 400 Bad Request
  *     HTTP/1.1 Header X-Status-Reason: {Message}
  *     {
@@ -102,7 +102,7 @@ function processValidationError(res: express.Response, err: any): ValidationErro
 /**
  * @apiDefine OtherErrors
  *
- * @apiSuccessExample {json} 404 Not Found
+ * @apiErrorExample {json} 404 Not Found
  *     HTTP/1.1 404 Not Found
  *     HTTP/1.1 Header X-Status-Reason: {Message}
  *     {
@@ -110,19 +110,12 @@ function processValidationError(res: express.Response, err: any): ValidationErro
  *        "error" : "Not Found"
  *     }
  *
- * @apiSuccessExample {json} 500 Server Error
+ * @apiErrorExample {json} 500 Server Error
  *     HTTP/1.1 500 Internal Server Error
  *     HTTP/1.1 Header X-Status-Reason: {Message}
  *     {
  *        "error" : "Not Found"
  *     }
- *
- * @apiSuccessExample {json} 405 Unauthorized
- *    HTTP/1.1 405 Unauthorized Method
- *    HTTP/1.1 Header X-Status-Reason: {Message}
- *    {
- *       "error" : "Not Found"
- *    }
  */
 export function handleError(res: express.Response, err: any): express.Response {
   if (err.code) {   // Database Error

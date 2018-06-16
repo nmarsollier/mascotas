@@ -24,12 +24,12 @@ export interface IUserSessionRequest extends express.Request {
 
 /**
  * @api {post} /auth/signup Crear Usuario
- * @apiName CrearUsuario
+ * @apiName Crear Usuario
  * @apiGroup Seguridad
  *
  * @apiDescription Registra un nuevo usuario en el sistema.
  *
- * @apiParamExample {json} Usuario
+ * @apiExample {json} Usuario
  *    {
  *      "name": "Nombre Usuario",
  *      "login": "login"
@@ -87,7 +87,7 @@ export function signup(req: express.Request, res: express.Response) {
  *
  * @apiDescription Login en el sistema.
  *
- * @apiParamExample {json} Usuario
+ * @apiExample {json} Usuario
  *    {
  *      "login": "login"
  *      "password": "password"
@@ -240,7 +240,7 @@ export function currentUser(req: IUserSessionRequest, res: express.Response, nex
  *
  * @apiDescription Permite cambiar la contraseña de usuario
  *
- * @apiParamExample {json} Body
+ * @apiExample {json} Body
  * {
  *      "currentPassword" : "currPass",
  *      "newPassword" : "newPass",

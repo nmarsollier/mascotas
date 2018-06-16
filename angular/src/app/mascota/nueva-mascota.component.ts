@@ -38,8 +38,12 @@ export class NuevaMascotaComponent implements OnInit, IErrorController {
       if (id) {
         this.mascotasService
           .buscarMascota(id)
-          .then(mascota => (this.mascota = mascota))
-          .catch(error => errorHandler.procesarValidacionesRest(this, error));
+          .then(mascota => {
+            this.mascota = mascota;
+          })
+          .catch(error => {
+            errorHandler.procesarValidacionesRest(this, error);
+          });
       }
     });
   }

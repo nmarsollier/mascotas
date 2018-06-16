@@ -62,7 +62,7 @@ export function read(req: IReadRequest, res: express.Response) {
  *
  * @apiDescription Actualiza los datos del perfil de usuario.
  *
- * @apiParamExample {json} Perfil
+ * @apiExample {json} Perfil
  *    {
  *      "name": "Nombre y Apellido",
  *      "phone": "Teléfono",

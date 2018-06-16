@@ -77,7 +77,7 @@ export function findByID(req: IFindByIdRequest, res: express.Response, next: Nex
  *
  * @apiDescription Crea o actualiza una provincia.
  *
- * @apiParamExample {json} Provincia
+ * @apiExample {json} Provincia
  *    {
  *      "name": "Nombre Provincia",
  *      "enabled": [true|false]

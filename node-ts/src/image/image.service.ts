@@ -32,7 +32,7 @@ export function read(req: IReadRequest, res: express.Response) {
  *
  * @apiDescription Guarda una imagen en la db
  *
- * @apiParamExample {json} Body
+ * @apiExample {json} Body
  *    {
  *      "image" : "Base 64 Image Text"
  *    }

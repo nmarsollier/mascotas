@@ -39,7 +39,7 @@ export function read(req: IReadRequest, res: express.Response) {
  *
  * @apiDescription Crea una mascota.
  *
- * @apiParamExample {json} Mascota
+ * @apiExample {json} Mascota
  *    {
  *      "name": "Nombre de la mascota",
  *      "description": "Description de la mascota",
@@ -60,7 +60,7 @@ export function read(req: IReadRequest, res: express.Response) {
  *
  * @apiDescription Actualiza los datos de una mascota.
  *
- * @apiParamExample {json} Mascota
+ * @apiExample {json} Mascota
  *    {
  *      "name": "Nombre de la mascota",
  *      "description": "Description de la mascota",
