@@ -1,15 +1,19 @@
-import { Injectable, ModuleWithProviders } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterModule, RouterStateSnapshot, Routes } from "@angular/router";
-import { MascotaComponent } from "./mascota/mascota.component";
-import { NuevaMascotaComponent } from "./mascota/nueva-mascota.component";
-import { PerfilComponent } from "./perfil/perfil.component";
-import { RegistrarUsuarioComponent } from "./usuario/registrar-usuario.component";
-import { UsuarioService } from "./usuario/usuario.service";
-import { WelcomeComponent } from "./welcome/welcome.component";
+import { Injectable, ModuleWithProviders } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterModule, RouterStateSnapshot, Routes } from '@angular/router';
+import { AuthService } from './auth/auth.service';
+import { InfoComponent } from './auth/info.component';
+import { LoginComponent } from './auth/login.component';
+import { NewUserComponent } from './auth/new.user.component';
+import { NewPasswordComponent } from './auth/new.password.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { ProfileComponent } from './profile/profile.component';
+import { PetComponent } from './pet/pet.component';
+import { NewPetComponent } from './pet/new-pet.component';
+
 
 @Injectable()
 export class LoggedIn implements CanActivate {
-    constructor(private router: Router, private auth: UsuarioService) { }
+    constructor(private router: Router, private auth: AuthService) { }
 
     canActivate(
         route: ActivatedRouteSnapshot,
@@ -18,7 +22,7 @@ export class LoggedIn implements CanActivate {
         if (this.auth.usuarioLogueado) {
             return true;
         } else {
-            this.router.navigate(["/"]);
+            this.router.navigate(['/']);
             return false;
         }
     }
@@ -26,12 +30,16 @@ export class LoggedIn implements CanActivate {
 
 // Route Configuration
 export const routes: Routes = [
-    { path: "", component: WelcomeComponent },
-    { path: "perfilUsuario", component: PerfilComponent, canActivate: [LoggedIn] },
-    { path: "registrarUsuario", component: RegistrarUsuarioComponent },
-    { path: "mascotas", component: MascotaComponent, canActivate: [LoggedIn] },
-    { path: "nuevaMascota/:id", component: NuevaMascotaComponent, canActivate: [LoggedIn] },
-    { path: "nuevaMascota", component: NuevaMascotaComponent, canActivate: [LoggedIn] }
+    { path: '', component: WelcomeComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'info', component: InfoComponent, canActivate: [LoggedIn] },
+    { path: 'password', component: NewPasswordComponent, canActivate: [LoggedIn] },
+    { path: 'registrarse', component: NewUserComponent },
+    { path: 'perfil', component: ProfileComponent },
+    { path: 'mascotas', component: PetComponent, canActivate: [LoggedIn] },
+    { path: 'nuevaMascota/:id', component: NewPetComponent, canActivate: [LoggedIn] },
+    { path: 'nuevaMascota', component: NewPetComponent, canActivate: [LoggedIn] }
+
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);

@@ -1,54 +1,30 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import * as errorHandler from "../tools/error-handler";
-import { IErrorController } from "../tools/error-handler";
-import { Usuario, UsuarioService } from "../usuario/usuario.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService, User } from '../auth/auth.service';
 
 @Component({
-  selector: "app-menu",
-  templateUrl: "./menu.component.html"
+  selector: 'app-menu',
+  templateUrl: './menu.component.html'
 })
-export class MenuComponent implements OnInit, IErrorController {
-  loginForm: FormGroup;
-
-  errorMessage: string;
-  errors: string[] = [];
-
-  get usuarioLogueado(): Usuario {
-    return this.usuarioService.usuarioLogueado;
+export class MenuComponent implements OnInit {
+  ngOnInit(): void {
+    if (localStorage.getItem('auth_token')) {
+      this.authService.getPrincipal();
+    }
   }
 
-  constructor(fb: FormBuilder, private router: Router, public usuarioService: UsuarioService) {
-    this.loginForm = fb.group({
-      username: [undefined, Validators.required],
-      password: [undefined, Validators.required]
-    });
+  get usuarioLogueado(): User {
+    return this.authService.usuarioLogueado;
   }
 
-  ngOnInit() {
-    this.usuarioService.getPrincipal().then();
-  }
-
-  login() {
-    this.usuarioService
-      .login(this.loginForm.value.username, this.loginForm.value.password)
-      .catch(error => {
-        errorHandler.procesarValidacionesRest(this, error);
-      });
-  }
+  constructor(private authService: AuthService, private router: Router) { }
 
   logout() {
-    errorHandler.cleanRestValidations(this);
-
-    this.usuarioService
+    this.authService
       .logout()
-      .then(result => {
-        this.router.navigate(["/"]);
+      .then(_ => {
+        this.router.navigate(['/']);
       })
-      .catch(error => {
-        errorHandler.procesarValidacionesRest(this, error);
-        this.router.navigate(["/"]);
-      });
+      .catch(error => {});
   }
 }
