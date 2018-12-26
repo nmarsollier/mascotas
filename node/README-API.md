@@ -45,7 +45,7 @@ Microservicio de Autentificación
 
 <p>Guarda una imagen en la db</p>
 
-	POST /image
+	POST /v1/image
 
 
 
@@ -110,7 +110,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Obtiene una imagen</p>
 
-	GET /image/:id
+	GET /v1/image/:id
 
 
 
@@ -171,7 +171,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Actualiza los datos de una mascota.</p>
 
-	PUT /pet/:petId
+	POST /v1/pet/:petId
 
 
 
@@ -181,6 +181,7 @@ Mascota
 
 ```
 {
+  "id": "Id de mascota",
   "name": "Nombre de la mascota",
   "description": "Description de la mascota",
   "birthDate": date (DD/MM/YYYY),
@@ -199,13 +200,10 @@ Mascota
 
 ```
 {
+  "id": "Id de mascota",
   "name": "Nombre de la mascota",
   "description": "Descripción de la mascota",
-  "user": "Id de usuario",
   "birthDate": date (DD/MM/YYYY),
-  "updated": date (DD/MM/YYYY),
-  "created": date (DD/MM/YYYY),
-  "enabled": [true|false]
 }
 ```
 
@@ -244,7 +242,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Busca una mascota por id.</p>
 
-	PUT /pet/:petId
+	PUT /v1/pet/:petId
 
 
 
@@ -263,13 +261,10 @@ Mascota
 
 ```
 {
+  "id": "Id de mascota",
   "name": "Nombre de la mascota",
   "description": "Descripción de la mascota",
-  "user": "Id de usuario",
   "birthDate": date (DD/MM/YYYY),
-  "updated": date (DD/MM/YYYY),
-  "created": date (DD/MM/YYYY),
-  "enabled": [true|false]
 }
 ```
 
@@ -308,7 +303,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Crea una mascota.</p>
 
-	POST /pet
+	POST /v1/pet
 
 
 
@@ -334,13 +329,10 @@ Mascota
 
 ```
 {
+  "id": "Id de mascota",
   "name": "Nombre de la mascota",
   "description": "Descripción de la mascota",
-  "user": "Id de usuario",
   "birthDate": date (DD/MM/YYYY),
-  "updated": date (DD/MM/YYYY),
-  "created": date (DD/MM/YYYY),
-  "enabled": [true|false]
 }
 ```
 
@@ -379,7 +371,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Eliminar una mascota.</p>
 
-	DELETE /pet/:petId
+	DELETE /v1/pet/:petId
 
 
 
@@ -421,7 +413,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Obtiene un listado de las mascotas del usuario actual.</p>
 
-	GET /pet
+	GET /v1/pet
 
 
 
@@ -441,13 +433,10 @@ Mascota
 ```
 [
   {
+    "id": "Id de mascota"
     "name": "Nombre de la mascota",
     "description": "Descripción de la mascota",
-    "user": "Id de usuario",
     "birthDate": date (DD/MM/YYYY),
-    "updated": date (DD/MM/YYYY),
-    "created": date (DD/MM/YYYY),
-    "enabled": [true|false]
   }, ...
 ]
 ```
@@ -480,7 +469,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Actualiza los datos del perfil de usuario.</p>
 
-	PUT /profile
+	PUT /v1/profile
 
 
 
@@ -606,7 +595,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Buscar una provincia.</p>
 
-	PUT /province/:provinceId
+	POST /v1/province/:provinceId
 
 
 
@@ -665,7 +654,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Crea o actualiza una provincia.</p>
 
-	POST /province
+	POST /v1/province
 
 
 
@@ -732,7 +721,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Elimina una provincia.</p>
 
-	DELETE /province/:provinceId
+	DELETE /v1/province/:provinceId
 
 
 
@@ -788,7 +777,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Lista todas las provincias.</p>
 
-	GET /province
+	GET /v1/province
 
 
 

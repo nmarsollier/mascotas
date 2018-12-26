@@ -1,6 +1,9 @@
 import { Component, forwardRef, NgModule, ViewChildren } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+// Este componente permite hacer un file upload de una imagen
+// Muestra la imagen de forma correcta en la ui, y proporciona metodos
+// para obtener el base64 de la imagen
 @Component({
     selector: 'app-file-upload',
     template: `

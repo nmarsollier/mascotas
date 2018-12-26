@@ -2,6 +2,7 @@ import { Headers, RequestOptions, Response } from '@angular/http';
 
 export class RestBaseService {
 
+  // Maneja los errores de llamadas a servicios rest
   protected handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
@@ -16,6 +17,7 @@ export class RestBaseService {
     }
   }
 
+  // Obtiene los headers genéricos para hacer llamadas a servicios rest
   protected getRestHeader(moreHeaders?: any): RequestOptions {
     const params = {
       'Content-Type': 'application/json',

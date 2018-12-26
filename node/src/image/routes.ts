@@ -21,7 +21,7 @@ export function initModule(app: express.Express) {
 }
 
 /**
- * @api {post} /image Guardar Imagen
+ * @api {post} /v1/image Guardar Imagen
  * @apiName Guardar Imagen
  * @apiGroup Imagen
  *
@@ -53,17 +53,13 @@ async function create(req: ISessionRequest, res: express.Response) {
 }
 
 /**
- * @api {get} /image/:id Obtener Imagen
+ * @api {get} /v1/image/:id Obtener Imagen
  * @apiName Obtener Imagen
  * @apiGroup Imagen
  *
  * @apiDescription Obtiene una imagen
  *
- * @apiSuccessExample {json} Response
- *    {
- *      "id": "id de imagen",
- *      "image" : "Base 64 Image Text"
- *    }
+ * @apiSuccessExample {text} Base64 image response
  *
  * @apiUse AuthHeader
  * @apiUse ParamValidationErrors

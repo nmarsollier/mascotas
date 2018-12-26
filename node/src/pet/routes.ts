@@ -25,7 +25,7 @@ export function initModule(app: express.Express) {
 
 
 /**
- * @api {get} /pet Listar Mascota
+ * @api {get} /v1/pet Listar Mascota
  * @apiName Listar Mascota
  * @apiGroup Mascotas
  *
@@ -34,13 +34,10 @@ export function initModule(app: express.Express) {
  * @apiSuccessExample {json} Mascota
  *  [
  *    {
+ *      "id": "Id de mascota"
  *      "name": "Nombre de la mascota",
  *      "description": "Descripción de la mascota",
- *      "user": "Id de usuario",
  *      "birthDate": date (DD/MM/YYYY),
- *      "updated": date (DD/MM/YYYY),
- *      "created": date (DD/MM/YYYY),
- *      "enabled": [true|false]
  *    }, ...
  *  ]
  *
@@ -69,18 +66,15 @@ async function findByCurrentUser(req: ISessionRequest, res: express.Response) {
  *
  * @apiSuccessExample {json} Mascota
  *    {
+ *      "id": "Id de mascota",
  *      "name": "Nombre de la mascota",
  *      "description": "Descripción de la mascota",
- *      "user": "Id de usuario",
  *      "birthDate": date (DD/MM/YYYY),
- *      "updated": date (DD/MM/YYYY),
- *      "created": date (DD/MM/YYYY),
- *      "enabled": [true|false]
  *    }
  */
 
 /**
- * @api {post} /pet Crear Mascota
+ * @api {post} /v1/pet Crear Mascota
  * @apiName Crear Mascota
  * @apiGroup Mascotas
  *
@@ -110,7 +104,7 @@ async function create(req: ISessionRequest, res: express.Response) {
 
 
 /**
- * @api {put} /pet/:petId Buscar Mascota
+ * @api {put} /v1/pet/:petId Buscar Mascota
  * @apiName Buscar Mascota
  * @apiGroup Mascotas
  *
@@ -137,7 +131,7 @@ async function readById(req: ISessionRequest, res: express.Response) {
 }
 
 /**
- * @api {put} /pet/:petId Actualizar Mascota
+ * @api {post} /v1/pet/:petId Actualizar Mascota
  * @apiName Actualizar Mascota
  * @apiGroup Mascotas
  *
@@ -145,6 +139,7 @@ async function readById(req: ISessionRequest, res: express.Response) {
  *
  * @apiExample {json} Mascota
  *    {
+ *      "id": "Id de mascota",
  *      "name": "Nombre de la mascota",
  *      "description": "Description de la mascota",
  *      "birthDate": date (DD/MM/YYYY),
@@ -171,7 +166,7 @@ async function updateById(req: ISessionRequest, res: express.Response) {
 }
 
 /**
- * @api {delete} /pet/:petId Eliminar Mascota
+ * @api {delete} /v1/pet/:petId Eliminar Mascota
  * @apiName Eliminar Mascota
  * @apiGroup Mascotas
  *

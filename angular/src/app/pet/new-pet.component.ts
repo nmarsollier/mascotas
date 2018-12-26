@@ -44,24 +44,28 @@ export class NewPetComponent extends BasicFromGroupController implements OnInit 
     });
   }
 
-  submitForm() {
-    this.cleanRestValidations();
-    this.petService
-      .savePet({
-        id: this.petId,
-        name: this.form.get('name').value,
-        description: this.form.get('description').value,
-        birthDate: this.form.get('birthDate').value
-      })
-      .then(mascota => this.router.navigate(['/mascotas']))
-      .catch(error => this.processRestValidations(error));
+  async submitForm() {
+    try {
+      this.cleanRestValidations();
+      await this.petService.savePet({
+          id: this.petId,
+          name: this.form.get('name').value,
+          description: this.form.get('description').value,
+          birthDate: this.form.get('birthDate').value
+        });
+        this.router.navigate(['/mascotas']);
+    } catch (error) {
+      this.processRestValidations(error);
+    }
   }
 
-  onDelete() {
-    this.cleanRestValidations();
-    this.petService
-      .deletePet(this.petId)
-      .then(any => this.router.navigate(['/mascotas']))
-      .catch(error => this.processRestValidations(error));
+  async onDelete() {
+    try {
+      this.cleanRestValidations();
+      await this.petService.deletePet(this.petId);
+      this.router.navigate(['/mascotas']);
+    } catch (error) {
+      this.processRestValidations(error);
+    }
   }
 }

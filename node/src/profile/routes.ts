@@ -72,7 +72,7 @@ async function current(req: ISessionRequest, res: express.Response) {
  */
 
 /**
- * @api {put} /profile Actualizar Perfil
+ * @api {put} /v1/profile Actualizar Perfil
  * @apiName Actualizar Perfil
  * @apiGroup Perfil
  *

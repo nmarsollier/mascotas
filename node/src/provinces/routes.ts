@@ -22,7 +22,7 @@ export function initModule(app: express.Express) {
 }
 
 /**
- * @api {get} /province Listar Provincias
+ * @api {get} /v1/province Listar Provincias
  * @apiName Listar Provincias
  * @apiGroup Provincias
  *
@@ -54,7 +54,7 @@ async function list(req: ISessionRequest, res: express.Response) {
 }
 
 /**
- * @api {post} /province Crear Provincia
+ * @api {post} /v1/province Crear Provincia
  * @apiName Crear Provincia
  * @apiGroup Provincias
  *
@@ -87,7 +87,7 @@ async function create(req: ISessionRequest, res: express.Response) {
 }
 
 /**
- * @api {put} /province/:provinceId Buscar Provincia
+ * @api {post} /v1/province/:provinceId Buscar Provincia
  * @apiName Buscar Provincia
  * @apiGroup Provincias
  *
@@ -116,7 +116,7 @@ async function read(req: ISessionRequest, res: express.Response) {
 }
 
 /**
- * @api {delete} /province/:provinceId Eliminar Provincia
+ * @api {delete} /v1/province/:provinceId Eliminar Provincia
  * @apiName Eliminar Provincia
  * @apiGroup Provincias
  *

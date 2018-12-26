@@ -10,7 +10,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { PetComponent } from './pet/pet.component';
 import { NewPetComponent } from './pet/new-pet.component';
 
-
 @Injectable()
 export class LoggedIn implements CanActivate {
     constructor(private router: Router, private auth: AuthService) { }
@@ -28,7 +27,7 @@ export class LoggedIn implements CanActivate {
     }
 }
 
-// Route Configuration
+// Configuración de Rutas
 export const routes: Routes = [
     { path: '', component: WelcomeComponent },
     { path: 'login', component: LoginComponent },
@@ -39,7 +38,6 @@ export const routes: Routes = [
     { path: 'mascotas', component: PetComponent, canActivate: [LoggedIn] },
     { path: 'nuevaMascota/:id', component: NewPetComponent, canActivate: [LoggedIn] },
     { path: 'nuevaMascota', component: NewPetComponent, canActivate: [LoggedIn] }
-
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
