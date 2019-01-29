@@ -123,17 +123,12 @@ Authorization=bearer {token}
 ```
 
 
-### Success Response
 
-Response
+### Success 200
 
-```
-{
-  "id": "id de imagen",
-  "image" : "Base 64 Image Text"
-}
-```
-
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  Base64 | text | <p>image response</p>|
 
 ### Error Response
 

@@ -59,7 +59,7 @@ async function create(req: ISessionRequest, res: express.Response) {
  *
  * @apiDescription Obtiene una imagen
  *
- * @apiSuccessExample {text} Base64 image response
+ * @apiSuccess {text} Base64 image response
  *
  * @apiUse AuthHeader
  * @apiUse ParamValidationErrors

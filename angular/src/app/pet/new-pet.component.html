@@ -1,4 +1,4 @@
-<h2>{{mascotaId ? "Editar Mascota" : 'Nueva Mascota' }}</h2>
+<h2>{{petId ? "Editar Mascota" : 'Nueva Mascota' }}</h2>
 
 <form [formGroup]="form">
 
@@ -24,7 +24,7 @@
 
     <div class="btn-group ">
         <button class="btn btn-primary" (click)="submitForm()" [disabled]="form.invalid">Guardar</button>
-        <button class="btn btn-warning" *ngIf="mascotaId" (click)="onDelete()">Eliminar</button>
+        <button class="btn btn-warning" *ngIf="petId" (click)="onDelete()">Eliminar</button>
         <button class="btn btn-light" [routerLink]="['/mascotas']">Cancelar</button>
     </div>
 </form>
