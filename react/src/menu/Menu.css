@@ -1,0 +1,15 @@
+.menu {
+  height: 100%;
+  display: inline-flex;
+  padding-top: 20px;
+  padding-right: 30px;
+}
+
+.section {
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.item {
+  text-align: left;
+}
