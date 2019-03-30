@@ -47,9 +47,9 @@ El backend expone la documentación de las api abriendo [localhost:3000](http://
 
 También se pueden ver las apis desde [Api](./node-ts/README-API.md)
 
-### Angular
+### React
 
-Abrir ventana de comandos en la carpeta angular, ejecutar:
+Abrir ventana de comandos en la carpeta react, ejecutar:
 
 ```bash
 npm install

@@ -12,7 +12,7 @@ class StateToolbar extends Component {
         </div>
 
         <div className="title navbar-brand flex-grow-1">
-          Mascotas {this.props.user ? " - " + this.props.user.userName : ""}
+          Mascotas {this.props.user ? " - " + this.props.user.name : ""}
         </div>
 
         <div className="btn-group navbar-nav">

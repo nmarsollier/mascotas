@@ -12,7 +12,10 @@ class StateLoginMenu extends Component {
   }
 
   login() {
-    this.props.login({ userName: 'Nestor' })
+    this.props.login({
+      "login": "admin",
+      "password": "admin"
+    })
   }
 
   render() {
@@ -40,7 +43,7 @@ class StateMainMenu extends Component {
   render() {
     return (
       <div>
-        <h6 className="section">{this.props.user.userName}</h6>
+        <h6 className="section">{this.props.user.name}</h6>
         <a className="item btn btn-sm btn-link">Sesión</a> <br />
         <a className="item btn btn-sm btn-link">Password</a> <br />
         <a onClick={this.logout} className="item btn btn-sm btn-link">Logout</a> <br />
@@ -63,7 +66,6 @@ function mapDispatchToProps(dispatch) {
 }
 const LoginMenu = connect(null, mapDispatchToProps)(StateLoginMenu);
 const MainMenu = connect(null, mapDispatchToProps)(StateMainMenu);
-
 
 class StateMenu extends Component {
   render() {
