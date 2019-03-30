@@ -43,7 +43,6 @@ class StateMainMenu extends Component {
   render() {
     return (
       <div>
-        <h6 className="section">{this.props.user.name}</h6>
         <a className="item btn btn-sm btn-link">Sesión</a> <br />
         <a className="item btn btn-sm btn-link">Password</a> <br />
         <a onClick={this.logout} className="item btn btn-sm btn-link">Logout</a> <br />
