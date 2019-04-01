@@ -1,17 +1,12 @@
-.toolbar {
-  height: 200px;
-  width: 100%;
-}
-
-.icon {
+.toolbar_icon {
   font-size: larger;
   font-weight: bold;
 }
 
-.title {
+.toolbar_title {
   margin-left: 20px;
 }
 
-.button {
+.toolbar_button {
   color: white;
 }

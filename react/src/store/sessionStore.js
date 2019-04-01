@@ -33,53 +33,66 @@ const sessionStore = createStore((state = initialState, action) => {
 });
 
 export function login(payload) {
-    userApi.login(payload)
-        .then(data => {
-            sessionStore.dispatch({
-                type: LOGIN,
-                payload: data
+    return new Promise((result, reject) => {
+        userApi.login(payload)
+            .then(data => {
+                sessionStore.dispatch({
+                    type: LOGIN,
+                    payload: data
+                })
+                reloadCurrentUser()
+                    .then(data => { result(data) })
+                    .catch(err => { reject(err) })
             })
-            reloadCurrentUser()
-        })
-        .catch(err => {
-            sessionStore.dispatch({
-                type: LOGOUT
+            .catch(err => {
+                sessionStore.dispatch({
+                    type: LOGOUT
+                })
+                reject(err)
             })
-        })
+    })
 }
 
 export function reloadCurrentUser() {
-    userApi.reloadCurrentUser()
-        .then(data => {
-            sessionStore.dispatch({
-                type: USER_FETCH,
-                payload: data
+    return new Promise((result, reject) => {
+        userApi.reloadCurrentUser()
+            .then(data => {
+                sessionStore.dispatch({
+                    type: USER_FETCH,
+                    payload: data
+                })
+                result(data)
             })
-        })
-        .catch(err => {
-            sessionStore.dispatch({
-                type: LOGOUT,
-                payload: undefined
+            .catch(err => {
+                sessionStore.dispatch({
+                    type: LOGOUT,
+                    payload: undefined
+                })
+                reject(err)
             })
-        })
+    })
 }
 
 export function logout() {
-    userApi.logout()
-        .then(data => {
-            sessionStore.dispatch({
-                type: LOGOUT
+    return new Promise((result, reject) => {
+        userApi.logout()
+            .then(data => {
+                sessionStore.dispatch({
+                    type: LOGOUT
+                })
+                result()
             })
-        })
-        .catch(err => {
-            sessionStore.dispatch({
-                type: LOGOUT
+            .catch(err => {
+                sessionStore.dispatch({
+                    type: LOGOUT
+                })
+                reject(err)
             })
-        })
+    })
 }
 
 if (userApi.getCurrentToken() != undefined) {
-    reloadCurrentUser()
+    reloadCurrentUser().then()
 }
 
 export default sessionStore

@@ -1,32 +1,40 @@
 import React, { Component } from 'react';
-import Toolbar from './toolbar/Toolbar.js';
-import Menu from './menu/Menu.js';
+import { HashRouter, Route } from "react-router-dom";
 import './App.css';
+import Login from "./login/Login.js";
+import Menu from './menu/Menu.js';
+import Toolbar from './toolbar/Toolbar.js';
+import Welcome from "./welcome/Welcome.js";
 
 class App extends Component {
   render() {
     return (
-      <table className="table_content">
-        <thead>
-          <tr className="toolbar">
-            <td colSpan="2">
-              <Toolbar />
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <Menu />
-            </td>
-            <td>
-              <div className="main_body">
-                <div id="content" className="main_content"></div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <HashRouter>
+        <table className="main_table">
+          <thead>
+            <tr className="main_toolbar">
+              <td colSpan="2">
+                <Toolbar />
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="main_menu">
+                <Menu />
+              </td>
+              <td className="main_content_td">
+                <div className="main_body">
+                  <div id="content" className="main_content">
+                    <Route exact path="/" component={Welcome} />
+                    <Route exact path="/login" component={Login} />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </HashRouter>
     );
   }
 }

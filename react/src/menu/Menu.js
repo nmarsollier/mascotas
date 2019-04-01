@@ -1,28 +1,16 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { login, logout } from "../store/sessionStore"
-import './Menu.css'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { logout } from "../store/sessionStore";
+import './Menu.css';
 
-
-class StateLoginMenu extends Component {
-  constructor(props) {
-    super(props)
-
-    this.login = this.login.bind(this)
-  }
-
-  login() {
-    this.props.login({
-      "login": "admin",
-      "password": "admin"
-    })
-  }
-
+class LoginMenu extends Component {
   render() {
     return (
       <div>
         <h6 className="section">Sesión</h6>
-        <a onClick={this.login} className="item btn btn-sm btn-link"> Login</a ><br />
+        <NavLink to="/login" className="item btn btn-sm btn-link">Login</NavLink><br />
+        <NavLink to="/" className="item btn btn-sm btn-link">Welcome</NavLink><br />
         <a className="item btn btn-sm btn-link"> Registrarse</a ><br />
       </div>
     )
@@ -37,7 +25,7 @@ class StateMainMenu extends Component {
   }
 
   logout() {
-    this.props.logout()
+    this.props.logout().then()
   }
 
   render() {
@@ -59,11 +47,9 @@ class StateMainMenu extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    login: user => login(user),
     logout: () => logout()
   };
 }
-const LoginMenu = connect(null, mapDispatchToProps)(StateLoginMenu);
 const MainMenu = connect(null, mapDispatchToProps)(StateMainMenu);
 
 class StateMenu extends Component {
