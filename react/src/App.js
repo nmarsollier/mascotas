@@ -23,13 +23,9 @@ class App extends Component {
               <td className="main_menu">
                 <Menu />
               </td>
-              <td className="main_content_td">
-                <div className="main_body">
-                  <div id="content" className="main_content">
-                    <Route exact path="/" component={Welcome} />
-                    <Route exact path="/login" component={Login} />
-                  </div>
-                </div>
+              <td id="content" className="main_content">
+                <Route exact path="/" component={Welcome} />
+                <Route exact path="/login" component={Login} />
               </td>
             </tr>
           </tbody>

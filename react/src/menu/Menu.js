@@ -9,9 +9,9 @@ class LoginMenu extends Component {
     return (
       <div>
         <h6 className="section">Sesión</h6>
-        <NavLink to="/login" className="item btn btn-sm btn-link">Login</NavLink><br />
-        <NavLink to="/" className="item btn btn-sm btn-link">Welcome</NavLink><br />
-        <a className="item btn btn-sm btn-link"> Registrarse</a ><br />
+        <NavLink to="/login" className="item btn btn-sm btn-link">Login</NavLink>
+        <NavLink to="/" className="item btn btn-sm btn-link">Welcome</NavLink>
+        <NavLink to="/" className="item btn btn-sm btn-link">Registrarse</NavLink>
       </div>
     )
   }
@@ -31,15 +31,15 @@ class StateMainMenu extends Component {
   render() {
     return (
       <div>
-        <a className="item btn btn-sm btn-link">Sesión</a> <br />
-        <a className="item btn btn-sm btn-link">Password</a> <br />
-        <a onClick={this.logout} className="item btn btn-sm btn-link">Logout</a> <br />
+        <NavLink to="/" className="item btn btn-sm btn-link">Sesión</NavLink>
+        <NavLink to="/" className="item btn btn-sm btn-link">Password</NavLink>
+        <NavLink onClick={this.logout} className="item btn btn-sm btn-link">Logout</NavLink><br />
 
         <h6 className="section">Perfil</h6>
-        <a className="item btn btn-sm btn-link">Editar</a> <br />
+        <NavLink to="/" className="item btn btn-sm btn-link">Editar</NavLink>
 
         <h6 className="section">Mascotas</h6>
-        <a className="item btn btn-sm btn-link">Lista</a> <br />
+        <NavLink to="/" className="item btn btn-sm btn-link">Lista</NavLink>
       </div>
     )
   }
