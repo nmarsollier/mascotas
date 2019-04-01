@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { HashRouter, Route } from "react-router-dom";
+import Toolbar from './Toolbar.js';
+import LoggedInRoute from '../../tools/LoggedInRoute';
 import './App.css';
-import Login from "./login/Login.js";
-import Menu from './menu/Menu.js';
-import Toolbar from './toolbar/Toolbar.js';
-import Welcome from "./welcome/Welcome.js";
+import Info from '../info/Info';
+import Login from "../login/Login.js";
+import Menu from './Menu.js';
+import Welcome from "../welcome/Welcome.js";
+
 
 class App extends Component {
   render() {
@@ -26,11 +29,12 @@ class App extends Component {
               <td id="content" className="main_content">
                 <Route exact path="/" component={Welcome} />
                 <Route exact path="/login" component={Login} />
+                <LoggedInRoute path="/info" component={Info} />
               </td>
             </tr>
           </tbody>
         </table>
-      </HashRouter>
+      </HashRouter >
     );
   }
 }

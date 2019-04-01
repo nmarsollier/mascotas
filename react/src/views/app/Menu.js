@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { logout } from "../store/sessionStore";
+import { logout } from "../../store/sessionStore";
 import './Menu.css';
 
 class LoginMenu extends Component {
@@ -9,9 +9,9 @@ class LoginMenu extends Component {
     return (
       <div>
         <h6 className="section">Sesión</h6>
-        <NavLink to="/login" className="item btn btn-sm btn-link">Login</NavLink>
-        <NavLink to="/" className="item btn btn-sm btn-link">Welcome</NavLink>
-        <NavLink to="/" className="item btn btn-sm btn-link">Registrarse</NavLink>
+        <NavLink to="/login" className="item btn btn-sm btn-link">Login</NavLink><br />
+        <NavLink to="/" className="item btn btn-sm btn-link">Welcome</NavLink><br />
+        <NavLink to="/" className="item btn btn-sm btn-link">Registrarse</NavLink><br />
       </div>
     )
   }
@@ -31,15 +31,15 @@ class StateMainMenu extends Component {
   render() {
     return (
       <div>
-        <NavLink to="/" className="item btn btn-sm btn-link">Sesión</NavLink>
-        <NavLink to="/" className="item btn btn-sm btn-link">Password</NavLink>
+        <NavLink to="/info" className="item btn btn-sm btn-link">Sesión</NavLink><br />
+        <NavLink to="/" className="item btn btn-sm btn-link">Password</NavLink><br />
         <NavLink onClick={this.logout} className="item btn btn-sm btn-link">Logout</NavLink><br />
 
         <h6 className="section">Perfil</h6>
-        <NavLink to="/" className="item btn btn-sm btn-link">Editar</NavLink>
+        <NavLink to="/" className="item btn btn-sm btn-link">Editar</NavLink><br />
 
         <h6 className="section">Mascotas</h6>
-        <NavLink to="/" className="item btn btn-sm btn-link">Lista</NavLink>
+        <NavLink to="/" className="item btn btn-sm btn-link">Lista</NavLink><br />
       </div>
     )
   }

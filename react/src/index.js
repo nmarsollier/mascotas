@@ -1,10 +1,10 @@
-import './index.css'
-import 'bootstrap/dist/css/bootstrap.css'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import sessionStore from "./store/sessionStore"
-import App from './App'
+import 'bootstrap/dist/css/bootstrap.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
+import './index.css';
+import sessionStore from "./store/sessionStore";
+import App from './views/app/App';
 
 ReactDOM.render(
     <Provider store={sessionStore}>

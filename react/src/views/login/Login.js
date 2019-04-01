@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { login } from "../store/sessionStore";
+import { login } from "../../store/sessionStore";
 import './Login.css';
 
 class StateLogin extends Component {
