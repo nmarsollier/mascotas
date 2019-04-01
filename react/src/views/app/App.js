@@ -13,9 +13,9 @@ class App extends Component {
   render() {
     return (
       <HashRouter>
-        <table className="main_table">
+        <table className="app_table">
           <thead>
-            <tr className="main_toolbar">
+            <tr className="app_toolbar">
               <td colSpan="2">
                 <Toolbar />
               </td>
@@ -23,10 +23,10 @@ class App extends Component {
           </thead>
           <tbody>
             <tr>
-              <td className="main_menu">
+              <td className="app_menu">
                 <Menu />
               </td>
-              <td id="content" className="main_content">
+              <td id="content" className="app_content">
                 <Route exact path="/" component={Welcome} />
                 <Route exact path="/login" component={Login} />
                 <LoggedInRoute path="/info" component={Info} />

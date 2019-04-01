@@ -38,7 +38,7 @@ class StateLogin extends Component {
     render() {
         return (
             <div className="login_content">
-                <h2 className="titulo">Login</h2>
+                <h2 className="global_title">Login</h2>
 
                 <form>
                     <div className="form-group">
@@ -61,12 +61,13 @@ class StateLogin extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        login: user => login(user),
-    };
-}
-
-const Login = connect(null, mapDispatchToProps)(StateLogin);
+const Login = connect(
+    null,
+    (dispatch) => {
+        return {
+            login: user => login(user),
+        };
+    }
+)(StateLogin);
 
 export default Login

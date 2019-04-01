@@ -13,6 +13,7 @@ class StateLoggedInRoute extends Component {
     }
   }
 }
+
 const LoggedInRoute = connect(
   (state) => {
     return {

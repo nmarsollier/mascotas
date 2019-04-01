@@ -8,7 +8,7 @@ class StateInfo extends Component {
 
         return (
             <div>
-                <h2>Perfil</h2>
+                <h2>Informaci&oacute;n de Perfil</h2>
                 <form>
                     <div className="form-group">
                         <label for="login">Login</label>

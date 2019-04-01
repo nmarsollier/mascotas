@@ -23,9 +23,9 @@ class StateToolbar extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { user: state.user };
-};
-const Toolbar = connect(mapStateToProps)(StateToolbar);
+const Toolbar = connect(
+  (state) => {
+    return { user: state.user };
+  })(StateToolbar);
 
 export default Toolbar
