@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { newUser } from "../../store/sessionStore";
 import ErrorComponent from "../../tools/ErrorComponent";
 import './Register.css';
+import ErrorLabel from "../tools/ErrorLabel";
 
 class StateRegister extends ErrorComponent {
     constructor(props) {
@@ -60,25 +61,25 @@ class StateRegister extends ErrorComponent {
                     <div className="form-group">
                         <label>Login</label>
                         <input id="login" type="text" onChange={this.updateState} className={this.getErrorClass("login", "form-control")}></input>
-                        <div hidden={!this.getErrorText('login')} class="invalid-feedback">{this.getErrorText('login')}</div>
+                        <ErrorLabel error={this.getErrorText('login')} />
                     </div>
 
                     <div className="form-group">
                         <label>Usuario</label>
                         <input id="name" type="text" onChange={this.updateState} className={this.getErrorClass("name", "form-control")}></input>
-                        <div hidden={!this.getErrorText('name')} class="invalid-feedback">{this.getErrorText('name')}</div>
+                        <ErrorLabel error={this.getErrorText('name')} />
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
                         <input id="password" type="password" onChange={this.updateState} className={this.getErrorClass("password", "form-control")}></input>
-                        <div hidden={!this.getErrorText('password')} class="invalid-feedback">{this.getErrorText('password')}</div>
+                        <ErrorLabel error={this.getErrorText('password')} />
                     </div>
 
                     <div className="form-group">
                         <label>Repetir Password</label>
                         <input id="password2" type="password" onChange={this.updateState} className={this.getErrorClass("password2", "form-control")}></input>
-                        <div hidden={!this.getErrorText('password2')} class="invalid-feedback">{this.getErrorText('password2')}</div>
+                        <ErrorLabel error={this.getErrorText('password2')} />
                     </div>
 
                     <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>

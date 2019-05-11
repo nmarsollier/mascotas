@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { changePassword } from "../../api/userApi";
 import ErrorComponent from "../../tools/ErrorComponent";
 import './Password.css';
+import ErrorLabel from "../tools/ErrorLabel";
 
 class StatePassword extends ErrorComponent {
     constructor(props) {
@@ -56,19 +57,19 @@ class StatePassword extends ErrorComponent {
                     <div className="form-group">
                         <label>Password Actual</label>
                         <input id="currentPassword" type="password" onChange={this.updateState} className={this.getErrorClass("currentPassword", "form-control")}></input>
-                        <div hidden={!this.getErrorText('currentPassword')} class="invalid-feedback">{this.getErrorText('currentPassword')}</div>
+                        <ErrorLabel error={this.getErrorText('currentPassword')} />
                     </div>
 
                     <div className="form-group">
                         <label>Nuevo Password</label>
                         <input id="newPassword" type="password" onChange={this.updateState} className={this.getErrorClass("newPassword", "form-control")}></input>
-                        <div hidden={!this.getErrorText('newPassword')} class="invalid-feedback">{this.getErrorText('newPassword')}</div>
+                        <ErrorLabel error={this.getErrorText('newPassword')} />
                     </div>
 
                     <div className="form-group">
                         <label>Repetir Password</label>
                         <input id="newPassword2" type="password" onChange={this.updateState} className={this.getErrorClass("newPassword2", "form-control")}></input>
-                        <div hidden={!this.getErrorText('newPassword2')} class="invalid-feedback">{this.getErrorText('newPassword2')}</div>
+                        <ErrorLabel error={this.getErrorText('newPassword2')} />
                     </div>
 
                     <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>

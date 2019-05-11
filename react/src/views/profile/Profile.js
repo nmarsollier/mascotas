@@ -4,6 +4,7 @@ import { saveProfile, getCurrentProfile } from "../../api/profileApi";
 import { getProvinces } from "../../api/provincesApi";
 import ErrorComponent from "../../tools/ErrorComponent";
 import './Profile.css';
+import ErrorLabel from "../tools/ErrorLabel";
 
 class StateProfile extends ErrorComponent {
     constructor(props) {
@@ -87,13 +88,13 @@ class StateProfile extends ErrorComponent {
                     <div className="form-group">
                         <label>Nombre</label>
                         <input id="name" value={this.state.name} type="text" onChange={this.updateState} className={this.getErrorClass("name", "form-control")}></input>
-                        <div hidden={!this.getErrorText('name')} class="invalid-feedback">{this.getErrorText('name')}</div>
+                        <ErrorLabel error={this.getErrorText('name')} />
                     </div>
 
                     <div className="form-group">
                         <label>Email</label>
                         <input id="email" value={this.state.email} type="text" onChange={this.updateState} className={this.getErrorClass("email", "form-control")}></input>
-                        <div hidden={!this.getErrorText('email')} class="invalid-feedback">{this.getErrorText('email')}</div>
+                        <ErrorLabel error={this.getErrorText('email')} />
                     </div>
 
                     <div className="form-group">
@@ -104,19 +105,19 @@ class StateProfile extends ErrorComponent {
                             className={this.getErrorClass("email", "form-control")}>
                             {this.state.provinces.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
                         </select>
-                        <div hidden={!this.getErrorText('province')} class="invalid-feedback">{this.getErrorText('province')}</div>
+                        <ErrorLabel error={this.getErrorText('province')} />
                     </div>
 
                     <div className="form-group">
                         <label>Direcci&oacute;n</label>
                         <input id="address" value={this.state.address} type="text" onChange={this.updateState} className={this.getErrorClass("address", "form-control")}></input>
-                        <div hidden={!this.getErrorText('address')} class="invalid-feedback">{this.getErrorText('address')}</div>
+                        <ErrorLabel error={this.getErrorText('address')} />
                     </div>
 
                     <div className="form-group">
                         <label>Tel&eacute;fono</label>
                         <input id="phone" value={this.state.phone} type="text" onChange={this.updateState} className={this.getErrorClass("phone", "form-control")}></input>
-                        <div hidden={!this.getErrorText('phone')} class="invalid-feedback">{this.getErrorText('phone')}</div>
+                        <ErrorLabel error={this.getErrorText('phone')} />
                     </div>
 
                     <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { login } from "../../store/sessionStore";
 import ErrorComponent from "../../tools/ErrorComponent";
 import './Login.css';
+import ErrorLabel from "../tools/ErrorLabel";
 
 class StateLogin extends ErrorComponent {
     constructor(props) {
@@ -52,13 +53,13 @@ class StateLogin extends ErrorComponent {
                     <div className="form-group">
                         <label>Usuario</label>
                         <input id="login" type="text" onChange={this.updateState} className={this.getErrorClass("login", "form-control")}></input>
-                        <div hidden={!this.getErrorText('login')} class="invalid-feedback">{this.getErrorText('login')}</div>
+                        <ErrorLabel error={this.getErrorText('login')} />
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
                         <input id="password" type="password" onChange={this.updateState} className={this.getErrorClass("password", "form-control")}></input>
-                        <div hidden={!this.getErrorText('password')} class="invalid-feedback">{this.getErrorText('password')}</div>
+                        <ErrorLabel error={this.getErrorText('password')} />
                     </div>
 
                     <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>
