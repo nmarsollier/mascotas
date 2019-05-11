@@ -11,7 +11,7 @@ class LoginMenu extends Component {
         <h6 className="menu_section">Sesión</h6>
         <NavLink to="/login" className="menu_item btn btn-sm btn-link">Login</NavLink><br />
         <NavLink to="/" className="menu_item btn btn-sm btn-link">Welcome</NavLink><br />
-        <NavLink to="/" className="menu_item btn btn-sm btn-link">Registrarse</NavLink><br />
+        <NavLink to="/newUser" className="menu_item btn btn-sm btn-link">Registrarse</NavLink><br />
       </div>
     )
   }
@@ -69,7 +69,6 @@ class StateMenu extends Component {
 const Menu = connect(
   state => {
     return { user: state.user };
-  })
-  (StateMenu);
+  })(StateMenu);
 
 export default Menu

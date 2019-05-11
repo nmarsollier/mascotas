@@ -6,7 +6,7 @@ import Welcome from "../views/welcome/Welcome.js";
 
 class StateLoggedInRoute extends Component {
   render() {
-    if (this.props.token == undefined) {
+    if (this.props.token === undefined) {
       return (<Route exact path={this.props.path} component={Welcome} />)
     } else {
       return (<Route exact path={this.props.path} component={this.props.component} />)

@@ -48,7 +48,7 @@ export function login(payload) {
 
 export function reloadCurrentUser() {
     return new Promise(function (resolve, reject) {
-        if (getCurrentToken() != undefined) {
+        if (getCurrentToken() !== undefined) {
             axios.get("http://localhost:3000/v1/users/current")
                 .then(res => {
                     localStorage.setItem('user', res.data);
@@ -62,6 +62,22 @@ export function reloadCurrentUser() {
     })
 }
 
-if (getCurrentToken() != undefined) {
+export function newUser(payload) {
+    return new Promise(function (resolve, reject) {
+        if (getCurrentToken() !== undefined) {
+            axios.post("http://localhost:3000/v1/user", payload)
+                .then(res => {
+                    setCurrentToken(res.data.token)
+                    resolve(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        }
+    })
+}
+
+if (getCurrentToken() !== undefined) {
     setCurrentToken(getCurrentToken())
 }

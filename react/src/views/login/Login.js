@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { login } from "../../store/sessionStore";
 import './Login.css';
+import ErrorComponent from "../../tools/ErrorComponent";
 
-class StateLogin extends Component {
+class StateLogin extends ErrorComponent {
     constructor(props) {
         super(props)
 
@@ -27,7 +28,7 @@ class StateLogin extends Component {
         this.props.login(this.state).then(result => {
             this.props.history.push('/')
         }).catch(error => {
-
+            this.processRestValidations(error.response.data)
         })
     }
 
@@ -43,20 +44,24 @@ class StateLogin extends Component {
                 <form>
                     <div className="form-group">
                         <label for="login">Usuario</label>
-                        <input id="login" type="text" onChange={this.updateState} placeholder="Nombre de usuario" className="form-control"></input>
+                        <input id="login" type="text" onChange={this.updateState} placeholder="Nombre de usuario" className={this.getErrorClass("login", "form-control")}></input>
+                        <div hidden={!this.getErrorText('login')} class="invalid-feedback">{this.getErrorText('login')}</div>
                     </div>
 
                     <div className="form-group">
                         <label for="password">Password</label>
-                        <input id="password" type="password" onChange={this.updateState} placeholder="Contrase&ntilde;a" className="form-control"></input>
+                        <input id="password" type="password" onChange={this.updateState} placeholder="Contrase&ntilde;a" className={this.getErrorClass("password", "form-control")}></input>
+                        <div hidden={!this.getErrorText('password')} class="invalid-feedback">{this.getErrorText('password')}</div>
                     </div>
+
+                    <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.loginClick}>Login</button>
                         <button className="btn btn-light" onClick={this.cancelClick} >Cancel</button >
                     </div >
                 </form >
-            </div>
+            </div >
         )
     }
 }

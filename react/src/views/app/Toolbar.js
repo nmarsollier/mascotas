@@ -8,7 +8,7 @@ class StateToolbar extends Component {
     return (
       <nav className="navbar navbar-expand-sm bg-dark navbar-dark d-flex shadow">
         <div className="toolbar_icon">
-          <img src="/assets/favicon.png"></img>
+          <img src="/assets/favicon.png" alt=""></img>
         </div>
 
         <div className="toolbar_title navbar-brand flex-grow-1">

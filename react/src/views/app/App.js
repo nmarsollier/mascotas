@@ -7,6 +7,7 @@ import Info from '../info/Info';
 import Login from "../login/Login.js";
 import Menu from './Menu.js';
 import Welcome from "../welcome/Welcome.js";
+import Register from '../login/Register.js';
 
 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
                 <Route exact path="/" component={Welcome} />
                 <Route exact path="/login" component={Login} />
                 <LoggedInRoute path="/info" component={Info} />
+                <Route path="/newUser" component={Register} />
               </td>
             </tr>
           </tbody>

@@ -4,6 +4,7 @@ import * as userApi from "../api/userApi"
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT"
 const USER_FETCH = "USER_FETCH"
+const NEW_USER = "NEW_USER"
 
 const initialState = {
     token: userApi.getCurrentToken(),
@@ -13,6 +14,11 @@ const initialState = {
 const sessionStore = createStore((state = initialState, action) => {
     switch (action.type) {
         case LOGIN:
+            return {
+                ...state,
+                token: action.payload.token
+            }
+        case NEW_USER:
             return {
                 ...state,
                 token: action.payload.token
@@ -28,8 +34,9 @@ const sessionStore = createStore((state = initialState, action) => {
                 token: undefined,
                 user: undefined
             }
+        default:
+            return state
     }
-    return state
 });
 
 export function login(payload) {
@@ -38,6 +45,27 @@ export function login(payload) {
             .then(data => {
                 sessionStore.dispatch({
                     type: LOGIN,
+                    payload: data
+                })
+                reloadCurrentUser()
+                    .then(data => { result(data) })
+                    .catch(err => { reject(err) })
+            })
+            .catch(err => {
+                sessionStore.dispatch({
+                    type: LOGOUT
+                })
+                reject(err)
+            })
+    })
+}
+
+export function newUser(payload) {
+    return new Promise((result, reject) => {
+        userApi.newUser(payload)
+            .then(data => {
+                sessionStore.dispatch({
+                    type: NEW_USER,
                     payload: data
                 })
                 reloadCurrentUser()
@@ -91,7 +119,7 @@ export function logout() {
     })
 }
 
-if (userApi.getCurrentToken() != undefined) {
+if (userApi.getCurrentToken() !== undefined) {
     reloadCurrentUser().then()
 }
 
