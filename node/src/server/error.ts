@@ -99,9 +99,7 @@ export function logErrors(err: any, req: express.Request, res: express.Response,
   console.error(err.message);
 
   res.status(err.status || ERROR_INTERNAL_ERROR);
-  res.send({
-    error: err.message
-  });
+  res.send(err);
 }
 
 

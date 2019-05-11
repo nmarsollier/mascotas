@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import { Component } from "react";
 
 class ErrorComponent extends Component {
     constructor(props) {
@@ -45,6 +45,10 @@ class ErrorComponent extends Component {
 
     getErrorClass(component, baseClass) {
         return baseClass + (this.getErrorText(component) ? " is-invalid" : "")
+    }
+
+    hasErrors() {
+        return this.errors.size > 0 && !this.errorMessage
     }
 }
 

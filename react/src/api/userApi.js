@@ -78,6 +78,21 @@ export function newUser(payload) {
     })
 }
 
+export function changePassword(payload) {
+    return new Promise(function (resolve, reject) {
+        if (getCurrentToken() !== undefined) {
+            axios.post("http://localhost:3000/v1/user/password", payload)
+                .then(res => {
+                    resolve(res.data)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        }
+    })
+}
+
 if (getCurrentToken() !== undefined) {
     setCurrentToken(getCurrentToken())
 }

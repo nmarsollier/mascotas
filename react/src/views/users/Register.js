@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { newUser } from "../../store/sessionStore";
-import './Register.css';
 import ErrorComponent from "../../tools/ErrorComponent";
+import './Register.css';
 
 class StateRegister extends ErrorComponent {
     constructor(props) {
@@ -27,8 +27,21 @@ class StateRegister extends ErrorComponent {
     }
 
     registerClick() {
+        this.cleanRestValidations()
+        if (!this.state.login) {
+            this.addError("login", "No puede estar vacío")
+        }
+        if (!this.state.name) {
+            this.addError("name", "ReqNo puede estar vacíouerido")
+        }
+        if (!this.state.password) {
+            this.addError("password", "No puede estar vacío")
+        }
         if (this.state.password !== this.state.password2) {
             this.addError("password2", "Las contraseñas no coinciden")
+        }
+
+        if (this.hasErrors()) {
             this.forceUpdate()
             return
         }

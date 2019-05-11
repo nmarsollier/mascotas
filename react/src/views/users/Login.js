@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { login } from "../../store/sessionStore";
-import './Login.css';
 import ErrorComponent from "../../tools/ErrorComponent";
+import './Login.css';
 
 class StateLogin extends ErrorComponent {
     constructor(props) {
@@ -25,6 +25,19 @@ class StateLogin extends ErrorComponent {
     }
 
     loginClick() {
+        this.cleanRestValidations()
+        if (!this.state.login) {
+            this.addError("login", "No puede estar vacío")
+        }
+        if (!this.state.password) {
+            this.addError("password", "No puede estar vacío")
+        }
+
+        if (this.hasErrors()) {
+            this.forceUpdate()
+            return
+        }
+
         this.props.login(this.state).then(result => {
             this.props.history.push('/')
         }).catch(error => {

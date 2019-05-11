@@ -4,10 +4,11 @@ import Toolbar from './Toolbar.js';
 import LoggedInRoute from '../../tools/LoggedInRoute';
 import './App.css';
 import Info from '../info/Info';
-import Login from "../login/Login.js";
+import Login from "../users/Login.js";
 import Menu from './Menu.js';
 import Welcome from "../welcome/Welcome.js";
-import Register from '../login/Register.js';
+import Register from '../users/Register.js';
+import Password from '../users/Password.js';
 
 
 class App extends Component {
@@ -30,8 +31,9 @@ class App extends Component {
               <td id="content" className="app_content">
                 <Route exact path="/" component={Welcome} />
                 <Route exact path="/login" component={Login} />
-                <LoggedInRoute path="/info" component={Info} />
                 <Route path="/newUser" component={Register} />
+                <LoggedInRoute path="/info" component={Info} />
+                <LoggedInRoute path="/password" component={Password} />
               </td>
             </tr>
           </tbody>

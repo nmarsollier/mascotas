@@ -32,7 +32,7 @@ class StateMainMenu extends Component {
     return (
       <div>
         <NavLink to="/info" className="menu_item btn btn-sm btn-link">Sesión</NavLink><br />
-        <NavLink to="/" className="menu_item btn btn-sm btn-link">Password</NavLink><br />
+        <NavLink to="/password" className="menu_item btn btn-sm btn-link">Password</NavLink><br />
         <NavLink onClick={this.logout} className="menu_item btn btn-sm btn-link">Logout</NavLink><br />
 
         <h6 className="menu_section">Perfil</h6>
