@@ -50,6 +50,12 @@ class ErrorComponent extends Component {
     hasErrors() {
         return this.errors.size > 0 && !this.errorMessage
     }
+
+    updateState(event) {
+        var update = {}
+        update[event.target.id] = event.target.value
+        this.setState(update);
+    }
 }
 
 export default ErrorComponent

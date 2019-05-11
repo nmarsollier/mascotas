@@ -9,6 +9,7 @@ import Menu from './Menu.js';
 import Welcome from "../welcome/Welcome.js";
 import Register from '../users/Register.js';
 import Password from '../users/Password.js';
+import Profile from '../profile/Profile.js';
 
 
 class App extends Component {
@@ -34,6 +35,7 @@ class App extends Component {
                 <Route path="/newUser" component={Register} />
                 <LoggedInRoute path="/info" component={Info} />
                 <LoggedInRoute path="/password" component={Password} />
+                <LoggedInRoute path="/profile" component={Profile} />
               </td>
             </tr>
           </tbody>

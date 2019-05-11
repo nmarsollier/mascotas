@@ -18,12 +18,6 @@ class StateLogin extends ErrorComponent {
         }
     }
 
-    updateState(event) {
-        var update = {}
-        update[event.target.id] = event.target.value
-        this.setState(update);
-    }
-
     loginClick() {
         this.cleanRestValidations()
         if (!this.state.login) {
@@ -56,14 +50,14 @@ class StateLogin extends ErrorComponent {
 
                 <form>
                     <div className="form-group">
-                        <label for="login">Usuario</label>
-                        <input id="login" type="text" onChange={this.updateState} placeholder="Nombre de usuario" className={this.getErrorClass("login", "form-control")}></input>
+                        <label>Usuario</label>
+                        <input id="login" type="text" onChange={this.updateState} className={this.getErrorClass("login", "form-control")}></input>
                         <div hidden={!this.getErrorText('login')} class="invalid-feedback">{this.getErrorText('login')}</div>
                     </div>
 
                     <div className="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" type="password" onChange={this.updateState} placeholder="Contrase&ntilde;a" className={this.getErrorClass("password", "form-control")}></input>
+                        <label>Password</label>
+                        <input id="password" type="password" onChange={this.updateState} className={this.getErrorClass("password", "form-control")}></input>
                         <div hidden={!this.getErrorText('password')} class="invalid-feedback">{this.getErrorText('password')}</div>
                     </div>
 

@@ -11,19 +11,19 @@ class StateInfo extends Component {
                 <h2>Informaci&oacute;n de Perfil</h2>
                 <form>
                     <div className="form-group">
-                        <label for="login">Login</label>
+                        <label>Login</label>
                         <input className="form-control" id="login" value={user.login} readonly />
                     </div>
                     <div class="form-group">
-                        <label for="name">Nombre</label>
+                        <label>Nombre</label>
                         <input className="form-control" id="name" value={user.name} readonly />
                     </div>
                     <div class="form-group">
-                        <label for="name">Permisos</label>
+                        <label>Permisos</label>
                         <input className="form-control" id="name" value={user.permissions} readonly />
                     </div>
                     <div class="form-group">
-                        <label for="name">Token</label>
+                        <label>Token</label>
                         <input className="form-control" id="name" value={token} readonly />
                     </div>
                 </form>

@@ -19,12 +19,6 @@ class StatePassword extends ErrorComponent {
         }
     }
 
-    updateState(event) {
-        var update = {}
-        update[event.target.id] = event.target.value
-        this.setState(update);
-    }
-
     updatePasswordClick() {
         this.cleanRestValidations()
 
@@ -60,19 +54,19 @@ class StatePassword extends ErrorComponent {
 
                 <form>
                     <div className="form-group">
-                        <label for="currentPassword">Password Actual</label>
+                        <label>Password Actual</label>
                         <input id="currentPassword" type="password" onChange={this.updateState} className={this.getErrorClass("currentPassword", "form-control")}></input>
                         <div hidden={!this.getErrorText('currentPassword')} class="invalid-feedback">{this.getErrorText('currentPassword')}</div>
                     </div>
 
                     <div className="form-group">
-                        <label for="newPassword">Nuevo Password</label>
+                        <label>Nuevo Password</label>
                         <input id="newPassword" type="password" onChange={this.updateState} className={this.getErrorClass("newPassword", "form-control")}></input>
                         <div hidden={!this.getErrorText('newPassword')} class="invalid-feedback">{this.getErrorText('newPassword')}</div>
                     </div>
 
                     <div className="form-group">
-                        <label for="newPassword2">Repetir Password</label>
+                        <label>Repetir Password</label>
                         <input id="newPassword2" type="password" onChange={this.updateState} className={this.getErrorClass("newPassword2", "form-control")}></input>
                         <div hidden={!this.getErrorText('newPassword2')} class="invalid-feedback">{this.getErrorText('newPassword2')}</div>
                     </div>

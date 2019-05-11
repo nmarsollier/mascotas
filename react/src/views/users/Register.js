@@ -20,12 +20,6 @@ class StateRegister extends ErrorComponent {
         }
     }
 
-    updateState(event) {
-        var update = {}
-        update[event.target.id] = event.target.value
-        this.setState(update);
-    }
-
     registerClick() {
         this.cleanRestValidations()
         if (!this.state.login) {
@@ -64,26 +58,26 @@ class StateRegister extends ErrorComponent {
 
                 <form>
                     <div className="form-group">
-                        <label for="login">Login</label>
-                        <input id="login" type="text" onChange={this.updateState} placeholder="Login" className={this.getErrorClass("login", "form-control")}></input>
+                        <label>Login</label>
+                        <input id="login" type="text" onChange={this.updateState} className={this.getErrorClass("login", "form-control")}></input>
                         <div hidden={!this.getErrorText('login')} class="invalid-feedback">{this.getErrorText('login')}</div>
                     </div>
 
                     <div className="form-group">
-                        <label for="name">Usuario</label>
-                        <input id="name" type="text" onChange={this.updateState} placeholder="Nombre de usuario" className={this.getErrorClass("name", "form-control")}></input>
+                        <label>Usuario</label>
+                        <input id="name" type="text" onChange={this.updateState} className={this.getErrorClass("name", "form-control")}></input>
                         <div hidden={!this.getErrorText('name')} class="invalid-feedback">{this.getErrorText('name')}</div>
                     </div>
 
                     <div className="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" type="password" onChange={this.updateState} placeholder="Contrase&ntilde;a" className={this.getErrorClass("password", "form-control")}></input>
+                        <label>Password</label>
+                        <input id="password" type="password" onChange={this.updateState} className={this.getErrorClass("password", "form-control")}></input>
                         <div hidden={!this.getErrorText('password')} class="invalid-feedback">{this.getErrorText('password')}</div>
                     </div>
 
                     <div className="form-group">
-                        <label for="password2">Repetir Password</label>
-                        <input id="password2" type="password" onChange={this.updateState} placeholder="Repetir Contrase&ntilde;a" className={this.getErrorClass("password2", "form-control")}></input>
+                        <label>Repetir Password</label>
+                        <input id="password2" type="password" onChange={this.updateState} className={this.getErrorClass("password2", "form-control")}></input>
                         <div hidden={!this.getErrorText('password2')} class="invalid-feedback">{this.getErrorText('password2')}</div>
                     </div>
 

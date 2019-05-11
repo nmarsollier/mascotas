@@ -36,7 +36,7 @@ class StateMainMenu extends Component {
         <NavLink onClick={this.logout} className="menu_item btn btn-sm btn-link">Logout</NavLink><br />
 
         <h6 className="menu_section">Perfil</h6>
-        <NavLink to="/" className="menu_item btn btn-sm btn-link">Editar</NavLink><br />
+        <NavLink to="/profile" className="menu_item btn btn-sm btn-link">Editar</NavLink><br />
 
         <h6 className="menu_section">Mascotas</h6>
         <NavLink to="/" className="menu_item btn btn-sm btn-link">Lista</NavLink><br />
