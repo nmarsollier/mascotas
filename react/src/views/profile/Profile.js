@@ -4,9 +4,9 @@ import { saveProfile, getCurrentProfile, getPictureUrl } from "../../api/profile
 import { getProvinces } from "../../api/provincesApi";
 import ErrorComponent from "../../tools/ErrorComponent";
 import './Profile.css';
-import ErrorLabel from "../tools/ErrorLabel";
-import ImageUpload from "../tools/ImageUpload";
+import ImageUpload from "../../tools/ImageUpload";
 import { saveImage } from "../../api/imageApi";
+import ErrorLabel from "../../tools/ErrorLabel";
 
 class StateProfile extends ErrorComponent {
     constructor(props) {

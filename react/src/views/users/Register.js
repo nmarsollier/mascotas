@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { newUser } from "../../store/sessionStore";
 import ErrorComponent from "../../tools/ErrorComponent";
 import './Register.css';
-import ErrorLabel from "../tools/ErrorLabel";
+import ErrorLabel from "../../tools/ErrorLabel";
 
 class StateRegister extends ErrorComponent {
     constructor(props) {
