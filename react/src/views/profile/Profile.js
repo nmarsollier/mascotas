@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { saveProfile, getCurrentProfile } from "../../api/profileApi";
+import { saveProfile, getCurrentProfile, getPictureUrl } from "../../api/profileApi";
 import { getProvinces } from "../../api/provincesApi";
 import ErrorComponent from "../../tools/ErrorComponent";
 import './Profile.css';
 import ErrorLabel from "../tools/ErrorLabel";
+import ImageUpload from "../tools/ImageUpload";
+import { saveImage } from "../../api/imageApi";
 
 class StateProfile extends ErrorComponent {
     constructor(props) {
@@ -13,6 +15,7 @@ class StateProfile extends ErrorComponent {
         this.updateClick = this.updateClick.bind(this)
         this.cancelClick = this.cancelClick.bind(this)
         this.updateState = this.updateState.bind(this);
+        this.uploadPicture = this.uploadPicture.bind(this);
 
         this.state = {
             name: "",
@@ -41,6 +44,18 @@ class StateProfile extends ErrorComponent {
     loadProfile() {
         this.props.getCurrentProfile().then(result => {
             this.setState(result)
+        }).catch(error => {
+            this.processRestValidations(error.response.data)
+        })
+    }
+
+    uploadPicture(image) {
+        this.props.saveImage({
+            image: image
+        }).then(result => {
+            this.setState({
+                picture: result.id
+            })
         }).catch(error => {
             this.processRestValidations(error.response.data)
         })
@@ -92,6 +107,13 @@ class StateProfile extends ErrorComponent {
                     </div>
 
                     <div className="form-group">
+                        <label>Profile Picture</label>
+                        <ImageUpload src={getPictureUrl(this.state.picture)}
+                            onChange={this.uploadPicture} />
+                        <ErrorLabel error={this.getErrorText('name')} />
+                    </div>
+
+                    <div className="form-group">
                         <label>Email</label>
                         <input id="email" value={this.state.email} type="text" onChange={this.updateState} className={this.getErrorClass("email", "form-control")}></input>
                         <ErrorLabel error={this.getErrorText('email')} />
@@ -138,7 +160,9 @@ const Profile = connect(
         return {
             saveProfile: user => saveProfile(user),
             getCurrentProfile: _ => getCurrentProfile(),
-            getProvinces: _ => getProvinces()
+            getProvinces: _ => getProvinces(),
+            saveImage: payload => saveImage(payload),
+            getPictureUrl: _ => getPictureUrl()
         };
     }
 )(StateProfile);

@@ -32,3 +32,7 @@ export function getCurrentProfile() {
         }
     })
 }
+
+export function getPictureUrl(id) {
+    return "http://localhost:3000/v1/image/" + id;
+}
