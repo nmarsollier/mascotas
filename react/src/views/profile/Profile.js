@@ -2,20 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import { saveProfile, getCurrentProfile, getPictureUrl } from "../../api/profileApi";
 import { getProvinces } from "../../api/provincesApi";
-import ErrorComponent from "../../tools/ErrorComponent";
+import CommonComponent from "../../tools/CommonComponent";
 import '../../styles.css';
 import ImageUpload from "../../tools/ImageUpload";
 import { saveImage } from "../../api/imageApi";
 import ErrorLabel from "../../tools/ErrorLabel";
 
-class StateProfile extends ErrorComponent {
+class StateProfile extends CommonComponent {
     constructor(props) {
         super(props)
 
         this.updateClick = this.updateClick.bind(this)
-        this.cancelClick = this.cancelClick.bind(this)
-        this.updateState = this.updateState.bind(this);
-        this.uploadPicture = this.uploadPicture.bind(this);
 
         this.state = {
             name: "",
@@ -90,10 +87,6 @@ class StateProfile extends ErrorComponent {
         })
     }
 
-    cancelClick() {
-        this.props.history.push('/')
-    }
-
     render() {
         return (
             <div className="global_content">
@@ -146,7 +139,7 @@ class StateProfile extends ErrorComponent {
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.updateClick}>Actualizar</button>
-                        <button className="btn btn-light" onClick={this.cancelClick} >Cancel</button >
+                        <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
                     </div >
                 </form >
             </div>

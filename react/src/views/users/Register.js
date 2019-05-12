@@ -1,17 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { newUser } from "../../store/sessionStore";
-import ErrorComponent from "../../tools/ErrorComponent";
+import CommonComponent from "../../tools/CommonComponent";
 import '../../styles.css';
 import ErrorLabel from "../../tools/ErrorLabel";
 
-class StateRegister extends ErrorComponent {
+class StateRegister extends CommonComponent {
     constructor(props) {
         super(props)
 
         this.registerClick = this.registerClick.bind(this)
-        this.cancelClick = this.cancelClick.bind(this)
-        this.updateState = this.updateState.bind(this);
 
         this.state = {
             login: "",
@@ -48,10 +46,6 @@ class StateRegister extends ErrorComponent {
         })
     }
 
-    cancelClick() {
-        this.props.history.push('/')
-    }
-
     render() {
         return (
             <div className="global_content">
@@ -86,7 +80,7 @@ class StateRegister extends ErrorComponent {
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.registerClick}>Registrarse</button>
-                        <button className="btn btn-light" onClick={this.cancelClick} >Cancel</button >
+                        <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
                     </div >
                 </form >
             </div>

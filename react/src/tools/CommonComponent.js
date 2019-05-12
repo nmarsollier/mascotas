@@ -1,11 +1,13 @@
 import { Component } from "react";
 
-class ErrorComponent extends Component {
+class CommonComponent extends Component {
     constructor(props) {
         super(props)
 
         // Es un mensaje genérico de error
         this.errorMessage = undefined
+        this.goHome = this.goHome.bind(this)
+        this.updateState = this.updateState.bind(this);
 
         // Son errores de los componentes visuales, es un map
         // la clave es el campo con error, el contenido es el mensaje
@@ -56,6 +58,10 @@ class ErrorComponent extends Component {
         update[event.target.id] = event.target.value
         this.setState(update);
     }
+
+    goHome() {
+        this.props.history.push('/')
+    }
 }
 
-export default ErrorComponent
+export default CommonComponent

@@ -1,17 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { changePassword } from "../../api/userApi";
-import ErrorComponent from "../../tools/ErrorComponent";
+import CommonComponent from "../../tools/CommonComponent";
 import '../../styles.css';
 import ErrorLabel from "../../tools/ErrorLabel";
 
-class StatePassword extends ErrorComponent {
+class StatePassword extends CommonComponent {
     constructor(props) {
         super(props)
 
         this.updatePasswordClick = this.updatePasswordClick.bind(this)
-        this.cancelClick = this.cancelClick.bind(this)
-        this.updateState = this.updateState.bind(this);
 
         this.state = {
             currentPassword: "",
@@ -44,10 +42,6 @@ class StatePassword extends ErrorComponent {
         })
     }
 
-    cancelClick() {
-        this.props.history.push('/')
-    }
-
     render() {
         return (
             <div className="global_content">
@@ -76,7 +70,7 @@ class StatePassword extends ErrorComponent {
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.updatePasswordClick}>Cambiar</button>
-                        <button className="btn btn-light" onClick={this.cancelClick} >Cancel</button >
+                        <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
                     </div >
                 </form >
             </div>
