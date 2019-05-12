@@ -39,7 +39,7 @@ class StateMainMenu extends Component {
         <NavLink to="/profile" className="menu_item btn btn-sm btn-link">Editar</NavLink><br />
 
         <h6 className="menu_section">Mascotas</h6>
-        <NavLink to="/" className="menu_item btn btn-sm btn-link">Lista</NavLink><br />
+        <NavLink to="/pets" className="menu_item btn btn-sm btn-link">Lista</NavLink><br />
       </div>
     )
   }

@@ -1,61 +1,73 @@
 import React from "react";
 import { connect } from "react-redux";
-import { newUser } from "../../store/sessionStore";
-import CommonComponent from "../../tools/CommonComponent";
+import { loadPets } from "../../api/petsApi";
 import '../../styles.css';
-import ErrorLabel from "../../tools/ErrorLabel";
+import CommonComponent from "../../tools/CommonComponent";
 
 class StatePets extends CommonComponent {
     constructor(props) {
         super(props)
 
-        this.registerClick = this.registerClick.bind(this)
+        this.editPetClick = this.editPetClick.bind(this)
+        this.loadPets = this.loadPets.bind(this)
+        this.newPetClick = this.newPetClick.bind(this)
 
         this.state = {
-            login: "",
-            name: "",
-            password: "",
-            password2: ""
+            pets: []
         }
+
+        this.loadPets()
+    }
+
+    loadPets() {
+        this.props.loadPets().then(result => {
+            this.setState({
+                pets: result
+            })
+        }).catch(error => {
+            this.processRestValidations(error.response.data)
+        })
+    }
+
+    editPetClick(petId) {
+        this.props.history.push('/editPet/' + petId)
+    }
+
+    newPetClick() {
+        this.props.history.push('/editPet')
     }
 
     render() {
         return (
             <div className="global_content">
-                <h2 className="global_title">Registrar Usuario</h2>
+                <h2 className="global_title">Mascotas</h2>
+                <table id="mascotas" class="table">
+                    <head>
+                        <tr>
+                            <th> Nombre </th>
+                            <th> Descripción </th>
+                            <th> </th>
+                        </tr>
+                    </head>
+                    <tbody>
+                        {this.state.pets.map((pet, i) => {
+                            return (
+                                <tr key={i}>
+                                    <td>{pet.name}</td>
+                                    <td>{pet.description}</td>
+                                    <td class="text">
+                                        <img src="/assets/edit.png" alt="" name="editar" onClick={() => this.editPetClick(pet.id)} />
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
 
-                <form>
-                    <div className="form-group">
-                        <label>Login</label>
-                        <input id="login" type="text" onChange={this.updateState} className={this.getErrorClass("login", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('login')} />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Usuario</label>
-                        <input id="name" type="text" onChange={this.updateState} className={this.getErrorClass("name", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('name')} />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input id="password" type="password" onChange={this.updateState} className={this.getErrorClass("password", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('password')} />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Repetir Password</label>
-                        <input id="password2" type="password" onChange={this.updateState} className={this.getErrorClass("password2", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('password2')} />
-                    </div>
-
-                    <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>
-
-                    <div className="btn-group ">
-                        <button className="btn btn-primary" onClick={this.registerClick}>Registrarse</button>
-                        <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
-                    </div >
-                </form >
+                <div className="btn-group ">
+                    <button className="btn btn-success" onClick={this.newPetClick} >Nueva Mascota</button >
+                    <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
+                </div >
             </div>
         )
     }
@@ -65,7 +77,7 @@ const Pets = connect(
     null,
     (dispatch) => {
         return {
-            newUser: user => newUser(user),
+            loadPets: user => loadPets(user),
         };
     }
 )(StatePets);
