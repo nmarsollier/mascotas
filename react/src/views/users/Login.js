@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { login } from "../../store/sessionStore";
 import ErrorComponent from "../../tools/ErrorComponent";
-import './Login.css';
+import '../../styles.css';
 import ErrorLabel from "../../tools/ErrorLabel";
 
 class StateLogin extends ErrorComponent {
@@ -46,7 +46,7 @@ class StateLogin extends ErrorComponent {
 
     render() {
         return (
-            <div className="login_content">
+            <div className="global_content">
                 <h2 className="global_title">Login</h2>
 
                 <form>

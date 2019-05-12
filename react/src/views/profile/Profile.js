@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { saveProfile, getCurrentProfile, getPictureUrl } from "../../api/profileApi";
 import { getProvinces } from "../../api/provincesApi";
 import ErrorComponent from "../../tools/ErrorComponent";
-import './Profile.css';
+import '../../styles.css';
 import ImageUpload from "../../tools/ImageUpload";
 import { saveImage } from "../../api/imageApi";
 import ErrorLabel from "../../tools/ErrorLabel";
@@ -96,7 +96,7 @@ class StateProfile extends ErrorComponent {
 
     render() {
         return (
-            <div className="profile_content">
+            <div className="global_content">
                 <h2 className="global_title">Actualizar Perfil</h2>
 
                 <form>

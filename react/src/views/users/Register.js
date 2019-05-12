@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { newUser } from "../../store/sessionStore";
 import ErrorComponent from "../../tools/ErrorComponent";
-import './Register.css';
+import '../../styles.css';
 import ErrorLabel from "../../tools/ErrorLabel";
 
 class StateRegister extends ErrorComponent {
@@ -54,7 +54,7 @@ class StateRegister extends ErrorComponent {
 
     render() {
         return (
-            <div className="register_content">
+            <div className="global_content">
                 <h2 className="global_title">Registrar Usuario</h2>
 
                 <form>

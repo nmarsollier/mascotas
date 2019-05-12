@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { changePassword } from "../../api/userApi";
 import ErrorComponent from "../../tools/ErrorComponent";
-import './Password.css';
+import '../../styles.css';
 import ErrorLabel from "../../tools/ErrorLabel";
 
 class StatePassword extends ErrorComponent {
@@ -50,7 +50,7 @@ class StatePassword extends ErrorComponent {
 
     render() {
         return (
-            <div className="register_content">
+            <div className="global_content">
                 <h2 className="global_title">Cambiar Password</h2>
 
                 <form>
