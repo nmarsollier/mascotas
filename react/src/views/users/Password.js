@@ -70,7 +70,7 @@ class StatePassword extends CommonComponent {
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.updatePasswordClick}>Cambiar</button>
-                        <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
+                        <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
                     </div >
                 </form >
             </div>

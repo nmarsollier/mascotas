@@ -7,7 +7,7 @@ import { ISessionRequest } from "../user/service";
 import * as service from "./service";
 
 /**
- * Modulo de imagenes de usuario
+ * Modulo de imagenes
  */
 export function initModule(app: express.Express) {
   // Rutas del controlador

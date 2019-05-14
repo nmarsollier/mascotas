@@ -30,7 +30,6 @@ interface IUpdateProfile {
   phone: string;
   email: string;
   address: string;
-  picture: string;
   province: string;
 }
 async function validateProfile(body: IUpdateProfile, isNew: boolean): Promise<IUpdateProfile> {
@@ -70,7 +69,7 @@ async function validateProfile(body: IUpdateProfile, isNew: boolean): Promise<IU
 
   return Promise.resolve(body);
 }
-export async function update(userId: string, body: IUpdateProfile): Promise<IProfile> {
+export async function updateBasicInfo(userId: string, body: IUpdateProfile): Promise<IProfile> {
   try {
     let profile = await findForUser(userId);
     const validatedBody = await validateProfile(body, !!profile);
@@ -93,14 +92,46 @@ export async function update(userId: string, body: IUpdateProfile): Promise<IPro
     if (validatedBody.phone) {
       profile.phone = validatedBody.phone;
     }
-    if (validatedBody.picture) {
-      profile.picture = validatedBody.picture;
-    }
     if (validatedBody.province) {
       profile.province = (await provinces.read(body.province))._id;
     } else {
       profile.province = undefined;
     }
+
+    await profile.save();
+    return Promise.resolve(profile);
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
+
+async function validateUpdateProfilePicture(imageId: string): Promise<void> {
+  const result: error.ValidationErrorMessage = {
+    messages: []
+  };
+
+  if (!imageId || imageId.length <= 0) {
+    result.messages.push({ path: "image", message: "Imagen inválida." });
+  }
+
+  if (result.messages.length > 0) {
+    return Promise.reject(result);
+  }
+
+  return Promise.resolve();
+}
+export async function updateProfilePicture(userId: string, imageId: string): Promise<IProfile> {
+  try {
+    let profile = await findForUser(userId);
+    await validateUpdateProfilePicture(imageId);
+
+    if (!profile) {
+      profile = new Profile();
+      profile.id = mongoose.Types.ObjectId.createFromHexString(userId);
+      profile.user = mongoose.Types.ObjectId.createFromHexString(userId);
+    }
+    profile.picture = imageId;
 
     await profile.save();
     return Promise.resolve(profile);

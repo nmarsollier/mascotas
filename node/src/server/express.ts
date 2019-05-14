@@ -14,6 +14,7 @@ import { Config } from "./environment";
 import * as user from "../user/routes";
 import * as provinces from "../provinces/routes";
 import * as profile from "../profile/routes";
+import * as profilePicture from "../profileImage/routes";
 import * as image from "../image/routes";
 import * as pet from "../pet/routes";
 
@@ -67,6 +68,7 @@ export function init(appConfig: Config): express.Express {
   profile.initModule(app);
   image.initModule(app);
   pet.initModule(app);
+  profilePicture.initModule(app);
 
   // Para el manejo de errores, para que los loguee en la consola
   app.use(error.logErrors);

@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { saveProfile, getCurrentProfile, getPictureUrl } from "../../api/profileApi";
+import { updateBasicInfo, updateProfilePicture, getCurrentProfile, getPictureUrl } from "../../api/profileApi";
 import { getProvinces } from "../../api/provincesApi";
 import CommonComponent from "../../tools/CommonComponent";
 import '../../styles.css';
 import ImageUpload from "../../tools/ImageUpload";
-import { saveImage } from "../../api/imageApi";
 import ErrorLabel from "../../tools/ErrorLabel";
 
 class StateProfile extends CommonComponent {
@@ -13,6 +12,7 @@ class StateProfile extends CommonComponent {
         super(props)
 
         this.updateClick = this.updateClick.bind(this)
+        this.uploadPicture = this.uploadPicture.bind(this)
 
         this.state = {
             name: "",
@@ -47,7 +47,7 @@ class StateProfile extends CommonComponent {
     }
 
     uploadPicture(image) {
-        this.props.saveImage({
+        this.props.updateProfilePicture({
             image: image
         }).then(result => {
             this.setState({
@@ -71,14 +71,13 @@ class StateProfile extends CommonComponent {
             return
         }
 
-        this.props.saveProfile(
+        this.props.updateBasicInfo(
             {
                 name: this.state.name,
                 province: this.state.province,
                 email: this.state.email,
                 address: this.state.address,
-                phone: this.state.phone,
-                picture: this.state.picture
+                phone: this.state.phone
             }
         ).then(result => {
             this.props.history.push('/')
@@ -139,7 +138,7 @@ class StateProfile extends CommonComponent {
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.updateClick}>Actualizar</button>
-                        <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
+                        <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
                     </div >
                 </form >
             </div>
@@ -151,10 +150,10 @@ const Profile = connect(
     null,
     (dispatch) => {
         return {
-            saveProfile: user => saveProfile(user),
+            updateBasicInfo: user => updateBasicInfo(user),
             getCurrentProfile: _ => getCurrentProfile(),
             getProvinces: _ => getProvinces(),
-            saveImage: payload => saveImage(payload),
+            updateProfilePicture: payload => updateProfilePicture(payload),
             getPictureUrl: _ => getPictureUrl()
         };
     }

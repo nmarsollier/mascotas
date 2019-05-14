@@ -13,7 +13,7 @@ export function initModule(app: express.Express) {
   app
     .route("/v1/profile")
     .get(passport.authenticate("jwt", { session: false }), current)
-    .post(passport.authenticate("jwt", { session: false }), update);
+    .post(passport.authenticate("jwt", { session: false }), updateBasicInfo);
 
 }
 
@@ -94,16 +94,15 @@ async function current(req: ISessionRequest, res: express.Response) {
  * @apiUse ParamValidationErrors
  * @apiUse OtherErrors
  */
-async function update(req: ISessionRequest, res: express.Response) {
+async function updateBasicInfo(req: ISessionRequest, res: express.Response) {
   try {
-    const result = await service.update(req.user.user_id, req.body);
+    const result = await service.updateBasicInfo(req.user.user_id, req.body);
     res.json({
       name: result.name,
       phone: result.phone,
       email: result.email,
       address: result.address,
       province: result.province,
-      picture: result.picture
     });
   } catch (err) {
     error.handle(res, err);

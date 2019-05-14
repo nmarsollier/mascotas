@@ -80,7 +80,7 @@ class StateRegister extends CommonComponent {
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.registerClick}>Registrarse</button>
-                        <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
+                        <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
                     </div >
                 </form >
             </div>

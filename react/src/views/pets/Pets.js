@@ -66,7 +66,7 @@ class StatePets extends CommonComponent {
 
                 <div className="btn-group ">
                     <button className="btn btn-success" onClick={this.newPetClick} >Nueva Mascota</button >
-                    <button className="btn btn-light" onClick={this.goHome} >Cancel</button >
+                    <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
                 </div >
             </div>
         )
