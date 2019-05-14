@@ -10,13 +10,7 @@ El proyecto se desarrollo con [Visual Studio Code](https://code.visualstudio.com
 
 Los plugins configurados en el momento de desarrollo en VSCode son los siguientes :
 
-- __Angular v6 Snippets__ by John Papa
-- __Go__ by Microsoft
 - __JavasScript (ES6) code snippets__ by charlampos karypidis
-- __Language Support for Java(TM)__ by Red Hat
-- __Python__ by Microsoft
-- __Python for VSCode__ by Thomas Haakon Townsend
-- __Python-autopep8__ by himanoa
 - __TSLint__ by egamma
 
 Existe un Workspace configurado para VSCode en la raíz del proyecto :

@@ -104,7 +104,7 @@ async function create(req: ISessionRequest, res: express.Response) {
 
 
 /**
- * @api {put} /v1/pet/:petId Buscar Mascota
+ * @api {get} /v1/pet/:petId Buscar Mascota
  * @apiName Buscar Mascota
  * @apiGroup Mascotas
  *

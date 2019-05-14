@@ -2,11 +2,11 @@
 
 Proyecto Red social de Mascotas, ejemplo de código para la cátedra "Programación Avanzada" en la Universidad Tecnología Nacional, Facultad Regional Mendoza.
 
-Este proyecto es un ejemplo de como armar un proyecto Node 6 con Typescript como backend, y Angular 6 como frontend.
+Este proyecto es un ejemplo de como armar un proyecto Node 6 con Typescript como backend, y React como frontend.
 
 El proyecto tiene 2 carpetas
 
-angular :  Frontend desarrollado en angular 6.
+react :  Frontend desarrollado en react.
 
 node-ts : Node con typescript para backend.
 

@@ -16,6 +16,7 @@ Microservicio de Autentificación
 	
 - [Perfil](#perfil)
 	- [Actualizar Perfil](#actualizar-perfil)
+	- [Guardar Imagen de Perfil](#guardar-imagen-de-perfil)
 	- [Obtener Perfil](#obtener-perfil)
 	
 - [Provincias](#provincias)
@@ -237,7 +238,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Busca una mascota por id.</p>
 
-	PUT /v1/pet/:petId
+	GET /v1/pet/:petId
 
 
 
@@ -464,7 +465,7 @@ HTTP/1.1 500 Internal Server Error
 
 <p>Actualiza los datos del perfil de usuario.</p>
 
-	PUT /v1/profile
+	POST /v1/profile
 
 
 
@@ -478,7 +479,6 @@ Perfil
   "phone": "Teléfono",
   "email": "Email",
   "address": "Dirección",
-  "picture": "Id de imagen",
   "province": "Id de provincia",
 }
 ```
@@ -501,6 +501,71 @@ Perfil
   "address": "Dirección",
   "picture": "Id de imagen",
   "province": "Id de provincia",
+}
+```
+
+
+### Error Response
+
+401 Unauthorized
+
+```
+HTTP/1.1 401 Unauthorized
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+   "messages" : [
+     {
+       "path" : "{Nombre de la propiedad}",
+       "message" : "{Motivo del error}"
+     },
+     ...
+  ]
+}
+```
+500 Server Error
+
+```
+HTTP/1.1 500 Internal Server Error
+{
+   "error" : "Not Found"
+}
+```
+## <a name='guardar-imagen-de-perfil'></a> Guardar Imagen de Perfil
+[Back to top](#top)
+
+<p>Guarda una imagen de perfil en la db y actualiza el perfil</p>
+
+	POST /v1/profile/picture
+
+
+
+### Examples
+
+Body
+
+```
+{
+  "image" : "Base 64 Image Text"
+}
+```
+Header Autorización
+
+```
+Authorization=bearer {token}
+```
+
+
+### Success Response
+
+Response
+
+```
+{
+  "id": "id de imagen"
 }
 ```
 

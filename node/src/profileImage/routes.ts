@@ -20,10 +20,10 @@ export function initModule(app: express.Express) {
 
 /**
  * @api {post} /v1/profile/picture Guardar Imagen de Perfil
- * @apiName Guardar Imagen
- * @apiGroup Imagen
+ * @apiName Guardar Imagen de Perfil
+ * @apiGroup Perfil
  *
- * @apiDescription Guarda una imagen en la db
+ * @apiDescription Guarda una imagen de perfil en la db y actualiza el perfil
  *
  * @apiExample {json} Body
  *    {

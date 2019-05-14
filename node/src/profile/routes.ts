@@ -72,7 +72,7 @@ async function current(req: ISessionRequest, res: express.Response) {
  */
 
 /**
- * @api {put} /v1/profile Actualizar Perfil
+ * @api {post} /v1/profile Actualizar Perfil
  * @apiName Actualizar Perfil
  * @apiGroup Perfil
  *
@@ -84,7 +84,6 @@ async function current(req: ISessionRequest, res: express.Response) {
  *      "phone": "Teléfono",
  *      "email": "Email",
  *      "address": "Dirección",
- *      "picture": "Id de imagen",
  *      "province": "Id de provincia",
  *    }
  *
