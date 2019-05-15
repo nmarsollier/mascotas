@@ -50,7 +50,7 @@ class StateProfile extends CommonComponent<IProps, IState> {
                 provinces: result,
             });
         }).catch((error) => {
-            this.processRestValidations(error.response.data);
+            this.processRestValidations(error);
         });
     }
 
@@ -58,7 +58,7 @@ class StateProfile extends CommonComponent<IProps, IState> {
         this.props.getCurrentProfile().then((result) => {
             this.setState(result);
         }).catch((error) => {
-            this.processRestValidations(error.response.data);
+            this.processRestValidations(error);
         });
     }
 
@@ -70,7 +70,7 @@ class StateProfile extends CommonComponent<IProps, IState> {
                 picture: result.id,
             });
         }).catch((error) => {
-            this.processRestValidations(error.response.data);
+            this.processRestValidations(error);
         });
     }
 
@@ -98,7 +98,7 @@ class StateProfile extends CommonComponent<IProps, IState> {
         ).then((result) => {
             this.props.history.push("/");
         }).catch((error) => {
-            this.processRestValidations(error.response.data);
+            this.processRestValidations(error);
         });
     }
 

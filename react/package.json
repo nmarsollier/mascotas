@@ -18,6 +18,10 @@
     "test": "react-scripts test"
   },
   "eslintConfig": {
+    "rules": {
+      "semi": "error",
+      "quotes": "error"
+    },
     "extends": "react-app"
   },
   "browserslist": [

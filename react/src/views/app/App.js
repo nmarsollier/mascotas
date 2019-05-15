@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { HashRouter, Route } from "react-router-dom";
-import LoggedInRoute from '../../tools/LoggedInRoute';
-import Info from '../info/Info';
-import NewPet from '../pets/NewPet.js';
-import Pets from '../pets/Pets.js';
-import Profile from '../profile/Profile.js';
+import LoggedInRoute from "../../tools/LoggedInRoute";
+import Info from "../info/Info";
+import NewPet from "../pets/NewPet.js";
+import Pets from "../pets/Pets.js";
+import Profile from "../profile/Profile.js";
 import Login from "../users/Login.js";
-import Password from '../users/Password.js';
-import Register from '../users/Register.js';
+import Password from "../users/Password.js";
+import Register from "../users/Register.js";
 import Welcome from "../welcome/Welcome.js";
-import './App.css';
-import Menu from './Menu.js';
-import Toolbar from './Toolbar.js';
+import "./App.css";
+import Menu from "./Menu.js";
+import Toolbar from "./Toolbar.js";
 
 
 class App extends Component {

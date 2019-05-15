@@ -1,36 +1,36 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loadPets } from "../../api/petsApi";
-import '../../styles.css';
+import "../../styles.css";
 import CommonComponent from "../../tools/CommonComponent";
 
 class StatePets extends CommonComponent {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             pets: []
-        }
+        };
 
-        this.loadPets()
+        this.loadPets();
     }
 
     loadPets = () => {
         this.props.loadPets().then(result => {
             this.setState({
                 pets: result
-            })
+            });
         }).catch(error => {
-            this.processRestValidations(error.response.data)
-        })
+            this.processRestValidations(error);
+        });
     }
 
     editPetClick = (petId) => {
-        this.props.history.push('/editPet/' + petId)
+        this.props.history.push("/editPet/" + petId);
     }
 
     newPetClick = () => {
-        this.props.history.push('/editPet')
+        this.props.history.push("/editPet");
     }
 
     render() {
@@ -55,7 +55,7 @@ class StatePets extends CommonComponent {
                                         <img src="/assets/edit.png" alt="" name="editar" onClick={() => this.editPetClick(pet.id)} />
                                     </td>
                                 </tr>
-                            )
+                            );
                         })}
                     </tbody>
                 </table>
@@ -65,7 +65,7 @@ class StatePets extends CommonComponent {
                     <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
                 </div >
             </div>
-        )
+        );
     }
 }
 
@@ -78,4 +78,4 @@ const Pets = connect(
     }
 )(StatePets);
 
-export default Pets
+export default Pets;

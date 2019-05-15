@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import './Toolbar.css'
+import "./Toolbar.css";
 
 class StateToolbar extends Component {
   render() {
@@ -28,4 +28,4 @@ const Toolbar = connect(
     return { user: state.user };
   })(StateToolbar);
 
-export default Toolbar
+export default Toolbar;

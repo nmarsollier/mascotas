@@ -52,7 +52,7 @@ class StateRegister extends CommonComponent<IProps, IState> {
         this.props.newUser(this.state).then((result) => {
             this.props.history.push("/");
         }).catch((error) => {
-            this.processRestValidations(error.response.data);
+            this.processRestValidations(error);
         });
     }
 

@@ -4,12 +4,12 @@ import { Route } from "react-router-dom";
 import { IStoredState } from "../store/sessionStore";
 import Welcome from "../views/welcome/Welcome";
 
-interface IStateLoggedInRouteProps extends IStoredState {
+interface IProps extends IStoredState {
   path: string;
   component: React.ComponentClass;
 }
 
-class StateLoggedInRoute extends React.Component<IStateLoggedInRouteProps, any> {
+class StateLoggedInRoute extends React.Component<IProps, any> {
   public render() {
     if (this.props.token === undefined) {
       return (<Route exact path={this.props.path} component={Welcome} />);
@@ -20,7 +20,7 @@ class StateLoggedInRoute extends React.Component<IStateLoggedInRouteProps, any> 
 }
 
 const LoggedInRoute = connect(
-  (state: IStateLoggedInRouteProps) => {
+  (state: IProps) => {
     return {
       token: state.token,
     };

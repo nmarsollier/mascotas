@@ -42,7 +42,7 @@ class StateLogin extends CommonComponent<IProps, IState> {
         this.props.login(this.state).then((result) => {
             this.props.history.push("/");
         }).catch((error) => {
-            this.processRestValidations(error.response.data);
+            this.processRestValidations(error);
         });
     }
 

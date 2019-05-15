@@ -4,16 +4,16 @@ import { IPet, loadPets } from "../../api/petsApi";
 import "../../styles.css";
 import CommonComponent, { ICommonProps } from "../../tools/CommonComponent";
 
-interface IStatePetsState {
+interface IState {
     pets: IPet[];
 }
 
-interface IStatePetsProps extends ICommonProps {
+interface IProps extends ICommonProps {
     loadPets(): Promise<IPet[]>;
 }
 
-class StatePets extends CommonComponent<IStatePetsProps, IStatePetsState> {
-    constructor(props: IStatePetsProps) {
+class StatePets extends CommonComponent<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -29,7 +29,7 @@ class StatePets extends CommonComponent<IStatePetsProps, IStatePetsState> {
                 pets: result,
             });
         }).catch((error) => {
-            this.processRestValidations(error.response.data);
+            this.processRestValidations(error);
         });
     }
 

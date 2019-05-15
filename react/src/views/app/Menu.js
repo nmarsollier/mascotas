@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { logout } from "../../store/sessionStore";
-import './Menu.css';
+import "./Menu.css";
 
 class LoginMenu extends Component {
   render() {
@@ -13,13 +13,13 @@ class LoginMenu extends Component {
         <NavLink to="/" className="menu_item btn btn-sm btn-link">Welcome</NavLink><br />
         <NavLink to="/newUser" className="menu_item btn btn-sm btn-link">Registrarse</NavLink><br />
       </div>
-    )
+    );
   }
 }
 
 class StateMainMenu extends Component {
   logout = () => {
-    this.props.logout().then()
+    this.props.logout().then();
   }
 
   render() {
@@ -35,7 +35,7 @@ class StateMainMenu extends Component {
         <h6 className="menu_section">Mascotas</h6>
         <NavLink to="/pets" className="menu_item btn btn-sm btn-link">Lista</NavLink><br />
       </div>
-    )
+    );
   }
 }
 
@@ -49,8 +49,8 @@ const MainMenu = connect(
 
 class StateMenu extends Component {
   render() {
-    var user = this.props.user
-    var menu = user ? <MainMenu user={this.props.user} /> : <LoginMenu />
+    var user = this.props.user;
+    var menu = user ? <MainMenu user={this.props.user} /> : <LoginMenu />;
 
     return (
       <div className="menu_div navbar-nav bg-light shadow">
@@ -65,4 +65,4 @@ const Menu = connect(
     return { user: state.user };
   })(StateMenu);
 
-export default Menu
+export default Menu;

@@ -1,13 +1,15 @@
 import React from "react";
 
-export interface IErrorDataDetail {
-    path: string;
-    message: string;
-}
-
-export interface IErrorData {
-    error?: string;
-    messages?: IErrorDataDetail[];
+export interface IError {
+    response?: {
+        data?: {
+            error?: string;
+            messages?: Array<{
+                path: string;
+                message: string;
+            }>;
+        };
+    };
 }
 
 export interface ICommonProps {
@@ -24,16 +26,21 @@ export default class CommonComponent<P extends ICommonProps, S> extends React.Co
     protected errors: Map<string, string> = new Map();
 
     // Procesa errores rest y llena errors de acuerdo a los resultados
-    protected processRestValidations(data: IErrorData) {
+    protected processRestValidations(data: IError) {
         if (this.errors && this.errors.size > 0) {
             this.cleanRestValidations();
         }
-        if (data.messages) {
-            for (const error of data.messages) {
+        if (!data.response || !data.response.data) {
+            this.errorMessage = "Problemas de conexión, verifique conexión a internet.";
+            this.forceUpdate();
+            return;
+        }
+        if (data.response.data.messages) {
+            for (const error of data.response.data.messages) {
                 this.errors.set(error.path, error.message);
             }
         } else {
-            this.errorMessage = data.error;
+            this.errorMessage = data.response.data.error;
         }
         this.forceUpdate();
     }

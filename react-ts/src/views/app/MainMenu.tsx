@@ -4,11 +4,11 @@ import { NavLink } from "react-router-dom";
 import { logout } from "../../store/sessionStore";
 import "./Menu.css";
 
-interface IStateMainMenuProps {
+interface IProps {
   logout: () => Promise<{}>;
 }
 
-class StateMainMenu extends React.Component<IStateMainMenuProps, any> {
+class StateMainMenu extends React.Component<IProps, any> {
   public logout = () => {
     this.props.logout().then();
   }
@@ -32,7 +32,7 @@ class StateMainMenu extends React.Component<IStateMainMenuProps, any> {
 
 const MainMenu = connect(
   null,
-  (dispatch) => {
+  () => {
     return {
       logout: () => logout(),
     };

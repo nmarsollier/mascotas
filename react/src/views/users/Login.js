@@ -2,38 +2,38 @@ import React from "react";
 import { connect } from "react-redux";
 import { login } from "../../store/sessionStore";
 import CommonComponent from "../../tools/CommonComponent";
-import '../../styles.css';
+import "../../styles.css";
 import ErrorLabel from "../../tools/ErrorLabel";
 
 class StateLogin extends CommonComponent {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             login: "",
             password: ""
-        }
+        };
     }
 
     loginClick = () => {
-        this.cleanRestValidations()
+        this.cleanRestValidations();
         if (!this.state.login) {
-            this.addError("login", "No puede estar vacío")
+            this.addError("login", "No puede estar vacío");
         }
         if (!this.state.password) {
-            this.addError("password", "No puede estar vacío")
+            this.addError("password", "No puede estar vacío");
         }
 
         if (this.hasErrors()) {
-            this.forceUpdate()
-            return
+            this.forceUpdate();
+            return;
         }
 
         this.props.login(this.state).then(result => {
-            this.props.history.push('/')
+            this.props.history.push("/");
         }).catch(error => {
-            this.processRestValidations(error.response.data)
-        })
+            this.processRestValidations(error);
+        });
     }
 
     render() {
@@ -45,13 +45,13 @@ class StateLogin extends CommonComponent {
                     <div className="form-group">
                         <label>Usuario</label>
                         <input id="login" type="text" onChange={this.updateState} className={this.getErrorClass("login", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('login')} />
+                        <ErrorLabel error={this.getErrorText("login")} />
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
                         <input id="password" type="password" onChange={this.updateState} className={this.getErrorClass("password", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('password')} />
+                        <ErrorLabel error={this.getErrorText("password")} />
                     </div>
 
                     <div hidden={!this.errorMessage} className="alert alert-danger" role="alert">{this.errorMessage}</div>
@@ -62,7 +62,7 @@ class StateLogin extends CommonComponent {
                     </div >
                 </form >
             </div >
-        )
+        );
     }
 }
 
@@ -75,4 +75,4 @@ const Login = connect(
     }
 )(StateLogin);
 
-export default Login
+export default Login;

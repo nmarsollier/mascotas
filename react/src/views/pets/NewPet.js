@@ -1,66 +1,66 @@
 import React from "react";
 import { connect } from "react-redux";
 import { deletePet, savePet, newPet, loadPet } from "../../api/petsApi";
-import '../../styles.css';
+import "../../styles.css";
 import CommonComponent from "../../tools/CommonComponent";
 import ErrorLabel from "../../tools/ErrorLabel";
 
 class StateNewPet extends CommonComponent {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             id: "",
             name: "",
             description: "",
             birthDate: "",
-        }
+        };
     }
 
     componentDidMount() {
-        const { id } = this.props.match.params
+        const { id } = this.props.match.params;
         if (id) {
             loadPet(id).then(result => {
-                this.setState(result)
+                this.setState(result);
             }).catch(error => {
-                this.processRestValidations(error.response.data)
-            })
+                this.processRestValidations(error);
+            });
         }
     }
 
     deleteClick = () => {
         if (this.state.id) {
             this.props.deletePet(this.state.id).then(result => {
-                this.props.history.push('/pets')
+                this.props.history.push("/pets");
             }).catch(error => {
-                this.processRestValidations(error.response.data)
-            })
+                this.processRestValidations(error);
+            });
         }
     }
 
     saveClick = () => {
-        this.cleanRestValidations()
+        this.cleanRestValidations();
         if (!this.state.name) {
-            this.addError("name", "No puede estar vacío")
+            this.addError("name", "No puede estar vacío");
         }
 
         if (this.hasErrors()) {
-            this.forceUpdate()
-            return
+            this.forceUpdate();
+            return;
         }
 
         if (this.state.id) {
             this.props.savePet(this.state).then(result => {
-                this.props.history.push('/pets')
+                this.props.history.push("/pets");
             }).catch(error => {
-                this.processRestValidations(error.response.data)
-            })
+                this.processRestValidations(error);
+            });
         } else {
             this.props.newPet(this.state).then(result => {
-                this.props.history.push('/pets')
+                this.props.history.push("/pets");
             }).catch(error => {
-                this.processRestValidations(error.response.data)
-            })
+                this.processRestValidations(error);
+            });
         }
     }
 
@@ -73,19 +73,19 @@ class StateNewPet extends CommonComponent {
                     <div className="form-group">
                         <label>Nombre</label>
                         <input id="name" type="text" value={this.state.name} onChange={this.updateState} className={this.getErrorClass("name", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('name')} />
+                        <ErrorLabel error={this.getErrorText("name")} />
                     </div>
 
                     <div className="form-group">
                         <label>Descripción</label>
                         <input id="description" type="text" value={this.state.description} onChange={this.updateState} className={this.getErrorClass("description", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('description')} />
+                        <ErrorLabel error={this.getErrorText("description")} />
                     </div>
 
                     <div className="form-group">
                         <label>Fecha de Nacimiento</label>
                         <input id="birthDate" type="text" value={this.state.birthDate} onChange={this.updateState} className={this.getErrorClass("birthDate", "form-control")}></input>
-                        <ErrorLabel error={this.getErrorText('birthDate')} />
+                        <ErrorLabel error={this.getErrorText("birthDate")} />
                     </div>
 
                     <div hidden={!this.errorMessage} className="alert alert-danger" role="alert">{this.errorMessage}</div>
@@ -97,7 +97,7 @@ class StateNewPet extends CommonComponent {
                     </div >
                 </form >
             </div>
-        )
+        );
     }
 }
 
@@ -113,4 +113,4 @@ const NewPet = connect(
     }
 )(StateNewPet);
 
-export default NewPet
+export default NewPet;

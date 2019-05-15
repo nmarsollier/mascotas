@@ -37,7 +37,7 @@ class StateNewPet extends CommonComponent<IProps, IState> {
             loadPet(id).then((result) => {
                 this.setState(result);
             }).catch((error) => {
-                this.processRestValidations(error.response.data);
+                this.processRestValidations(error);
             });
         }
     }
@@ -47,7 +47,7 @@ class StateNewPet extends CommonComponent<IProps, IState> {
             this.props.deletePet(this.state.id).then((result) => {
                 this.props.history.push("/pets");
             }).catch((error) => {
-                this.processRestValidations(error.response.data);
+                this.processRestValidations(error);
             });
         }
     }
@@ -67,13 +67,13 @@ class StateNewPet extends CommonComponent<IProps, IState> {
             this.props.savePet(this.state).then((result) => {
                 this.props.history.push("/pets");
             }).catch((error) => {
-                this.processRestValidations(error.response.data);
+                this.processRestValidations(error);
             });
         } else {
             this.props.newPet(this.state).then((result) => {
                 this.props.history.push("/pets");
             }).catch((error) => {
-                this.processRestValidations(error.response.data);
+                this.processRestValidations(error);
             });
         }
     }

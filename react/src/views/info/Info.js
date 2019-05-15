@@ -1,14 +1,14 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 import { connect } from "react-redux";
 
 class StateInfo extends Component {
     render() {
-        var user = this.props.user
-        var token = this.props.token
+        var user = this.props.user;
+        var token = this.props.token;
 
         return (
             <div>
-                <h2>Informaci&oacute;n de Perfil</h2>
+                <h2>Información de Perfil</h2>
                 <form>
                     <div className="form-group">
                         <label>Login</label>
@@ -28,7 +28,7 @@ class StateInfo extends Component {
                     </div>
                 </form>
             </div>
-        )
+        );
     }
 }
 
@@ -41,4 +41,4 @@ const Info = connect(
     })(StateInfo);
 
 
-export default Info
+export default Info;

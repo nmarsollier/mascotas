@@ -1,11 +1,11 @@
 import React from "react";
 
-interface IImageUploadProps {
+interface IProps {
     src: string;
     onChange: (image: string) => void;
 }
 
-export default class ImageUpload extends React.Component<IImageUploadProps, any> {
+export default class ImageUpload extends React.Component<IProps, any> {
     public imageClick = () => {
         const fileInput: HTMLInputElement | null = (this.refs.fileInput as HTMLInputElement);
         if (fileInput == null) {

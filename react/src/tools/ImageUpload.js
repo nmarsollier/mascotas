@@ -8,19 +8,19 @@ class ImageUpload extends Component {
     imageSelect = () => {
         this.getBase64(this.refs.fileInput.files[0], image => {
             if (image && this.props.onChange) {
-                this.props.onChange(image)
+                this.props.onChange(image);
             }
-        })
+        });
     }
 
     getBase64(file, cb) {
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function () {
-            cb(reader.result)
+            cb(reader.result);
         };
         reader.onerror = function (error) {
-            console.log('Error: ', error);
+            console.log("Error: ", error);
         };
     }
 
@@ -30,8 +30,8 @@ class ImageUpload extends Component {
                 <img src={this.props.src} alt="" height="100" onClick={this.imageClick} />
                 <input type="file" ref="fileInput" className="upload" accept="*" onChange={this.imageSelect} style={{ display: "none" }} />
             </div>
-        )
+        );
     }
 }
 
-export default ImageUpload
+export default ImageUpload;
