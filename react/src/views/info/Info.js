@@ -14,15 +14,15 @@ class StateInfo extends Component {
                         <label>Login</label>
                         <input className="form-control" id="login" value={user.login} readonly />
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                         <label>Nombre</label>
                         <input className="form-control" id="name" value={user.name} readonly />
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                         <label>Permisos</label>
                         <input className="form-control" id="name" value={user.permissions} readonly />
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                         <label>Token</label>
                         <input className="form-control" id="name" value={token} readonly />
                     </div>

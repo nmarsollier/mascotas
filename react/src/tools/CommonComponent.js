@@ -6,8 +6,6 @@ class CommonComponent extends Component {
 
         // Es un mensaje genérico de error
         this.errorMessage = undefined
-        this.goHome = this.goHome.bind(this)
-        this.updateState = this.updateState.bind(this);
 
         // Son errores de los componentes visuales, es un map
         // la clave es el campo con error, el contenido es el mensaje
@@ -53,13 +51,13 @@ class CommonComponent extends Component {
         return this.errors.size > 0 && !this.errorMessage
     }
 
-    updateState(event) {
+    updateState = (event) => {
         var update = {}
         update[event.target.id] = event.target.value
         this.setState(update);
     }
 
-    goHome() {
+    goHome = () => {
         this.props.history.push('/')
     }
 }

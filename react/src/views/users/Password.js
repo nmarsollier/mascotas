@@ -9,8 +9,6 @@ class StatePassword extends CommonComponent {
     constructor(props) {
         super(props)
 
-        this.updatePasswordClick = this.updatePasswordClick.bind(this)
-
         this.state = {
             currentPassword: "",
             newPassword: "",
@@ -18,7 +16,7 @@ class StatePassword extends CommonComponent {
         }
     }
 
-    updatePasswordClick() {
+    updatePasswordClick = () => {
         this.cleanRestValidations()
 
         if (!this.state.currentPassword) {
@@ -66,7 +64,7 @@ class StatePassword extends CommonComponent {
                         <ErrorLabel error={this.getErrorText('newPassword2')} />
                     </div>
 
-                    <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>
+                    <div hidden={!this.errorMessage} className="alert alert-danger" role="alert">{this.errorMessage}</div>
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.updatePasswordClick}>Cambiar</button>

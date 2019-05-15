@@ -9,15 +9,13 @@ class StateLogin extends CommonComponent {
     constructor(props) {
         super(props)
 
-        this.loginClick = this.loginClick.bind(this)
-
         this.state = {
             login: "",
             password: ""
         }
     }
 
-    loginClick() {
+    loginClick = () => {
         this.cleanRestValidations()
         if (!this.state.login) {
             this.addError("login", "No puede estar vacío")
@@ -56,7 +54,7 @@ class StateLogin extends CommonComponent {
                         <ErrorLabel error={this.getErrorText('password')} />
                     </div>
 
-                    <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>
+                    <div hidden={!this.errorMessage} className="alert alert-danger" role="alert">{this.errorMessage}</div>
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.loginClick}>Login</button>

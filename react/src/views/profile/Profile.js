@@ -11,9 +11,6 @@ class StateProfile extends CommonComponent {
     constructor(props) {
         super(props)
 
-        this.updateClick = this.updateClick.bind(this)
-        this.uploadPicture = this.uploadPicture.bind(this)
-
         this.state = {
             name: "",
             province: "",
@@ -46,7 +43,7 @@ class StateProfile extends CommonComponent {
         })
     }
 
-    uploadPicture(image) {
+    uploadPicture = (image) => {
         this.props.updateProfilePicture({
             image: image
         }).then(result => {
@@ -58,7 +55,7 @@ class StateProfile extends CommonComponent {
         })
     }
 
-    updateClick() {
+    updateClick = () => {
         this.cleanRestValidations()
         if (!this.state.name) {
             this.addError("name", "No puede estar vacío")
@@ -134,7 +131,7 @@ class StateProfile extends CommonComponent {
                         <ErrorLabel error={this.getErrorText('phone')} />
                     </div>
 
-                    <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>
+                    <div hidden={!this.errorMessage} className="alert alert-danger" role="alert">{this.errorMessage}</div>
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.updateClick}>Actualizar</button>

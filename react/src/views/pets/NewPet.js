@@ -9,9 +9,6 @@ class StateNewPet extends CommonComponent {
     constructor(props) {
         super(props)
 
-        this.saveClick = this.saveClick.bind(this)
-        this.deleteClick = this.deleteClick.bind(this)
-
         this.state = {
             id: "",
             name: "",
@@ -31,7 +28,7 @@ class StateNewPet extends CommonComponent {
         }
     }
 
-    deleteClick() {
+    deleteClick = () => {
         if (this.state.id) {
             this.props.deletePet(this.state.id).then(result => {
                 this.props.history.push('/pets')
@@ -41,7 +38,7 @@ class StateNewPet extends CommonComponent {
         }
     }
 
-    saveClick() {
+    saveClick = () => {
         this.cleanRestValidations()
         if (!this.state.name) {
             this.addError("name", "No puede estar vacío")
@@ -91,7 +88,7 @@ class StateNewPet extends CommonComponent {
                         <ErrorLabel error={this.getErrorText('birthDate')} />
                     </div>
 
-                    <div hidden={!this.errorMessage} class="alert alert-danger" role="alert">{this.errorMessage}</div>
+                    <div hidden={!this.errorMessage} className="alert alert-danger" role="alert">{this.errorMessage}</div>
 
                     <div className="btn-group ">
                         <button className="btn btn-primary" onClick={this.saveClick}>Guardar</button>

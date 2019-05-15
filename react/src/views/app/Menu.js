@@ -18,13 +18,7 @@ class LoginMenu extends Component {
 }
 
 class StateMainMenu extends Component {
-  constructor(props) {
-    super(props)
-
-    this.logout = this.logout.bind(this)
-  }
-
-  logout() {
+  logout = () => {
     this.props.logout().then()
   }
 

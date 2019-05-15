@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 
 class ImageUpload extends Component {
-    constructor(props) {
-        super(props)
-
-        this.imageClick = this.imageClick.bind(this)
-        this.imageSelect = this.imageSelect.bind(this)
-    }
-
-    imageClick() {
+    imageClick = () => {
         this.refs.fileInput.click();
     }
 
-    imageSelect() {
+    imageSelect = () => {
         this.getBase64(this.refs.fileInput.files[0], image => {
             if (image && this.props.onChange) {
                 this.props.onChange(image)
@@ -35,12 +28,10 @@ class ImageUpload extends Component {
         return (
             <div>
                 <img src={this.props.src} alt="" height="100" onClick={this.imageClick} />
-                <input type="file" ref="fileInput" class="upload" accept="*" onChange={this.imageSelect} style={{ display: "none" }} />
+                <input type="file" ref="fileInput" className="upload" accept="*" onChange={this.imageSelect} style={{ display: "none" }} />
             </div>
         )
     }
 }
 
 export default ImageUpload
-
-

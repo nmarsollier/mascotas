@@ -8,10 +8,6 @@ class StatePets extends CommonComponent {
     constructor(props) {
         super(props)
 
-        this.editPetClick = this.editPetClick.bind(this)
-        this.loadPets = this.loadPets.bind(this)
-        this.newPetClick = this.newPetClick.bind(this)
-
         this.state = {
             pets: []
         }
@@ -19,7 +15,7 @@ class StatePets extends CommonComponent {
         this.loadPets()
     }
 
-    loadPets() {
+    loadPets = () => {
         this.props.loadPets().then(result => {
             this.setState({
                 pets: result
@@ -29,11 +25,11 @@ class StatePets extends CommonComponent {
         })
     }
 
-    editPetClick(petId) {
+    editPetClick = (petId) => {
         this.props.history.push('/editPet/' + petId)
     }
 
-    newPetClick() {
+    newPetClick = () => {
         this.props.history.push('/editPet')
     }
 
@@ -41,7 +37,7 @@ class StatePets extends CommonComponent {
         return (
             <div className="global_content">
                 <h2 className="global_title">Mascotas</h2>
-                <table id="mascotas" class="table">
+                <table id="mascotas" className="table">
                     <head>
                         <tr>
                             <th> Nombre </th>
@@ -55,7 +51,7 @@ class StatePets extends CommonComponent {
                                 <tr key={i}>
                                     <td>{pet.name}</td>
                                     <td>{pet.description}</td>
-                                    <td class="text">
+                                    <td className="text">
                                         <img src="/assets/edit.png" alt="" name="editar" onClick={() => this.editPetClick(pet.id)} />
                                     </td>
                                 </tr>
