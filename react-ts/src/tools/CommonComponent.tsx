@@ -12,6 +12,7 @@ export interface IErrorData {
 
 export interface ICommonProps {
     history?: any;
+    match?: any;
 }
 
 export default class CommonComponent<P extends ICommonProps, S> extends React.Component<P, S> {

@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 import * as userApi from "../api/userApi";
+import { ILogin, ISignUpRequest, IUser } from "../api/userApi";
 
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
@@ -8,7 +9,7 @@ const NEW_USER = "NEW_USER";
 
 export interface IStoredState {
     token?: string;
-    user?: userApi.IUser;
+    user?: IUser;
 }
 
 export interface IAction {
@@ -49,8 +50,8 @@ const sessionStore = createStore((state = initialState, action: IAction) => {
     }
 });
 
-export function login(payload: userApi.ILogin) {
-    return new Promise((result, reject) => {
+export function login(payload: ILogin) {
+    return new Promise<IUser>((result, reject) => {
         userApi.login(payload)
             .then((data) => {
                 sessionStore.dispatch({
@@ -71,8 +72,8 @@ export function login(payload: userApi.ILogin) {
     });
 }
 
-export function newUser(payload: userApi.ISignUpRequest) {
-    return new Promise((result, reject) => {
+export function newUser(payload: ISignUpRequest) {
+    return new Promise<IUser>((result, reject) => {
         userApi.newUser(payload)
             .then((data) => {
                 sessionStore.dispatch({
@@ -94,7 +95,7 @@ export function newUser(payload: userApi.ISignUpRequest) {
 }
 
 export function reloadCurrentUser() {
-    return new Promise((result, reject) => {
+    return new Promise<IUser>((result, reject) => {
         userApi.reloadCurrentUser()
             .then((data) => {
                 sessionStore.dispatch({

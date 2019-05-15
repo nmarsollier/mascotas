@@ -2,16 +2,16 @@ import React from "react";
 import { HashRouter, Route } from "react-router-dom";
 import LoggedInRoute from "../../tools/LoggedInRoute";
 import Info from "../info/Info";
-import NewPet from "../pets/NewPet.js";
-import Pets from "../pets/Pets.js";
-import Profile from "../profile/Profile.js";
-import Login from "../users/Login.js";
-import Password from "../users/Password.js";
-import Register from "../users/Register.js";
-import Welcome from "../welcome/Welcome.js";
+import NewPet from "../pets/NewPet";
+import Pets from "../pets/Pets";
+import Profile from "../profile/Profile";
+import Login from "../users/Login";
+import Password from "../users/Password";
+import Register from "../users/Register";
+import Welcome from "../welcome/Welcome";
 import "./App.css";
 import Menu from "./Menu";
-import Toolbar from "./Toolbar.js";
+import Toolbar from "./Toolbar";
 
 export default class App extends React.Component<{}, {}> {
   public render() {

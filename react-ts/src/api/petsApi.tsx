@@ -6,7 +6,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 export interface IPet {
     id: string;
     name: string;
-    birthDate: Date;
+    birthDate: string;
     description: string;
 }
 

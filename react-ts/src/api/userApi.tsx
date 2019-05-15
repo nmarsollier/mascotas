@@ -102,11 +102,11 @@ export interface IChangePassword {
 }
 
 export function changePassword(payload: IChangePassword) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
         if (getCurrentToken()) {
             axios.post("http://localhost:3000/v1/user/password", payload)
-                .then((res) => {
-                    resolve(res.data);
+                .then(() => {
+                    resolve();
                 })
                 .catch((err) => {
                     reject(err);
