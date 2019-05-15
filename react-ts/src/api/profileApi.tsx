@@ -70,5 +70,9 @@ export function getCurrentProfile() {
 }
 
 export function getPictureUrl(id: string) {
-    return "http://localhost:3000/v1/image/" + id;
+    if (id && id.length > 0) {
+        return "http://localhost:3000/v1/image/" + id;
+    } else {
+        return "/assets/profile.png";
+    }
 }
