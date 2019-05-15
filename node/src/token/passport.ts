@@ -34,7 +34,8 @@ export function init() {
 
     /*
     Este método se utiliza para validar que el usuario se haya logueado.
-    passport.authenticate("jwt", { session: false })  termina llamando a este método.
+    passport.authenticate("jwt", { session: false })
+    termina llamando a este método.
     El resultado de este método es puesto en el request, o sea el payload se pone en el request
 
     A esta altura el token fue desencriptado correctamente, pero hay que validar el contenido.
@@ -87,3 +88,9 @@ export function createSessionToken(sessionToken: IToken): string {
 export function getTokenFromCache(token_id: string): string {
     return sessionCache.get(token_id);
 }
+
+/**
+ * Este filtro de express es para validar que el usuario esté logueado
+ * si no esta logueado sale con error 401
+ */
+export const onlyLoggedIn = passport.authenticate("jwt", { session: false });

@@ -1,8 +1,8 @@
 "use strict";
 
 import * as express from "express";
-import * as passport from "passport";
 import * as error from "../server/error";
+import { onlyLoggedIn } from "../token/passport";
 import * as token from "../token/service";
 import * as user from "./service";
 import { ISessionRequest } from "./service";
@@ -11,20 +11,19 @@ import { ISessionRequest } from "./service";
  * Modulo de seguridad, login/logout, cambio de contraseñas, etc
  */
 export function initModule(app: express.Express) {
-  app.route("/v1/user/password").post(passport.authenticate("jwt", { session: false }), changePassword);
+  app.route("/v1/user/password").post(onlyLoggedIn, changePassword);
 
   app.route("/v1/user").post(signUp);
   app.route("/v1/user/signin").post(login);
-  app.route("/v1/user/signout").get(passport.authenticate("jwt", { session: false }), logout);
-  app.route("/v1/users/:userID/grant").post(passport.authenticate("jwt", { session: false }), grantPermissions);
-  app.route("/v1/users/:userID/revoke").post(passport.authenticate("jwt", { session: false }), revokePermissions);
-  app.route("/v1/users/:userID/enable").post(passport.authenticate("jwt", { session: false }), enableUser);
-  app.route("/v1/users/:userID/disable").post(passport.authenticate("jwt", { session: false }), disableUser);
-  app.route("/v1/users").get(passport.authenticate("jwt", { session: false }), getAll);
+  app.route("/v1/user/signout").get(onlyLoggedIn, logout);
+  app.route("/v1/users/:userID/grant").post(onlyLoggedIn, grantPermissions);
+  app.route("/v1/users/:userID/revoke").post(onlyLoggedIn, revokePermissions);
+  app.route("/v1/users/:userID/enable").post(onlyLoggedIn, enableUser);
+  app.route("/v1/users/:userID/disable").post(onlyLoggedIn, disableUser);
+  app.route("/v1/users").get(onlyLoggedIn, getAll);
 
-  app.route("/v1/users/current").get(passport.authenticate("jwt", { session: false }), current);
+  app.route("/v1/users/current").get(onlyLoggedIn, current);
 }
-
 
 /**
  * @api {post} /v1/user/password Cambiar Password

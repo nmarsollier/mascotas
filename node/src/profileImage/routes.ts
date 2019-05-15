@@ -1,20 +1,20 @@
 "use strict";
 
 import * as express from "express";
-import * as passport from "passport";
-import * as error from "../server/error";
-import { ISessionRequest } from "../user/service";
 import * as imageService from "../image/service";
 import * as profileService from "../profile/service";
+import * as error from "../server/error";
+import { onlyLoggedIn } from "../token/passport";
+import { ISessionRequest } from "../user/service";
 
 /**
- * Modulo de imagenes de perfil
+ * Modulo de imágenes de perfil
  */
 export function initModule(app: express.Express) {
   // Rutas del controlador
   app
     .route("/v1/profile/picture")
-    .post(passport.authenticate("jwt", { session: false }), updateProfilePicture);
+    .post(onlyLoggedIn, updateProfilePicture);
 
 }
 

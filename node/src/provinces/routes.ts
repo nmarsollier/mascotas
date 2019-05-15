@@ -1,11 +1,11 @@
 "use strict";
 
 import * as express from "express";
-import * as passport from "passport";
-import * as service from "./service";
 import * as error from "../server/error";
-import { ISessionRequest } from "../user/service";
+import { onlyLoggedIn } from "../token/passport";
 import * as user from "../user/service";
+import { ISessionRequest } from "../user/service";
+import * as service from "./service";
 
 /**
  * Modulo de perfiles de usuario
@@ -14,11 +14,11 @@ export function initModule(app: express.Express) {
   // Rutas del controlador
   app.route("/v1/province")
     .get(list)
-    .post(passport.authenticate("jwt", { session: false }), create);
+    .post(onlyLoggedIn, create);
 
   app.route("/v1/province/:provinceId")
     .get(read)
-    .delete(passport.authenticate("jwt", { session: false }), remove);
+    .delete(onlyLoggedIn, remove);
 }
 
 /**
@@ -80,7 +80,7 @@ async function create(req: ISessionRequest, res: express.Response) {
   try {
     await user.hasPermission(req.user.user_id, "admin");
     const result = await service.create(req.body);
-    res.json({id: result});
+    res.json({ id: result });
   } catch (err) {
     error.handle(res, err);
   }

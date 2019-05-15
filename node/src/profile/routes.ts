@@ -1,8 +1,8 @@
 "use strict";
 
 import * as express from "express";
-import * as passport from "passport";
 import * as error from "../server/error";
+import { onlyLoggedIn } from "../token/passport";
 import { ISessionRequest } from "../user/service";
 import * as service from "./service";
 
@@ -12,8 +12,8 @@ import * as service from "./service";
 export function initModule(app: express.Express) {
   app
     .route("/v1/profile")
-    .get(passport.authenticate("jwt", { session: false }), current)
-    .post(passport.authenticate("jwt", { session: false }), updateBasicInfo);
+    .get(onlyLoggedIn, current)
+    .post(onlyLoggedIn, updateBasicInfo);
 
 }
 
