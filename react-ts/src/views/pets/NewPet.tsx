@@ -31,28 +31,30 @@ class StateNewPet extends CommonComponent<IProps, IState> {
         };
     }
 
-    public componentDidMount() {
+    public async componentDidMount() {
         const { id } = this.props.match.params;
         if (id) {
-            loadPet(id).then((result) => {
+            try {
+                const result = await loadPet(id);
                 this.setState(result);
-            }).catch((error) => {
+            } catch (error) {
                 this.processRestValidations(error);
-            });
+            }
         }
     }
 
-    public deleteClick = () => {
+    public deleteClick = async () => {
         if (this.state.id) {
-            this.props.deletePet(this.state.id).then((result) => {
+            try {
+                await this.props.deletePet(this.state.id);
                 this.props.history.push("/pets");
-            }).catch((error) => {
+            } catch (error) {
                 this.processRestValidations(error);
-            });
+            }
         }
     }
 
-    public saveClick = () => {
+    public saveClick = async () => {
         this.cleanRestValidations();
         if (!this.state.name) {
             this.addError("name", "No puede estar vacío");
@@ -63,18 +65,15 @@ class StateNewPet extends CommonComponent<IProps, IState> {
             return;
         }
 
-        if (this.state.id) {
-            this.props.savePet(this.state).then((result) => {
-                this.props.history.push("/pets");
-            }).catch((error) => {
-                this.processRestValidations(error);
-            });
-        } else {
-            this.props.newPet(this.state).then((result) => {
-                this.props.history.push("/pets");
-            }).catch((error) => {
-                this.processRestValidations(error);
-            });
+        try {
+            if (this.state.id) {
+                await this.props.savePet(this.state);
+            } else {
+                await this.props.newPet(this.state);
+            }
+            this.props.history.push("/pets");
+        } catch (error) {
+            this.processRestValidations(error);
         }
     }
 

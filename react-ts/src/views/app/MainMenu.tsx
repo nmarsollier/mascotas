@@ -5,12 +5,12 @@ import { logout } from "../../store/sessionStore";
 import "./Menu.css";
 
 interface IProps {
-  logout: () => Promise<{}>;
+  logout: () => Promise<void>;
 }
 
 class StateMainMenu extends React.Component<IProps, any> {
-  public logout = () => {
-    this.props.logout().then();
+  public logout = async () => {
+    await this.props.logout();
   }
 
   public render() {

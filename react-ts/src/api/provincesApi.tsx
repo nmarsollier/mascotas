@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getCurrentToken } from "./userApi";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -8,16 +7,11 @@ export interface IProvince {
     name: string;
 }
 
-export function getProvinces() {
-    return new Promise<IProvince[]>((resolve, reject) => {
-        if (getCurrentToken() !== undefined) {
-            axios.get("http://localhost:3000/v1/province")
-                .then((res) => {
-                    resolve(res.data);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        }
-    });
+export async function getProvinces(): Promise<IProvince[]> {
+    try {
+        const res = await axios.get("http://localhost:3000/v1/province");
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }

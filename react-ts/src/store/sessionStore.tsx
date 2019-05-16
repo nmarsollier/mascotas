@@ -50,88 +50,70 @@ const sessionStore = createStore((state = initialState, action: IAction) => {
     }
 });
 
-export function login(payload: ILogin) {
-    return new Promise<IUser>((result, reject) => {
-        userApi.login(payload)
-            .then((data) => {
-                sessionStore.dispatch({
-                    payload: data,
-                    type: LOGIN,
-                });
-                reloadCurrentUser()
-                    .then((response) => { result(response); })
-                    .catch((err) => { reject(err); });
-            })
-            .catch((err) => {
-                sessionStore.dispatch({
-                    payload: undefined,
-                    type: LOGOUT,
-                });
-                reject(err);
-            });
-    });
+export async function login(payload: ILogin): Promise<IUser> {
+    try {
+        const data = await userApi.login(payload);
+        sessionStore.dispatch({
+            payload: data,
+            type: LOGIN,
+        });
+        const response = await reloadCurrentUser();
+        return Promise.resolve(response);
+    } catch (err) {
+        sessionStore.dispatch({
+            payload: undefined,
+            type: LOGOUT,
+        });
+        return Promise.reject(err);
+    }
 }
 
-export function newUser(payload: ISignUpRequest) {
-    return new Promise<IUser>((result, reject) => {
-        userApi.newUser(payload)
-            .then((data) => {
-                sessionStore.dispatch({
-                    payload: data,
-                    type: NEW_USER,
-                });
-                reloadCurrentUser()
-                    .then((response) => { result(response); })
-                    .catch((err) => { reject(err); });
-            })
-            .catch((err) => {
-                sessionStore.dispatch({
-                    payload: undefined,
-                    type: LOGOUT,
-                });
-                reject(err);
-            });
-    });
+export async function newUser(payload: ISignUpRequest): Promise<IUser> {
+    try {
+        const data = await userApi.newUser(payload);
+        sessionStore.dispatch({
+            payload: data,
+            type: NEW_USER,
+        });
+        const response = await reloadCurrentUser();
+        return Promise.resolve(response);
+    } catch (err) {
+        sessionStore.dispatch({
+            payload: undefined,
+            type: LOGOUT,
+        });
+        return Promise.reject(err);
+    }
 }
 
-export function reloadCurrentUser() {
-    return new Promise<IUser>((result, reject) => {
-        userApi.reloadCurrentUser()
-            .then((data) => {
-                sessionStore.dispatch({
-                    payload: data,
-                    type: USER_FETCH,
-                });
-                result(data);
-            })
-            .catch((err) => {
-                sessionStore.dispatch({
-                    payload: undefined,
-                    type: LOGOUT,
-                });
-                reject(err);
-            });
-    });
+async function reloadCurrentUser(): Promise<IUser> {
+    try {
+        const data = await userApi.reloadCurrentUser();
+        sessionStore.dispatch({
+            payload: data,
+            type: USER_FETCH,
+        });
+        return Promise.resolve(data);
+    } catch (err) {
+        sessionStore.dispatch({
+            payload: undefined,
+            type: LOGOUT,
+        });
+        return Promise.reject(err);
+    }
 }
 
-export function logout() {
-    return new Promise((result, reject) => {
-        userApi.logout()
-            .then((data) => {
-                sessionStore.dispatch({
-                    payload: undefined,
-                    type: LOGOUT,
-                });
-                result();
-            })
-            .catch((err) => {
-                sessionStore.dispatch({
-                    payload: undefined,
-                    type: LOGOUT,
-                });
-                reject(err);
-            });
-    });
+export async function logout(): Promise<void> {
+    try {
+        await userApi.logout();
+        sessionStore.dispatch({
+            payload: undefined,
+            type: LOGOUT,
+        });
+        return Promise.resolve();
+    } catch (error) {
+        return Promise.reject(error);
+    }
 }
 
 if (userApi.getCurrentToken() !== undefined) {

@@ -16,18 +16,16 @@ export function getCurrentUser(): IUser | undefined {
     return (localStorage.getItem("user") as unknown) as IUser;
 }
 
-export function logout() {
+export async function logout(): Promise<void> {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    return new Promise<void>((resolve, reject) => {
-        axios.get("http://localhost:3000/v1/user/signout")
-            .then(() => {
-                resolve();
-            })
-            .catch((err) => {
-                reject(err);
-            });
-    });
+
+    try {
+        await axios.get("http://localhost:3000/v1/user/signout");
+        return Promise.resolve();
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
 export interface ILogin {
@@ -39,18 +37,14 @@ export interface IToken {
     token: string;
 }
 
-export function login(payload: ILogin) {
-    return new Promise<IToken>((resolve, reject) => {
-        axios.post("http://localhost:3000/v1/user/signin",
-            payload)
-            .then((res) => {
-                setCurrentToken(res.data.token);
-                resolve(res.data);
-            })
-            .catch((err) => {
-                reject(err);
-            });
-    });
+export async function login(payload: ILogin): Promise<IToken> {
+    try {
+        const res = await axios.post("http://localhost:3000/v1/user/signin", payload);
+        setCurrentToken(res.data.token);
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
 export interface IUser {
@@ -60,19 +54,14 @@ export interface IUser {
     permissions: string[];
 }
 
-export function reloadCurrentUser() {
-    return new Promise<IUser>((resolve, reject) => {
-        if (getCurrentToken()) {
-            axios.get("http://localhost:3000/v1/users/current")
-                .then((res) => {
-                    localStorage.setItem("user", res.data);
-                    resolve(res.data);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        }
-    });
+export async function reloadCurrentUser(): Promise<IUser> {
+    try {
+        const res = await axios.get("http://localhost:3000/v1/users/current");
+        localStorage.setItem("user", res.data);
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
 export interface ISignUpRequest {
@@ -81,19 +70,14 @@ export interface ISignUpRequest {
     login: string;
 }
 
-export function newUser(payload: ISignUpRequest) {
-    return new Promise<IToken>((resolve, reject) => {
-        if (getCurrentToken()) {
-            axios.post("http://localhost:3000/v1/user", payload)
-                .then((res) => {
-                    setCurrentToken(res.data.token);
-                    resolve(res.data);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        }
-    });
+export async function newUser(payload: ISignUpRequest): Promise<IToken> {
+    try {
+        const res = await axios.post("http://localhost:3000/v1/user", payload);
+        setCurrentToken(res.data.token);
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
 export interface IChangePassword {
@@ -101,18 +85,13 @@ export interface IChangePassword {
     currentPassword: string;
 }
 
-export function changePassword(payload: IChangePassword) {
-    return new Promise<void>((resolve, reject) => {
-        if (getCurrentToken()) {
-            axios.post("http://localhost:3000/v1/user/password", payload)
-                .then(() => {
-                    resolve();
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        }
-    });
+export async function changePassword(payload: IChangePassword): Promise<void> {
+    try {
+        const res = await axios.post("http://localhost:3000/v1/user/password", payload);
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
 if (getCurrentToken()) {

@@ -26,7 +26,7 @@ class StatePassword extends CommonComponent<IProps, IState> {
         };
     }
 
-    public updatePasswordClick = () => {
+    public updatePasswordClick = async () => {
         this.cleanRestValidations();
 
         if (!this.state.currentPassword) {
@@ -43,11 +43,12 @@ class StatePassword extends CommonComponent<IProps, IState> {
             return;
         }
 
-        this.props.changePassword(this.state).then((result) => {
+        try {
+            await this.props.changePassword(this.state);
             this.props.history.push("/");
-        }).catch((error) => {
+        } catch (error) {
             this.processRestValidations(error);
-        });
+        }
     }
 
     public render() {

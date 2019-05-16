@@ -25,7 +25,7 @@ class StateLogin extends CommonComponent<IProps, IState> {
         };
     }
 
-    public loginClick = () => {
+    public loginClick = async () => {
         this.cleanRestValidations();
         if (!this.state.login) {
             this.addError("login", "No puede estar vacío");
@@ -39,11 +39,12 @@ class StateLogin extends CommonComponent<IProps, IState> {
             return;
         }
 
-        this.props.login(this.state).then((result) => {
+        try {
+            await this.props.login(this.state);
             this.props.history.push("/");
-        }).catch((error) => {
+        } catch (error) {
             this.processRestValidations(error);
-        });
+        }
     }
 
     public render() {

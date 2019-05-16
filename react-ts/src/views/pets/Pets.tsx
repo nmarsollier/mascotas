@@ -23,14 +23,15 @@ class StatePets extends CommonComponent<IProps, IState> {
         this.loadPets();
     }
 
-    public loadPets = () => {
-        this.props.loadPets().then((result) => {
+    public loadPets = async () => {
+        try {
+            const result = await this.props.loadPets();
             this.setState({
                 pets: result,
             });
-        }).catch((error) => {
+        } catch (error) {
             this.processRestValidations(error);
-        });
+        }
     }
 
     public editPetClick = (petId: string) => {

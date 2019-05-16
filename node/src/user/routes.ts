@@ -45,10 +45,13 @@ export function initModule(app: express.Express) {
  * @apiUse ParamValidationErrors
  * @apiUse OtherErrors
  */
-function changePassword(req: ISessionRequest, res: express.Response) {
-  user.changePassword(req.user.user_id, req.body)
-    .then(_ => res.send())
-    .catch(err => error.handle(res, err));
+async function changePassword(req: ISessionRequest, res: express.Response) {
+  try {
+    await user.changePassword(req.user.user_id, req.body);
+    res.send();
+  } catch (err) {
+    error.handle(res, err);
+  }
 }
 
 /**
@@ -312,15 +315,16 @@ async function getAll(req: ISessionRequest, res: express.Response) {
  * @apiUse AuthHeader
  * @apiUse OtherErrors
  */
-function current(req: ISessionRequest, res: express.Response) {
-  user.findById(req.user.user_id)
-    .then(user => {
-      return res.json({
-        id: user.id,
-        name: user.name,
-        login: user.login,
-        permissions: user.permissions
-      });
-    })
-    .catch(err => error.handle(res, err));
+async function current(req: ISessionRequest, res: express.Response) {
+  try {
+    const response = await user.findById(req.user.user_id);
+    return res.json({
+      id: response.id,
+      name: response.name,
+      login: response.login,
+      permissions: response.permissions
+    });
+  } catch (err) {
+    error.handle(res, err);
+  }
 }

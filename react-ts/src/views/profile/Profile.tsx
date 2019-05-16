@@ -44,37 +44,40 @@ class StateProfile extends CommonComponent<IProps, IState> {
         this.loadProfile();
     }
 
-    public getProvinces() {
-        this.props.getProvinces().then((result) => {
+    public async getProvinces() {
+        try {
+            const result = await this.props.getProvinces();
             this.setState({
                 provinces: result,
             });
-        }).catch((error) => {
+        } catch (error) {
             this.processRestValidations(error);
-        });
+        }
     }
 
-    public loadProfile() {
-        this.props.getCurrentProfile().then((result) => {
+    public async loadProfile() {
+        try {
+            const result = await this.props.getCurrentProfile();
             this.setState(result);
-        }).catch((error) => {
+        } catch (error) {
             this.processRestValidations(error);
-        });
+        }
     }
 
-    public uploadPicture = (image: string) => {
-        this.props.updateProfilePicture({
-            image,
-        }).then((result) => {
+    public uploadPicture = async (image: string) => {
+        try {
+            const result = await this.props.updateProfilePicture({
+                image,
+            });
             this.setState({
                 picture: result.id,
             });
-        }).catch((error) => {
+        } catch (error) {
             this.processRestValidations(error);
-        });
+        }
     }
 
-    public updateClick = () => {
+    public updateClick = async () => {
         this.cleanRestValidations();
         if (!this.state.name) {
             this.addError("name", "No puede estar vacío");
@@ -87,19 +90,20 @@ class StateProfile extends CommonComponent<IProps, IState> {
             return;
         }
 
-        this.props.updateBasicInfo(
-            {
-                address: this.state.address,
-                email: this.state.email,
-                name: this.state.name,
-                phone: this.state.phone,
-                province: this.state.province,
-            },
-        ).then((result) => {
+        try {
+            await this.props.updateBasicInfo(
+                {
+                    address: this.state.address,
+                    email: this.state.email,
+                    name: this.state.name,
+                    phone: this.state.phone,
+                    province: this.state.province,
+                },
+            );
             this.props.history.push("/");
-        }).catch((error) => {
+        } catch (error) {
             this.processRestValidations(error);
-        });
+        }
     }
 
     public render() {

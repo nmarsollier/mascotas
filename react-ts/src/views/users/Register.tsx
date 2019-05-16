@@ -29,7 +29,7 @@ class StateRegister extends CommonComponent<IProps, IState> {
         };
     }
 
-    public registerClick = () => {
+    public registerClick = async () => {
         this.cleanRestValidations();
         if (!this.state.login) {
             this.addError("login", "No puede estar vacío");
@@ -49,11 +49,12 @@ class StateRegister extends CommonComponent<IProps, IState> {
             return;
         }
 
-        this.props.newUser(this.state).then((result) => {
+        try {
+            await this.props.newUser(this.state);
             this.props.history.push("/");
-        }).catch((error) => {
+        } catch (error) {
             this.processRestValidations(error);
-        });
+        }
     }
 
     public render() {

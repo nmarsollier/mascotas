@@ -18,24 +18,21 @@ export interface SignUpRequest {
     login?: string;
 }
 
-export function register(body: SignUpRequest): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-        validateRegister(body)
-            .then(body => {
-                const user = <IUser>new User();
-                user.name = body.name;
-                user.login = body.login;
-                user.permissions = ["user"];
-                user.setStringPassword(body.password);
+export async function register(signUpRequest: SignUpRequest): Promise<string> {
+    try {
+        const body = await validateRegister(signUpRequest);
+        const user = <IUser>new User();
+        user.name = body.name;
+        user.login = body.login;
+        user.permissions = ["user"];
+        user.setStringPassword(body.password);
 
-                // Then save the user
-                user.save(function (err: any) {
-                    if (err) reject(err);
-                    resolve(user._id.toHexString());
-                });
-            })
-            .catch(error => reject(error));
-    });
+        // Then save the user
+        await user.save();
+        return Promise.resolve(user._id.toHexString());
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 function validateRegister(body: SignUpRequest): Promise<SignUpRequest> {
     const result: error.ValidationErrorMessage = {

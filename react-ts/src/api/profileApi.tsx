@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getCurrentToken } from "./userApi";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -20,18 +19,13 @@ export interface IUpdateBasicProfile {
     province: string;
 }
 
-export function updateBasicInfo(payload: IUpdateBasicProfile) {
-    return new Promise<IProfile>((resolve, reject) => {
-        if (getCurrentToken() !== undefined) {
-            axios.post("http://localhost:3000/v1/profile", payload)
-                .then((res) => {
-                    resolve(res.data);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        }
-    });
+export async function updateBasicInfo(data: IUpdateBasicProfile): Promise<IProfile> {
+    try {
+        const res = await axios.post("http://localhost:3000/v1/profile", data);
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
 export interface IUpdateProfileImage {
@@ -41,32 +35,22 @@ export interface IUpdateProfileImageId {
     id: string;
 }
 
-export function updateProfilePicture(payload: IUpdateProfileImage) {
-    return new Promise<IUpdateProfileImageId>((resolve, reject) => {
-        if (getCurrentToken() !== undefined) {
-            axios.post("http://localhost:3000/v1/profile/picture", payload)
-                .then((res) => {
-                    resolve(res.data);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        }
-    });
+export async function updateProfilePicture(payload: IUpdateProfileImage): Promise<IUpdateProfileImageId> {
+    try {
+        const res = await axios.post("http://localhost:3000/v1/profile/picture", payload);
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
-export function getCurrentProfile() {
-    return new Promise<IProfile>((resolve, reject) => {
-        if (getCurrentToken() !== undefined) {
-            axios.get("http://localhost:3000/v1/profile")
-                .then((res) => {
-                    resolve(res.data);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        }
-    });
+export async function getCurrentProfile(): Promise<IProfile> {
+    try {
+        const res = await axios.get("http://localhost:3000/v1/profile");
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
 }
 
 export function getPictureUrl(id: string) {
