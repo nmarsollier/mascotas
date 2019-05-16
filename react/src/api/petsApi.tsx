@@ -47,7 +47,7 @@ export async function savePet(payload: IPet): Promise<IPet> {
 
 export async function deletePet(id: string): Promise<void> {
     try {
-        const res = await axios.delete("http://localhost:3000/v1/pet/" + id);
+        await axios.delete("http://localhost:3000/v1/pet/" + id);
         return Promise.resolve();
     } catch (err) {
         return Promise.reject(err);
