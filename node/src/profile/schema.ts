@@ -22,8 +22,7 @@ export let ProfileSchema = new mongoose.Schema({
   name: {
     type: String,
     default: "",
-    trim: true,
-    required: "Nombre es requerido"
+    trim: true
   },
   phone: {
     type: String,
@@ -33,8 +32,7 @@ export let ProfileSchema = new mongoose.Schema({
   email: {
     type: String,
     default: "",
-    trim: true,
-    required: "Email es requerido"
+    trim: true
   },
   address: {
     type: String,

@@ -2,6 +2,7 @@
 
 import * as express from "express";
 import { NextFunction } from "express-serve-static-core";
+import * as mongoose from "mongoose";
 
 export const ERROR_UNAUTHORIZED = 401;
 export const ERROR_NOT_FOUND = 404;
@@ -84,6 +85,9 @@ export function handle(res: express.Response, err: any): express.Response {
     }
 
     return res.send(send);
+  } else if (err instanceof mongoose.Error.ValidationError) {
+    // Error de Mongo
+    return res.send(sendMongooseValidationError(res, err));
   } else if (err.code) {
     // Error de Mongo
     return res.send(sendMongoose(res, err));
@@ -117,6 +121,29 @@ export function handle404(req: express.Request, res: express.Response) {
 function sendUnknown(res: express.Response, err: any): ValidationErrorMessage {
   res.status(ERROR_INTERNAL_ERROR);
   return { error: err };
+}
+
+// Obtiene un error adecuando cuando hay errores de db
+function sendMongooseValidationError(res: express.Response, err: mongoose.Error.ValidationError): ValidationErrorMessage {
+  res.status(ERROR_BAD_REQUEST);
+  const result = new ValidationErrorMessage();
+  result.messages = [];
+
+  Object.keys(err.errors).forEach(property => {
+    const element = err.errors[property];
+    if (element.path && element.message) {
+      result.messages.push({
+        path: element.path as string,
+        message: element.message as string,
+      });
+    }
+  });
+
+  if (result.messages.length == 0 && err.message) {
+    result.error = err.message;
+  }
+
+  return result;
 }
 
 // Obtiene un error adecuando cuando hay errores de db
