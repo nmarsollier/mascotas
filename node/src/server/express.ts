@@ -11,12 +11,9 @@ import * as path from "path";
 import * as token from "../token/passport";
 import * as error from "../server/error";
 import { Config } from "./environment";
-import * as user from "../user/routes";
-import * as provinces from "../provinces/routes";
-import * as profile from "../profile/routes";
-import * as profilePicture from "../profileImage/routes";
-import * as image from "../image/routes";
-import * as pet from "../pet/routes";
+require("express-async-errors");
+
+import * as routes from "./routes";
 
 export function init(appConfig: Config): express.Express {
   const app = express();
@@ -63,15 +60,10 @@ export function init(appConfig: Config): express.Express {
 
   // Iniciamos las rutas del directorio
   // mas sobre rutas http://expressjs.com/es/guide/routing.html
-  user.initModule(app);
-  provinces.initModule(app);
-  profile.initModule(app);
-  image.initModule(app);
-  pet.initModule(app);
-  profilePicture.initModule(app);
+  routes.initModules(app);
 
   // Para el manejo de errores, para que los loguee en la consola
-  app.use(error.logErrors);
+  app.use(error.handle);
 
   // Responder con JSON cuando hay un error 404, sino responde con un html
   // Esto tiene que ir al final porque sino nos sobreescribe las otras rutas

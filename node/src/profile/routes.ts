@@ -42,19 +42,15 @@ export function initModule(app: express.Express) {
  * @apiUse OtherErrors
  */
 async function current(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.read(req.user.user_id);
-    res.json({
-      name: result.name,
-      phone: result.phone,
-      email: result.email,
-      address: result.address,
-      province: result.province,
-      picture: result.picture
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.read(req.user.user_id);
+  res.json({
+    name: result.name,
+    phone: result.phone,
+    email: result.email,
+    address: result.address,
+    province: result.province,
+    picture: result.picture
+  });
 }
 
 /**
@@ -94,16 +90,12 @@ async function current(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function updateBasicInfo(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.updateBasicInfo(req.user.user_id, req.body);
-    res.json({
-      name: result.name,
-      phone: result.phone,
-      email: result.email,
-      address: result.address,
-      province: result.province,
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.updateBasicInfo(req.user.user_id, req.body);
+  res.json({
+    name: result.name,
+    phone: result.phone,
+    email: result.email,
+    address: result.address,
+    province: result.province,
+  });
 }

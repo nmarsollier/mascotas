@@ -46,19 +46,15 @@ export function initModule(app: express.Express) {
  * @apiUse OtherErrors
  */
 async function findByCurrentUser(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.findByCurrentUser(req.user.user_id);
-    res.json(result.map(u => {
-      return {
-        id: u.id,
-        name: u.name,
-        description: u.description,
-        birthDate: u.birthDate
-      };
-    }));
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.findByCurrentUser(req.user.user_id);
+  res.json(result.map(u => {
+    return {
+      id: u.id,
+      name: u.name,
+      description: u.description,
+      birthDate: u.birthDate
+    };
+  }));
 }
 
 /**
@@ -92,14 +88,10 @@ async function findByCurrentUser(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function create(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.update(undefined, req.user.user_id, req.body);
-    res.json({
-      id: result.id
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.update(undefined, req.user.user_id, req.body);
+  res.json({
+    id: result.id
+  });
 }
 
 
@@ -117,17 +109,13 @@ async function create(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function readById(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.findById(req.user.user_id, req.params.petId);
-    res.json({
-      id: result.id,
-      name: result.name,
-      description: result.description,
-      birthDate: result.birthDate
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.findById(req.user.user_id, req.params.petId);
+  res.json({
+    id: result.id,
+    name: result.name,
+    description: result.description,
+    birthDate: result.birthDate
+  });
 }
 
 /**
@@ -152,17 +140,13 @@ async function readById(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function updateById(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.update(req.params.petId, req.user.user_id, req.body);
-    res.json({
-      id: result.id,
-      name: result.name,
-      description: result.description,
-      birthDate: result.birthDate
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.update(req.params.petId, req.user.user_id, req.body);
+  res.json({
+    id: result.id,
+    name: result.name,
+    description: result.description,
+    birthDate: result.birthDate
+  });
 }
 
 /**
@@ -178,10 +162,6 @@ async function updateById(req: ISessionRequest, res: express.Response) {
  */
 
 async function removeById(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.remove(req.user.user_id, req.params.petId);
-    res.send();
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await service.remove(req.user.user_id, req.params.petId);
+  res.send();
 }

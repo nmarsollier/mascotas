@@ -67,7 +67,7 @@ export function newError(code: number, err: string): ValidationErrorMessage {
  *     }
  *
  */
-export function handle(res: express.Response, err: any): express.Response {
+export function handle(err: any, req: express.Request, res: express.Response, next: NextFunction) {
   if (err instanceof ValidationErrorMessage
     || err.code || err.messages) {
     // ValidationErrorMessage
@@ -97,17 +97,6 @@ export function handle(res: express.Response, err: any): express.Response {
   }
 }
 
-// Loguea errores a la consola
-export function logErrors(err: any, req: express.Request, res: express.Response, next: NextFunction) {
-  if (!err) return next();
-
-  console.error(err.message);
-
-  res.status(err.status || ERROR_INTERNAL_ERROR);
-  res.send(err);
-}
-
-
 export function handle404(req: express.Request, res: express.Response) {
   res.status(ERROR_NOT_FOUND);
   res.send({
@@ -115,7 +104,6 @@ export function handle404(req: express.Request, res: express.Response) {
     error: "Not Found"
   });
 }
-
 
 // Error desconocido
 function sendUnknown(res: express.Response, err: any): ValidationErrorMessage {

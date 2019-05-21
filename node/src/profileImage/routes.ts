@@ -40,15 +40,11 @@ export function initModule(app: express.Express) {
  * @apiUse OtherErrors
  */
 async function updateProfilePicture(req: ISessionRequest, res: express.Response) {
-  try {
-    const imageResult = await imageService.create(req.body);
-    const profileResult = await profileService.updateProfilePicture(req.user.user_id, imageResult.id);
+  const imageResult = await imageService.create(req.body);
+  const profileResult = await profileService.updateProfilePicture(req.user.user_id, imageResult.id);
 
-    res.json({
-      id: profileResult.picture
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  res.json({
+    id: profileResult.picture
+  });
 }
 

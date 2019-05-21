@@ -42,14 +42,10 @@ export function initModule(app: express.Express) {
  * @apiUse OtherErrors
  */
 async function create(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.create(req.body);
-    res.json({
-      id: result.id
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.create(req.body);
+  res.json({
+    id: result.id
+  });
 }
 
 /**
@@ -66,13 +62,9 @@ async function create(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function read(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.findByID(req.params.imageId);
-    const data = result.image.substring(result.image.indexOf(",") + 1);
-    const buff = new Buffer(data, "base64");
-    res.type("image/jpeg");
-    res.send(buff);
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.findByID(req.params.imageId);
+  const data = result.image.substring(result.image.indexOf(",") + 1);
+  const buff = new Buffer(data, "base64");
+  res.type("image/jpeg");
+  res.send(buff);
 }

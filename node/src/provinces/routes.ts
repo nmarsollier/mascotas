@@ -39,18 +39,14 @@ export function initModule(app: express.Express) {
  * @apiUse OtherErrors
  */
 async function list(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.list();
+  const result = await service.list();
 
-    res.json(result.map(u => {
-      return {
-        id: u.id,
-        name: u.name
-      };
-    }));
-  } catch (err) {
-    error.handle(res, err);
-  }
+  res.json(result.map(u => {
+    return {
+      id: u.id,
+      name: u.name
+    };
+  }));
 }
 
 /**
@@ -77,13 +73,9 @@ async function list(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function create(req: ISessionRequest, res: express.Response) {
-  try {
-    await user.hasPermission(req.user.user_id, "admin");
-    const result = await service.create(req.body);
-    res.json({ id: result });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await user.hasPermission(req.user.user_id, "admin");
+  const result = await service.create(req.body);
+  res.json({ id: result });
 }
 
 /**
@@ -104,15 +96,11 @@ async function create(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function read(req: ISessionRequest, res: express.Response) {
-  try {
-    const result = await service.read(req.params.provinceId);
-    return res.json({
-      id: result.id,
-      name: result.name
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const result = await service.read(req.params.provinceId);
+  return res.json({
+    id: result.id,
+    name: result.name
+  });
 }
 
 /**
@@ -128,11 +116,7 @@ async function read(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function remove(req: ISessionRequest, res: express.Response) {
-  try {
-    await user.hasPermission(req.user.user_id, "admin");
-    await service.invalidate(req.params.provinceId);
-    res.send();
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await user.hasPermission(req.user.user_id, "admin");
+  await service.invalidate(req.params.provinceId);
+  res.send();
 }

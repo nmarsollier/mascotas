@@ -46,12 +46,8 @@ export function initModule(app: express.Express) {
  * @apiUse OtherErrors
  */
 async function changePassword(req: ISessionRequest, res: express.Response) {
-  try {
-    await user.changePassword(req.user.user_id, req.body);
-    res.send();
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await user.changePassword(req.user.user_id, req.body);
+  res.send();
 }
 
 /**
@@ -83,13 +79,9 @@ async function changePassword(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function signUp(req: express.Request, res: express.Response) {
-  try {
-    const userId = await user.register(req.body);
-    const tokenString = await token.create(userId);
-    res.json({ token: tokenString });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const userId = await user.register(req.body);
+  const tokenString = await token.create(userId);
+  res.json({ token: tokenString });
 }
 
 /**
@@ -111,13 +103,9 @@ async function signUp(req: express.Request, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function login(req: express.Request, res: express.Response) {
-  try {
-    const userId = await user.login(req.body);
-    const tokenString = await token.create(userId);
-    res.json({ token: tokenString });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const userId = await user.login(req.body);
+  const tokenString = await token.create(userId);
+  res.json({ token: tokenString });
 }
 
 /**
@@ -134,12 +122,8 @@ async function login(req: express.Request, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function logout(req: ISessionRequest, res: express.Response) {
-  try {
-    await token.invalidate(req.user);
-    res.send();
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await token.invalidate(req.user);
+  res.send();
 }
 
 
@@ -163,13 +147,9 @@ async function logout(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function grantPermissions(req: ISessionRequest, res: express.Response) {
-  try {
-    await user.hasPermission(req.user.user_id, "admin");
-    await user.grant(req.params.userID, req.body.permissions);
-    res.send();
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await user.hasPermission(req.user.user_id, "admin");
+  await user.grant(req.params.userID, req.body.permissions);
+  res.send();
 }
 
 /**
@@ -192,13 +172,9 @@ async function grantPermissions(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function revokePermissions(req: ISessionRequest, res: express.Response) {
-  try {
-    await user.hasPermission(req.user.user_id, "admin");
-    await user.revoke(req.params.userID, req.body.permissions);
-    res.send();
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await user.hasPermission(req.user.user_id, "admin");
+  await user.revoke(req.params.userID, req.body.permissions);
+  res.send();
 }
 
 
@@ -217,13 +193,9 @@ async function revokePermissions(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function enableUser(req: ISessionRequest, res: express.Response) {
-  try {
-    await user.hasPermission(req.user.user_id, "admin");
-    await user.enable(req.params.userID);
-    res.send();
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await user.hasPermission(req.user.user_id, "admin");
+  await user.enable(req.params.userID);
+  res.send();
 }
 
 /**
@@ -241,13 +213,9 @@ async function enableUser(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function disableUser(req: ISessionRequest, res: express.Response) {
-  try {
-    await user.hasPermission(req.user.user_id, "admin");
-    await user.disable(req.params.userID);
-    res.send();
-  } catch (err) {
-    error.handle(res, err);
-  }
+  await user.hasPermission(req.user.user_id, "admin");
+  await user.disable(req.params.userID);
+  res.send();
 }
 
 /**
@@ -275,22 +243,18 @@ async function disableUser(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function getAll(req: ISessionRequest, res: express.Response) {
-  try {
-    await user.hasPermission(req.user.user_id, "admin");
-    const users = await user.findAll();
+  await user.hasPermission(req.user.user_id, "admin");
+  const users = await user.findAll();
 
-    res.json(users.map(u => {
-      return {
-        id: u.id,
-        name: u.name,
-        login: u.login,
-        permissions: u.permissions,
-        enabled: u.enabled
-      };
-    }));
-  } catch (err) {
-    error.handle(res, err);
-  }
+  res.json(users.map(u => {
+    return {
+      id: u.id,
+      name: u.name,
+      login: u.login,
+      permissions: u.permissions,
+      enabled: u.enabled
+    };
+  }));
 }
 
 
@@ -316,15 +280,11 @@ async function getAll(req: ISessionRequest, res: express.Response) {
  * @apiUse OtherErrors
  */
 async function current(req: ISessionRequest, res: express.Response) {
-  try {
-    const response = await user.findById(req.user.user_id);
-    return res.json({
-      id: response.id,
-      name: response.name,
-      login: response.login,
-      permissions: response.permissions
-    });
-  } catch (err) {
-    error.handle(res, err);
-  }
+  const response = await user.findById(req.user.user_id);
+  return res.json({
+    id: response.id,
+    name: response.name,
+    login: response.login,
+    permissions: response.permissions
+  });
 }
