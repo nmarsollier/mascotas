@@ -6,12 +6,15 @@ Red social de ejemplo para la cátedra Programación Avanzada UTN/FRM.
 
 ## Entorno de Desarrollo
 
-El proyecto se desarrollo con [Visual Studio Code](https://code.visualstudio.com/download), Si bien podrían utilizarse alternativas como [Atom](https://atom.io/), [Sublime](https://www.sublimetext.com/download), [Eclipse](http://www.eclipse.org/downloads/), la variedad de plugins en VSCode hacen que el desarrollo sea 'amigable' para la variedad de lenguajes que estamos manejando en el proyecto.
+El proyecto se desarrollo con [Visual Studio Code](https://code.visualstudio.com/download), Si bien podrían utilizarse alternativas como [Atom](https://atom.io/), [Sublime](https://www.sublimetext.com/download).
 
-Los plugins configurados en el momento de desarrollo en VSCode son los siguientes :
+Algunos plugins interesantes para VSCode que facilitan el desarrollo :
 
 - __JavasScript (ES6) code snippets__ by charlampos karypidis
-- __TSLint__ by egamma
+- __ESLint__ by egamma
+- Typescript React code snippets
+- React Native Tools
+- ES7 React/Redux/GraphQL/React-native snippets
 
 Existe un Workspace configurado para VSCode en la raíz del proyecto :
 
@@ -41,7 +44,7 @@ Para windows se puede descargar el paquete sin instalación : [Instalación](htt
 
 Recomiendo instalar FastoRedis para navegar la base de datos [fastoredis.com](https://fastoredis.com/)
 
-### Node 8
+### Node 10
 
 Seguir los pasos de instalación del sitio oficial [nodejs.org](https://nodejs.org/en/)
 

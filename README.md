@@ -6,9 +6,9 @@ Este proyecto es un ejemplo de como armar un proyecto Node 6 con Typescript como
 
 El proyecto tiene 2 carpetas
 
-react :  Frontend desarrollado en react.
+react :  Frontend desarrollado en react y typescript.
 
-node-ts : Node con typescript para backend.
+node : Node con typescript para backend.
 
 ## Guía de Instalación
 
@@ -36,7 +36,7 @@ Recomiendo instalar FastoRedis para navegar la base de datos [fastoredis.com](ht
 
 ### Backend
 
-Abrir ventana de comandos en el folder node-ts y ejecutar :
+Abrir ventana de comandos en el folder node y ejecutar :
 
 ```bash
 npm install
@@ -45,7 +45,7 @@ npm start
 
 El backend expone la documentación de las api abriendo [localhost:3000](http://localhost:3000/)
 
-También se pueden ver las apis desde [Api](./node-ts/README-API.md)
+También se pueden ver las apis desde [Api](./node/README-API.md)
 
 ### React
 
