@@ -9,11 +9,6 @@ import * as express from "./server/express";
 // Variables de entorno
 const conf: Config = env.getConfig(process.env);
 
-// Mejoramos el log de las promesas
-process.on("unhandledRejection", (reason, p) => {
-  console.error("Unhandled Rejection at: Promise", p, "reason:", reason);
-});
-
 // Establecemos conexión con MongoDD
 mongoose.connect(conf.mongoDb, {}, function (err: MongoError) {
   if (err) {
