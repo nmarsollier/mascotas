@@ -45,7 +45,7 @@ npm start
 
 El backend expone la documentación de las api abriendo [localhost:3000](http://localhost:3000/)
 
-También se pueden ver las apis desde [Api](./node/README-API.md)
+Pueden ver la documentación del proyecto en [node](./node/README.md)
 
 ### React
 
