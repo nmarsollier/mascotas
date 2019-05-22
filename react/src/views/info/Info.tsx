@@ -11,7 +11,7 @@ class StateInfo extends React.Component<IStoredState, any> {
         return (
             <div>
                 <h2>Información de Perfil</h2>
-                <form>
+                <form onSubmit={(e) => e.preventDefault()}>
                     <div className="form-group">
                         <label>Login</label>
                         <input className="form-control" id="login" value={user.login} disabled />

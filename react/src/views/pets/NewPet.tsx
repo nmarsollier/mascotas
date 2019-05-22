@@ -82,7 +82,7 @@ class StateNewPet extends CommonComponent<IProps, IState> {
             <div className="global_content">
                 <h2 className="global_title">Nueva Mascota</h2>
 
-                <form>
+                <form onSubmit={(e) => e.preventDefault()}>
                     <div className="form-group">
                         <label>Nombre</label>
                         <input id="name" type="text"

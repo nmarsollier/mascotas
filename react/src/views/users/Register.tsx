@@ -62,7 +62,7 @@ class StateRegister extends CommonComponent<IProps, IState> {
             <div className="global_content">
                 <h2 className="global_title">Registrar Usuario</h2>
 
-                <form>
+                <form onSubmit={(e) => e.preventDefault()}>
                     <div className="form-group">
                         <label>Login</label>
                         <input id="login" type="text"

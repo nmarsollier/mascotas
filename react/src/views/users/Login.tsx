@@ -52,7 +52,7 @@ class StateLogin extends CommonComponent<IProps, IState> {
             <div className="global_content">
                 <h2 className="global_title">Login</h2>
 
-                <form>
+                <form onSubmit={(e) => e.preventDefault()}>
                     <div className="form-group">
                         <label>Usuario</label>
                         <input id="login" type="text"
