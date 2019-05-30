@@ -25,7 +25,7 @@ export async function logout(): Promise<void> {
         axios.defaults.headers.common.Authorization = "";
         return Promise.resolve();
     } catch (err) {
-        return Promise.reject(err);
+        return Promise.resolve();
     }
 }
 
