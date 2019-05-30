@@ -112,7 +112,11 @@ export async function logout(): Promise<void> {
         });
         return Promise.resolve();
     } catch (error) {
-        return Promise.reject(error);
+        sessionStore.dispatch({
+            payload: undefined,
+            type: LOGOUT,
+        });
+        return Promise.resolve();
     }
 }
 

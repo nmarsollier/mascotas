@@ -1,16 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { deletePet, IPet, loadPet, newPet, savePet } from "../../api/petsApi";
+import { deletePet, loadPet, newPet, savePet } from "../../api/petsApi";
 import "../../styles.css";
 import CommonComponent, { ICommonProps } from "../../tools/CommonComponent";
 import ErrorLabel from "../../tools/ErrorLabel";
-
-interface IProps extends ICommonProps {
-    deletePet(id: string): Promise<void>;
-    newPet(payload: IPet): Promise<IPet>;
-    savePet(payload: IPet): Promise<IPet>;
-    loadPet(id: string): Promise<IPet>;
-}
 
 interface IState {
     birthDate: string;
@@ -19,8 +11,8 @@ interface IState {
     name: string;
 }
 
-class StateNewPet extends CommonComponent<IProps, IState> {
-    constructor(props: IProps) {
+export default class NewPet extends CommonComponent<ICommonProps, IState> {
+    constructor(props: ICommonProps) {
         super(props);
 
         this.state = {
@@ -46,7 +38,7 @@ class StateNewPet extends CommonComponent<IProps, IState> {
     public deleteClick = async () => {
         if (this.state.id) {
             try {
-                await this.props.deletePet(this.state.id);
+                await deletePet(this.state.id);
                 this.props.history.push("/pets");
             } catch (error) {
                 this.processRestValidations(error);
@@ -67,9 +59,9 @@ class StateNewPet extends CommonComponent<IProps, IState> {
 
         try {
             if (this.state.id) {
-                await this.props.savePet(this.state);
+                await savePet(this.state);
             } else {
-                await this.props.newPet(this.state);
+                await newPet(this.state);
             }
             this.props.history.push("/pets");
         } catch (error) {
@@ -133,17 +125,3 @@ class StateNewPet extends CommonComponent<IProps, IState> {
         );
     }
 }
-
-const NewPet = connect(
-    null,
-    (dispatch) => {
-        return {
-            deletePet: (id: string) => deletePet(id),
-            loadPet: (id: string) => loadPet(id),
-            newPet: (pet: IPet) => newPet(pet),
-            savePet: (pet: IPet) => savePet(pet),
-        };
-    },
-)(StateNewPet);
-
-export default NewPet;

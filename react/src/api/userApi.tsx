@@ -22,6 +22,7 @@ export async function logout(): Promise<void> {
 
     try {
         await axios.get("http://localhost:3000/v1/user/signout");
+        axios.defaults.headers.common.Authorization = "";
         return Promise.resolve();
     } catch (err) {
         return Promise.reject(err);
@@ -95,5 +96,5 @@ export async function changePassword(payload: IChangePassword): Promise<void> {
 }
 
 if (getCurrentToken()) {
-    setCurrentToken(getCurrentToken() as string);
+    axios.defaults.headers.common.Authorization = "bearer " + getCurrentToken();
 }
