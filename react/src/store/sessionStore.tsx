@@ -2,19 +2,18 @@ import { createStore } from "redux";
 import * as userApi from "../api/userApi";
 import { ILogin, ISignUpRequest, IUser } from "../api/userApi";
 
-const LOGIN = "LOGIN";
-const LOGOUT = "LOGOUT";
-const USER_FETCH = "USER_FETCH";
-const NEW_USER = "NEW_USER";
-
 export interface IStoredState {
     token?: string;
     user?: IUser;
 }
 
-export interface IAction {
-    type: string;
-    payload: any;
+enum StoreAction {
+    LOGIN, LOGOUT, USER_FETCH,
+}
+
+interface IAction {
+    type: StoreAction;
+    payload?: IStoredState;
 }
 
 const initialState: IStoredState = {
@@ -24,22 +23,17 @@ const initialState: IStoredState = {
 
 const sessionStore = createStore((state = initialState, action: IAction) => {
     switch (action.type) {
-        case LOGIN:
+        case StoreAction.LOGIN:
             return {
                 ...state,
-                token: action.payload.token,
+                token: action.payload!.token,
             };
-        case NEW_USER:
-            return {
-                ...state,
-                token: action.payload.token,
-            };
-        case USER_FETCH:
+        case StoreAction.USER_FETCH:
             return {
                 ...state,
                 user: action.payload,
             };
-        case LOGOUT:
+        case StoreAction.LOGOUT:
             return {
                 ...state,
                 token: undefined,
@@ -55,14 +49,14 @@ export async function login(payload: ILogin): Promise<IUser> {
         const data = await userApi.login(payload);
         sessionStore.dispatch({
             payload: data,
-            type: LOGIN,
+            type: StoreAction.LOGIN,
         });
         const response = await reloadCurrentUser();
         return Promise.resolve(response);
     } catch (err) {
         sessionStore.dispatch({
             payload: undefined,
-            type: LOGOUT,
+            type: StoreAction.LOGOUT,
         });
         return Promise.reject(err);
     }
@@ -73,14 +67,14 @@ export async function newUser(payload: ISignUpRequest): Promise<IUser> {
         const data = await userApi.newUser(payload);
         sessionStore.dispatch({
             payload: data,
-            type: NEW_USER,
+            type: StoreAction.LOGIN,
         });
         const response = await reloadCurrentUser();
         return Promise.resolve(response);
     } catch (err) {
         sessionStore.dispatch({
             payload: undefined,
-            type: LOGOUT,
+            type: StoreAction.LOGOUT,
         });
         return Promise.reject(err);
     }
@@ -90,14 +84,16 @@ async function reloadCurrentUser(): Promise<IUser> {
     try {
         const data = await userApi.reloadCurrentUser();
         sessionStore.dispatch({
-            payload: data,
-            type: USER_FETCH,
+            payload: {
+                user: data,
+            },
+            type: StoreAction.USER_FETCH,
         });
         return Promise.resolve(data);
     } catch (err) {
         sessionStore.dispatch({
             payload: undefined,
-            type: LOGOUT,
+            type: StoreAction.LOGOUT,
         });
         return Promise.reject(err);
     }
@@ -108,13 +104,13 @@ export async function logout(): Promise<void> {
         await userApi.logout();
         sessionStore.dispatch({
             payload: undefined,
-            type: LOGOUT,
+            type: StoreAction.LOGOUT,
         });
         return Promise.resolve();
     } catch (error) {
         sessionStore.dispatch({
             payload: undefined,
-            type: LOGOUT,
+            type: StoreAction.LOGOUT,
         });
         return Promise.resolve();
     }
