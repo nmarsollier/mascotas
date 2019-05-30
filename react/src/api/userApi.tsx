@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { logout as sessionLogout } from "../store/sessionStore";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -61,6 +62,9 @@ export async function reloadCurrentUser(): Promise<IUser> {
         localStorage.setItem("user", res.data);
         return Promise.resolve(res.data);
     } catch (err) {
+        if ((err as AxiosError).code === "401") {
+            sessionLogout();
+        }
         return Promise.reject(err);
     }
 }
@@ -91,6 +95,9 @@ export async function changePassword(payload: IChangePassword): Promise<void> {
         const res = await axios.post("http://localhost:3000/v1/user/password", payload);
         return Promise.resolve(res.data);
     } catch (err) {
+        if ((err as AxiosError).code === "401") {
+            sessionLogout();
+        }
         return Promise.reject(err);
     }
 }
