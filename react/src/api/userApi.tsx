@@ -62,7 +62,7 @@ export async function reloadCurrentUser(): Promise<IUser> {
         localStorage.setItem("user", res.data);
         return Promise.resolve(res.data);
     } catch (err) {
-        if ((err as AxiosError).code === "401") {
+        if ((err as AxiosError) && err.response && err.response.status === 401) {
             sessionLogout();
         }
         return Promise.reject(err);
@@ -95,7 +95,7 @@ export async function changePassword(payload: IChangePassword): Promise<void> {
         const res = await axios.post("http://localhost:3000/v1/user/password", payload);
         return Promise.resolve(res.data);
     } catch (err) {
-        if ((err as AxiosError).code === "401") {
+        if ((err as AxiosError) && err.response && err.response.status === 401) {
             sessionLogout();
         }
         return Promise.reject(err);

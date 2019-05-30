@@ -44,7 +44,7 @@ export async function updateProfilePicture(payload: IUpdateProfileImage): Promis
         const res = await axios.post("http://localhost:3000/v1/profile/picture", payload);
         return Promise.resolve(res.data);
     } catch (err) {
-        if ((err as AxiosError).code === "401") {
+        if ((err as AxiosError) && err.response && err.response.status === 401) {
             logout();
         }
         return Promise.reject(err);
@@ -56,7 +56,7 @@ export async function getCurrentProfile(): Promise<IProfile> {
         const res = await axios.get("http://localhost:3000/v1/profile");
         return Promise.resolve(res.data);
     } catch (err) {
-        if ((err as AxiosError).code === "401") {
+        if ((err as AxiosError) && err.response && err.response.status === 401) {
             logout();
         }
         return Promise.reject(err);
