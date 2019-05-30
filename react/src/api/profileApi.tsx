@@ -25,7 +25,7 @@ export async function updateBasicInfo(data: IUpdateBasicProfile): Promise<IProfi
         const res = await axios.post("http://localhost:3000/v1/profile", data);
         return Promise.resolve(res.data);
     } catch (err) {
-        if ((err as AxiosError).code === "401") {
+        if ((err as AxiosError).response != null && err.response.status === 401) {
             logout();
         }
         return Promise.reject(err);
