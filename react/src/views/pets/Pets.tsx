@@ -42,13 +42,13 @@ export default class Pets extends CommonComponent<ICommonProps, IState> {
             <div className="global_content">
                 <h2 className="global_title">Mascotas</h2>
                 <table id="mascotas" className="table">
-                    <head>
+                    <thead>
                         <tr>
                             <th> Nombre </th>
                             <th> Descripción </th>
                             <th> </th>
                         </tr>
-                    </head>
+                    </thead>
                     <tbody>
                         {this.state.pets.map((pet, i) => {
                             return (
