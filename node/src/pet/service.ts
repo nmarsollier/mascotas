@@ -1,13 +1,13 @@
 "use strict";
 
-import { IPet, Pet } from "./schema";
 import * as error from "../server/error";
+import { IPet, Pet } from "./schema";
 const mongoose = require("mongoose");
 
 export async function findByCurrentUser(userId: string): Promise<Array<IPet>> {
   try {
     const result = await Pet.find({
-      user: userId,
+      user: mongoose.Types.ObjectId(userId),
       enabled: true
     }).exec();
     return Promise.resolve(result);
@@ -19,7 +19,7 @@ export async function findByCurrentUser(userId: string): Promise<Array<IPet>> {
 export async function findById(userId: string, petId: string): Promise<IPet> {
   try {
     const result = await Pet.findOne({
-      user: userId,
+      user: mongoose.Types.ObjectId(userId),
       _id: petId,
       enabled: true
     }).exec();
@@ -86,7 +86,7 @@ export async function update(petId: string, userId: string, body: IPet): Promise
 export async function remove(userId: string, petId: string): Promise<void> {
   try {
     const pet = await Pet.findOne({
-      user: userId,
+      user: mongoose.Types.ObjectId(userId),
       _id: petId,
       enabled: true
     }).exec();

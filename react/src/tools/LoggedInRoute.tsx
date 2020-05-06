@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Route } from "react-router-dom";
+import { Route, RouteComponentProps } from "react-router-dom";
 import { IStoredState } from "../store/sessionStore";
 import Welcome from "../views/welcome/Welcome";
 
 interface IProps extends IStoredState {
   path: string;
-  component: React.ComponentClass;
+  component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
 }
 
 class StateLoggedInRoute extends React.Component<IProps, any> {

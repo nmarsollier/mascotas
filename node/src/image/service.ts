@@ -2,7 +2,7 @@
 
 import * as escape from "escape-html";
 import * as redis from "ioredis";
-import * as uuid from "uuid/v1";
+import { v1 as uuid } from "uuid";
 import * as appConfig from "../server/environment";
 import * as error from "../server/error";
 import { IImage } from "./schema";

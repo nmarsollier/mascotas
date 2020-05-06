@@ -4,10 +4,10 @@ export interface IError {
     response?: {
         data?: {
             error?: string;
-            messages?: Array<{
+            messages?: {
                 path: string;
                 message: string;
-            }>;
+            }[];
         };
     };
 }
@@ -39,8 +39,10 @@ export default class CommonComponent<P extends ICommonProps, S> extends React.Co
             for (const error of data.response.data.messages) {
                 this.errors.set(error.path, error.message);
             }
-        } else {
+        } else if ((typeof data.response.data.error) === "string") {
             this.errorMessage = data.response.data.error;
+        } else {
+            this.errorMessage = "Problemas internos del servidor";
         }
         this.forceUpdate();
     }
@@ -76,6 +78,8 @@ export default class CommonComponent<P extends ICommonProps, S> extends React.Co
     }
 
     protected goHome = () => {
-        this.props.history.push("/");
+        if (this.props.history) {
+            this.props.history.push("/");
+        }
     }
 }

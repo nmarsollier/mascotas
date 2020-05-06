@@ -7,7 +7,7 @@ import * as provinces from "../provinces/service";
 
 async function findForUser(userId: string): Promise<IProfile> {
   return await Profile.findOne({
-    user: escape(userId),
+    user: mongoose.Types.ObjectId(escape(userId)),
     enabled: true
   });
 }
