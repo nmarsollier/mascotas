@@ -3,6 +3,9 @@ import { IPet, loadPets } from "./api/petsApi";
 import "../styles.css";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome, DefaultProps } from "../common/utils/Tools";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormAcceptButton from "../common/components/FormAcceptButton";
+import FormButton from "../common/components/FormButton";
 
 export default function Pets(props: DefaultProps) {
     const [pets, setPets] = useState(new Array<IPet>())
@@ -60,10 +63,10 @@ export default function Pets(props: DefaultProps) {
                 </tbody>
             </table>
 
-            <div className="btn-group ">
-                <button className="btn btn-success" onClick={newPetClick} >Nueva Mascota</button >
-                <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
-            </div >
+            <FormButtonBar>
+                <FormAcceptButton label="Nueva Mascota" onClick={newPetClick} />
+                <FormButton label="Cancelar" onClick={() => goHome(props)} />
+            </FormButtonBar>
         </div>
     );
 }

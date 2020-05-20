@@ -9,6 +9,9 @@ import "../styles.css";
 import { getCurrentProfile, getPictureUrl, updateBasicInfo, updateProfilePicture } from "./api/profileApi";
 import DangerLabel from "../common/components/DangerLabel";
 import FormInput from "../common/components/FormInput";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormAcceptButton from "../common/components/FormAcceptButton";
+import FormButton from "../common/components/FormButton";
 
 interface IState {
     name: string;
@@ -152,10 +155,10 @@ export default function Profile(props: DefaultProps) {
 
                 <DangerLabel message={errorHandler.errorMessage} />
 
-                <div className="btn-group ">
-                    <button className="btn btn-primary" onClick={updateClick}>Actualizar</button>
-                    <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
-                </div >
+                <FormButtonBar>
+                    <FormAcceptButton label="Actualizar" onClick={updateClick} />
+                    <FormButton label="Cancelar" onClick={() => goHome(props)} />
+                </FormButtonBar>
             </form >
         </div>
     );

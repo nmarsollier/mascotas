@@ -3,6 +3,7 @@ import { useState } from "react";
 export interface DefaultProps {
     history?: any;
     match?: any;
+    children?: any;
 }
 
 export function goHome(props: DefaultProps) {

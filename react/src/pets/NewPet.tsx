@@ -5,21 +5,25 @@ import "../styles.css";
 import { deletePet, loadPet, newPet, savePet } from "./api/petsApi";
 import DangerLabel from "../common/components/DangerLabel";
 import FormInput from "../common/components/FormInput";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormAcceptButton from "../common/components/FormAcceptButton";
+import FormButton from "../common/components/FormButton";
+import FormWarnButton from "../common/components/FormWarnButton";
 
 export default function NewPet(props: DefaultProps) {
     const [birthDate, setBirthDate] = useState("")
     const [description, setDescription] = useState("")
-    const [id, setId] = useState("")
+    const [petId, setPetId] = useState("")
     const [name, setName] = useState("")
 
     const errorHandler = useErrorHandler()
 
-    const loadPetById = async (petId: string) => {
-        if (petId) {
+    const loadPetById = async (id: string) => {
+        if (id) {
             try {
-                const result = await loadPet(petId);
+                const result = await loadPet(id);
                 setBirthDate(result.birthDate)
-                setId(result.id)
+                setPetId(result.id)
                 setName(result.name)
                 setDescription(result.description)
             } catch (error) {
@@ -28,9 +32,9 @@ export default function NewPet(props: DefaultProps) {
         }
     }
     const deleteClick = async () => {
-        if (id) {
+        if (petId) {
             try {
-                await deletePet(id);
+                await deletePet(petId);
                 props.history.push("/pets");
             } catch (error) {
                 errorHandler.processRestValidations(error);
@@ -49,10 +53,10 @@ export default function NewPet(props: DefaultProps) {
         }
 
         try {
-            if (id) {
-                await savePet({ id, name, birthDate, description });
+            if (petId) {
+                await savePet({ id: petId, name, birthDate, description });
             } else {
-                await newPet({ id, name, birthDate, description });
+                await newPet({ id: petId, name, birthDate, description });
             }
             props.history.push("/pets");
         } catch (error) {
@@ -61,9 +65,9 @@ export default function NewPet(props: DefaultProps) {
     }
 
     useEffect(() => {
-        const { paramId } = props.match.params;
-        if (paramId) {
-            loadPetById(paramId)
+        const { id } = props.match.params;
+        if (id) {
+            loadPetById(id)
         }
         // eslint-disable-next-line
     }, [])
@@ -96,15 +100,14 @@ export default function NewPet(props: DefaultProps) {
 
                 <DangerLabel message={errorHandler.errorMessage} />
 
-                <div className="btn-group ">
-                    <button className="btn btn-primary" onClick={saveClick}>Guardar</button>
+                <FormButtonBar>
+                    <FormAcceptButton label="Guardar" onClick={saveClick} />
 
-                    <button hidden={!id}
-                        className="btn btn-warning"
-                        onClick={deleteClick}>Eliminar</button>
+                    <FormWarnButton hidden={!petId} label="Eliminar" onClick={deleteClick} />
 
-                    <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
-                </div >
+                    <FormButton label="Cancelar" onClick={() => goHome(props)} />
+
+                </FormButtonBar>
             </form >
         </div>
     );

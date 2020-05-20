@@ -6,6 +6,9 @@ import { login } from "../store/sessionStore";
 import "../styles.css";
 import FormInput from "../common/components/FormInput";
 import FormPassword from "../common/components/FormPassword";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormAcceptButton from "../common/components/FormAcceptButton";
+import FormButton from "../common/components/FormButton";
 
 export default function Login(props: DefaultProps) {
     const [userName, setUserName] = useState("")
@@ -52,10 +55,10 @@ export default function Login(props: DefaultProps) {
 
                 <DangerLabel message={errorHandler.errorMessage} />
 
-                <div className="btn-group ">
-                    <button className="btn btn-primary" onClick={loginClick}>Login</button>
-                    <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
-                </div >
+                <FormButtonBar>
+                    <FormAcceptButton label="Login" onClick={loginClick} />
+                    <FormButton label="Cancelar" onClick={() => goHome(props)} />
+                </FormButtonBar>
             </form >
         </div >
     );

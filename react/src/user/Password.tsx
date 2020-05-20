@@ -5,6 +5,9 @@ import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { DefaultProps, goHome } from "../common/utils/Tools";
 import "../styles.css";
 import { changePassword } from "./api/userApi";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormAcceptButton from "../common/components/FormAcceptButton";
+import FormButton from "../common/components/FormButton";
 
 
 export default function Password(props: DefaultProps) {
@@ -67,10 +70,10 @@ export default function Password(props: DefaultProps) {
 
                 <DangerLabel message={errorHandler.errorMessage} />
 
-                <div className="btn-group ">
-                    <button className="btn btn-primary" onClick={updatePasswordClick}>Cambiar</button>
-                    <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
-                </div >
+                <FormButtonBar>
+                    <FormAcceptButton label="Cambiar" onClick={updatePasswordClick} />
+                    <FormButton label="Cancelar" onClick={() => goHome(props)} />
+                </FormButtonBar>
             </form >
         </div>
     );
