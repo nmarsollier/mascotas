@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ErrorLabel from "../common/components/ErrorLabel";
 import ImageUpload from "../common/components/ImageUpload";
-import useErrorHandler from "../common/utils/ErrorHandler";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome, DefaultProps } from "../common/utils/Tools";
 import { getProvinces, IProvince } from "../provinces/provincesApi";
 import "../styles.css";
 // tslint:disable-next-line:max-line-length
 import { getCurrentProfile, getPictureUrl, updateBasicInfo, updateProfilePicture } from "./api/profileApi";
 import DangerLabel from "../common/components/DangerLabel";
+import FormInput from "../common/components/FormInput";
 
 interface IState {
     name: string;
@@ -103,15 +104,12 @@ export default function Profile(props: DefaultProps) {
             <h2 className="global_title">Actualizar Perfil</h2>
 
             <form onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group">
-                    <label>Nombre</label>
-                    <input id="name" type="text"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                        className={errorHandler.getErrorClass("name", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("name")} />
-                </div>
+                <FormInput
+                    label="Nombre"
+                    name="name"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    errorHandler={errorHandler} />
 
                 <div className="form-group">
                     <label>Profile Picture</label>
@@ -120,15 +118,12 @@ export default function Profile(props: DefaultProps) {
                     <ErrorLabel message={errorHandler.getErrorText("name")} />
                 </div>
 
-                <div className="form-group">
-                    <label>Email</label>
-                    <input id="email" type="text"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        className={errorHandler.getErrorClass("email", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("email")} />
-                </div>
+                <FormInput
+                    label="Email"
+                    name="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    errorHandler={errorHandler} />
 
                 <div className="form-group">
                     <label>Provincia</label>
@@ -141,25 +136,19 @@ export default function Profile(props: DefaultProps) {
                     <ErrorLabel message={errorHandler.getErrorText("province")} />
                 </div>
 
-                <div className="form-group">
-                    <label>Dirección</label>
-                    <input id="address" type="text"
-                        value={address}
-                        onChange={e => setAddress(e.target.value)}
-                        className={errorHandler.getErrorClass("address", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("address")} />
-                </div>
+                <FormInput
+                    label="Dirección"
+                    name="address"
+                    value={address}
+                    onChange={e => setAddress(e.target.value)}
+                    errorHandler={errorHandler} />
 
-                <div className="form-group">
-                    <label>Tel&eacute;fono</label>
-                    <input id="phone" type="text"
-                        value={phone}
-                        onChange={e => setPhone(e.target.value)}
-                        className={errorHandler.getErrorClass("phone", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("phone")} />
-                </div>
+                <FormInput
+                    label="Teléfono"
+                    name="phone"
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                    errorHandler={errorHandler} />
 
                 <DangerLabel message={errorHandler.errorMessage} />
 

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import DangerLabel from "../common/components/DangerLabel";
-import ErrorLabel from "../common/components/ErrorLabel";
-import useErrorHandler from "../common/utils/ErrorHandler";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { DefaultProps, goHome } from "../common/utils/Tools";
 import { login } from "../store/sessionStore";
 import "../styles.css";
+import FormInput from "../common/components/FormInput";
+import FormPassword from "../common/components/FormPassword";
 
 export default function Login(props: DefaultProps) {
     const [userName, setUserName] = useState("")
@@ -37,23 +38,17 @@ export default function Login(props: DefaultProps) {
             <h2 className="global_title">Login</h2>
 
             <form onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group">
-                    <label>Usuario</label>
-                    <input id="login" type="text"
-                        onChange={(event) => setUserName(event.target.value)}
-                        className={errorHandler.getErrorClass("login", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("login")} />
-                </div>
+                <FormInput
+                    label="Usuario"
+                    name="login"
+                    errorHandler={errorHandler}
+                    onChange={(event) => setUserName(event.target.value)} />
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input id="password" type="password"
-                        onChange={(event) => setPassword(event.target.value)}
-                        className={errorHandler.getErrorClass("password", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("password")} />
-                </div>
+                <FormPassword
+                    label="Password"
+                    name="password"
+                    errorHandler={errorHandler}
+                    onChange={(event) => setPassword(event.target.value)} />
 
                 <DangerLabel message={errorHandler.errorMessage} />
 

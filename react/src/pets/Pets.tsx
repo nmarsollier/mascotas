@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IPet, loadPets } from "./api/petsApi";
 import "../styles.css";
-import useErrorHandler from "../common/utils/ErrorHandler";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome, DefaultProps } from "../common/utils/Tools";
 
 export default function Pets(props: DefaultProps) {

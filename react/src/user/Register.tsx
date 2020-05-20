@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { newUser } from "../store/sessionStore";
 import "../styles.css";
-import ErrorLabel from "../common/components/ErrorLabel";
-import useErrorHandler from "../common/utils/ErrorHandler";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome, DefaultProps } from "../common/utils/Tools";
 import DangerLabel from "../common/components/DangerLabel";
+import FormInput from "../common/components/FormInput";
+import FormPassword from "../common/components/FormPassword";
 
 export default function Register(props: DefaultProps) {
     const [login, setLogin] = useState("")
@@ -50,41 +51,33 @@ export default function Register(props: DefaultProps) {
             <h2 className="global_title">Registrar Usuario</h2>
 
             <form onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group">
-                    <label>Login</label>
-                    <input id="login" type="text"
-                        onChange={event => setLogin(event.target.value)}
-                        className={errorHandler.getErrorClass("login", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("login")} />
-                </div>
+                <FormInput
+                    label="Login"
+                    name="login"
+                    value={login}
+                    errorHandler={errorHandler}
+                    onChange={e => setLogin(e.target.value)} />
 
-                <div className="form-group">
-                    <label>Usuario</label>
-                    <input id="name" type="text"
-                        onChange={event => setName(event.target.value)}
-                        className={errorHandler.getErrorClass("name", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("name")} />
-                </div>
+                <FormInput
+                    label="Usuario"
+                    name="name"
+                    value={name}
+                    errorHandler={errorHandler}
+                    onChange={e => setName(e.target.value)} />
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input id="password" type="password"
-                        onChange={event => setPassword(event.target.value)}
-                        className={errorHandler.getErrorClass("password", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("password")} />
-                </div>
+                <FormPassword
+                    label="Password"
+                    name="password"
+                    value={password}
+                    errorHandler={errorHandler}
+                    onChange={e => setPassword(e.target.value)} />
 
-                <div className="form-group">
-                    <label>Repetir Password</label>
-                    <input id="password2" type="password"
-                        onChange={event => setPassword2(event.target.value)}
-                        className={errorHandler.getErrorClass("password2", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("password2")} />
-                </div>
+                <FormPassword
+                    label="Repetir Password"
+                    name="password2"
+                    value={password2}
+                    errorHandler={errorHandler}
+                    onChange={e => setPassword2(e.target.value)} />
 
                 <DangerLabel message={errorHandler.errorMessage} />
 

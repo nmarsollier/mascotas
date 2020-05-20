@@ -76,8 +76,10 @@ class ErrorHandler {
     }
 }
 
-export default function useErrorHandler(): ErrorHandler {
+function useErrorHandler(): ErrorHandler {
     const forceUpdate = useForceUpdate();
     const handler = useState(new ErrorHandler(forceUpdate))[0]
     return handler
 }
+
+export { ErrorHandler, useErrorHandler }

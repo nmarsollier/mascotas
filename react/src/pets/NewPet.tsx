@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ErrorLabel from "../common/components/ErrorLabel";
-import useErrorHandler from "../common/utils/ErrorHandler";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome, DefaultProps } from "../common/utils/Tools";
 import "../styles.css";
 import { deletePet, loadPet, newPet, savePet } from "./api/petsApi";
 import DangerLabel from "../common/components/DangerLabel";
+import FormInput from "../common/components/FormInput";
 
 export default function NewPet(props: DefaultProps) {
     const [birthDate, setBirthDate] = useState("")
@@ -73,35 +73,26 @@ export default function NewPet(props: DefaultProps) {
             <h2 className="global_title">Nueva Mascota</h2>
 
             <form onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group">
-                    <label>Nombre</label>
-                    <input id="name" type="text"
-                        value={name}
-                        onChange={event => setName(event.target.value)}
-                        className={errorHandler.getErrorClass("name", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("name")} />
-                </div>
+                <FormInput
+                    label="Nombre"
+                    name="name"
+                    value={name}
+                    onChange={event => setName(event.target.value)}
+                    errorHandler={errorHandler} />
 
-                <div className="form-group">
-                    <label>Descripción</label>
-                    <input id="description" type="text"
-                        value={description}
-                        onChange={event => setDescription(event.target.value)}
-                        className={errorHandler.getErrorClass("description", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("description")} />
-                </div>
+                <FormInput
+                    label="Descripción"
+                    name="description"
+                    value={description}
+                    onChange={event => setDescription(event.target.value)}
+                    errorHandler={errorHandler} />
 
-                <div className="form-group">
-                    <label>Fecha de Nacimiento</label>
-                    <input id="birthDate" type="text"
-                        value={birthDate}
-                        onChange={event => setBirthDate(event.target.value)}
-                        className={errorHandler.getErrorClass("birthDate", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("birthDate")} />
-                </div>
+                <FormInput
+                    label="Fecha de Nacimiento"
+                    name="birthDate"
+                    value={birthDate}
+                    onChange={event => setBirthDate(event.target.value)}
+                    errorHandler={errorHandler} />
 
                 <DangerLabel message={errorHandler.errorMessage} />
 

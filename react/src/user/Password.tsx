@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { changePassword } from "./api/userApi";
-import "../styles.css";
-import ErrorLabel from "../common/components/ErrorLabel";
-import useErrorHandler from "../common/utils/ErrorHandler";
-import { goHome, DefaultProps } from "../common/utils/Tools";
 import DangerLabel from "../common/components/DangerLabel";
+import FormPassword from "../common/components/FormPassword";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
+import { DefaultProps, goHome } from "../common/utils/Tools";
+import "../styles.css";
+import { changePassword } from "./api/userApi";
 
 
 export default function Password(props: DefaultProps) {
@@ -47,32 +47,23 @@ export default function Password(props: DefaultProps) {
             <h2 className="global_title">Cambiar Password</h2>
 
             <form onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group">
-                    <label>Password Actual</label>
-                    <input id="currentPassword" type="password"
-                        onChange={event => setCurrentPassword(event.target.value)}
-                        className={errorHandler.getErrorClass("currentPassword", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("currentPassword")} />
-                </div>
+                <FormPassword
+                    label="Password Actual"
+                    name="currentPassword"
+                    errorHandler={errorHandler}
+                    onChange={event => setCurrentPassword(event.target.value)} />
 
-                <div className="form-group">
-                    <label>Nuevo Password</label>
-                    <input id="newPassword" type="password"
-                        onChange={event => setNewPassword(event.target.value)}
-                        className={errorHandler.getErrorClass("newPassword", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("newPassword")} />
-                </div>
+                <FormPassword
+                    label="Nuevo Password"
+                    name="newPassword"
+                    errorHandler={errorHandler}
+                    onChange={event => setNewPassword(event.target.value)} />
 
-                <div className="form-group">
-                    <label>Repetir Password</label>
-                    <input id="newPassword2" type="password"
-                        onChange={event => setNewPassword2(event.target.value)}
-                        className={errorHandler.getErrorClass("newPassword2", "form-control")}>
-                    </input>
-                    <ErrorLabel message={errorHandler.getErrorText("newPassword2")} />
-                </div>
+                <FormPassword
+                    label="Repetir Password"
+                    name="newPassword2"
+                    errorHandler={errorHandler}
+                    onChange={event => setNewPassword2(event.target.value)} />
 
                 <DangerLabel message={errorHandler.errorMessage} />
 

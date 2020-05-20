@@ -1,45 +1,21 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { IStoredState } from "../../store/sessionStore";
-import { IUser } from "../../user/api/userApi";
+import FormLabel from "../../common/components/FormLabel";
 
-class StateInfo extends React.Component<IStoredState, any> {
-    public render() {
-        const user: IUser = this.props.user as IUser;
-        const token: string = this.props.token as string;
+export default function Info() {
+    const user = useSelector((state: IStoredState) => state.user)
+    const token = useSelector((state: IStoredState) => state.token)
 
-        return (
-            <div>
-                <h2>Información de Perfil</h2>
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <div className="form-group">
-                        <label>Login</label>
-                        <input className="form-control" id="login" value={user.login} disabled />
-                    </div>
-                    <div className="form-group">
-                        <label>Nombre</label>
-                        <input className="form-control" id="name" value={user.name} disabled />
-                    </div>
-                    <div className="form-group">
-                        <label>Permisos</label>
-                        <input className="form-control" id="name" value={user.permissions} disabled />
-                    </div>
-                    <div className="form-group">
-                        <label>Token</label>
-                        <input className="form-control" id="name" value={token} disabled />
-                    </div>
-                </form>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h2>Información de Perfil</h2>
+            <form onSubmit={(e) => e.preventDefault()}>
+                <FormLabel label="Login" text={user?.login} />
+                <FormLabel label="Nombre" text={user?.name} />
+                <FormLabel label="Permisos" text={user?.permissions.join(", ")} />
+                <FormLabel label="Token" text={token} />
+            </form>
+        </div>
+    );
 }
-
-const Info = connect(
-    (state: IStoredState) => {
-        return {
-            token: state.token,
-            user: state.user,
-        };
-    })(StateInfo);
-
-export default Info;
