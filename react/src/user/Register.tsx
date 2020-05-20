@@ -1,110 +1,98 @@
-import React from "react";
+import React, { useState } from "react";
 import { newUser } from "../store/sessionStore";
 import "../styles.css";
-import CommonComponent, { ICommonProps } from "../common/components/CommonComponent";
 import ErrorLabel from "../common/components/ErrorLabel";
+import useErrorHandler from "../common/utils/ErrorHandler";
+import { goHome, DefaultProps } from "../common/utils/Tools";
+import DangerLabel from "../common/components/DangerLabel";
 
-interface IState {
-    login: string;
-    name: string;
-    password: string;
-    password2: string;
-}
+export default function Register(props: DefaultProps) {
+    const [login, setLogin] = useState("")
+    const [name, setName] = useState("")
+    const [password, setPassword] = useState("")
+    const [password2, setPassword2] = useState("")
 
-export default class Register extends CommonComponent<ICommonProps, IState> {
-    constructor(props: ICommonProps) {
-        super(props);
+    const errorHandler = useErrorHandler()
 
-        this.state = {
-            login: "",
-            name: "",
-            password: "",
-            password2: "",
-        };
-    }
-
-    public registerClick = async () => {
-        this.cleanRestValidations();
-        if (!this.state.login) {
-            this.addError("login", "No puede estar vacío");
+    const registerClick = async () => {
+        errorHandler.cleanRestValidations();
+        if (!login) {
+            errorHandler.addError("login", "No puede estar vacío");
         }
-        if (!this.state.name) {
-            this.addError("name", "No puede estar vacío");
+        if (!name) {
+            errorHandler.addError("name", "No puede estar vacío");
         }
-        if (!this.state.password) {
-            this.addError("password", "No puede estar vacío");
+        if (!password) {
+            errorHandler.addError("password", "No puede estar vacío");
         }
-        if (this.state.password !== this.state.password2) {
-            this.addError("password2", "Las contraseñas no coinciden");
+        if (password !== password2) {
+            errorHandler.addError("password2", "Las contraseñas no coinciden");
         }
 
-        if (this.hasErrors()) {
-            this.forceUpdate();
+        if (errorHandler.hasErrors()) {
             return;
         }
 
         try {
-            await newUser(this.state);
-            this.props.history.push("/");
+            await newUser({
+                login,
+                name,
+                password,
+            });
+            goHome(props)
         } catch (error) {
-            this.processRestValidations(error);
+            errorHandler.processRestValidations(error);
         }
     }
 
-    public render() {
-        return (
-            <div className="global_content">
-                <h2 className="global_title">Registrar Usuario</h2>
+    return (
+        <div className="global_content">
+            <h2 className="global_title">Registrar Usuario</h2>
 
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <div className="form-group">
-                        <label>Login</label>
-                        <input id="login" type="text"
-                            onChange={this.updateState}
-                            className={this.getErrorClass("login", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("login")} />
-                    </div>
+            <form onSubmit={(e) => e.preventDefault()}>
+                <div className="form-group">
+                    <label>Login</label>
+                    <input id="login" type="text"
+                        onChange={event => setLogin(event.target.value)}
+                        className={errorHandler.getErrorClass("login", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("login")} />
+                </div>
 
-                    <div className="form-group">
-                        <label>Usuario</label>
-                        <input id="name" type="text"
-                            onChange={this.updateState}
-                            className={this.getErrorClass("name", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("name")} />
-                    </div>
+                <div className="form-group">
+                    <label>Usuario</label>
+                    <input id="name" type="text"
+                        onChange={event => setName(event.target.value)}
+                        className={errorHandler.getErrorClass("name", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("name")} />
+                </div>
 
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input id="password" type="password"
-                            onChange={this.updateState}
-                            className={this.getErrorClass("password", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("password")} />
-                    </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input id="password" type="password"
+                        onChange={event => setPassword(event.target.value)}
+                        className={errorHandler.getErrorClass("password", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("password")} />
+                </div>
 
-                    <div className="form-group">
-                        <label>Repetir Password</label>
-                        <input id="password2" type="password"
-                            onChange={this.updateState}
-                            className={this.getErrorClass("password2", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("password2")} />
-                    </div>
+                <div className="form-group">
+                    <label>Repetir Password</label>
+                    <input id="password2" type="password"
+                        onChange={event => setPassword2(event.target.value)}
+                        className={errorHandler.getErrorClass("password2", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("password2")} />
+                </div>
 
-                    <div hidden={!this.errorMessage}
-                        className="alert alert-danger"
-                        role="alert">
-                        {this.errorMessage}
-                    </div>
+                <DangerLabel message={errorHandler.errorMessage} />
 
-                    <div className="btn-group ">
-                        <button className="btn btn-primary" onClick={this.registerClick}>Registrarse</button>
-                        <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
-                    </div >
-                </form >
-            </div>
-        );
-    }
+                <div className="btn-group ">
+                    <button className="btn btn-primary" onClick={registerClick}>Registrarse</button>
+                    <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
+                </div >
+            </form >
+        </div>
+    );
 }

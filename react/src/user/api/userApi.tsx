@@ -86,8 +86,8 @@ export async function newUser(payload: ISignUpRequest): Promise<IToken> {
 }
 
 export interface IChangePassword {
-    newPassword: string;
     currentPassword: string;
+    newPassword: string;
 }
 
 export async function changePassword(payload: IChangePassword): Promise<void> {

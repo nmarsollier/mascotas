@@ -1,77 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { IPet, loadPets } from "./api/petsApi";
 import "../styles.css";
-import CommonComponent, { ICommonProps } from "../common/components/CommonComponent";
+import useErrorHandler from "../common/utils/ErrorHandler";
+import { goHome, DefaultProps } from "../common/utils/Tools";
 
-interface IState {
-    pets: IPet[];
-}
+export default function Pets(props: DefaultProps) {
+    const [pets, setPets] = useState(new Array<IPet>())
 
-export default class Pets extends CommonComponent<ICommonProps, IState> {
-    constructor(props: ICommonProps) {
-        super(props);
+    const errorHandler = useErrorHandler()
 
-        this.state = {
-            pets: [],
-        };
-
-        this.loadPets();
-    }
-
-    public loadPets = async () => {
+    const loadCurrentPets = async () => {
         try {
             const result = await loadPets();
-            this.setState({
-                pets: result,
-            });
+            setPets(result);
         } catch (error) {
-            this.processRestValidations(error);
+            errorHandler.processRestValidations(error);
         }
     }
 
-    public editPetClick = (petId: string) => {
-        this.props.history.push("/editPet/" + petId);
+    const editPetClick = (petId: string) => {
+        props.history.push("/editPet/" + petId);
     }
 
-    public newPetClick = () => {
-        this.props.history.push("/editPet");
+    const newPetClick = () => {
+        props.history.push("/editPet");
     }
 
-    public render() {
-        return (
-            <div className="global_content">
-                <h2 className="global_title">Mascotas</h2>
-                <table id="mascotas" className="table">
-                    <thead>
-                        <tr>
-                            <th> Nombre </th>
-                            <th> Descripción </th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.pets.map((pet, i) => {
-                            return (
-                                <tr key={i}>
-                                    <td>{pet.name}</td>
-                                    <td>{pet.description}</td>
-                                    <td className="text">
-                                        <img
-                                            src="/assets/edit.png"
-                                            alt=""
-                                            onClick={() => this.editPetClick(pet.id)} />
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+    useEffect(() => {
+        loadCurrentPets()
+        // eslint-disable-next-line
+    }, [])
 
-                <div className="btn-group ">
-                    <button className="btn btn-success" onClick={this.newPetClick} >Nueva Mascota</button >
-                    <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
-                </div >
-            </div>
-        );
-    }
+    return (
+        <div className="global_content">
+            <h2 className="global_title">Mascotas</h2>
+            <table id="mascotas" className="table">
+                <thead>
+                    <tr>
+                        <th> Nombre </th>
+                        <th> Descripción </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {pets.map((pet, i) => {
+                        return (
+                            <tr key={i}>
+                                <td>{pet.name}</td>
+                                <td>{pet.description}</td>
+                                <td className="text">
+                                    <img
+                                        src="/assets/edit.png"
+                                        alt=""
+                                        onClick={() => editPetClick(pet.id)} />
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+
+            <div className="btn-group ">
+                <button className="btn btn-success" onClick={newPetClick} >Nueva Mascota</button >
+                <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
+            </div >
+        </div>
+    );
 }

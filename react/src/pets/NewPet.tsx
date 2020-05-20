@@ -1,127 +1,120 @@
-import React from "react";
-import { deletePet, loadPet, newPet, savePet } from "./api/petsApi";
-import "../styles.css";
-import CommonComponent, { ICommonProps } from "../common/components/CommonComponent";
+import React, { useEffect, useState } from "react";
 import ErrorLabel from "../common/components/ErrorLabel";
+import useErrorHandler from "../common/utils/ErrorHandler";
+import { goHome, DefaultProps } from "../common/utils/Tools";
+import "../styles.css";
+import { deletePet, loadPet, newPet, savePet } from "./api/petsApi";
+import DangerLabel from "../common/components/DangerLabel";
 
-interface IState {
-    birthDate: string;
-    description: string;
-    id: string;
-    name: string;
-}
+export default function NewPet(props: DefaultProps) {
+    const [birthDate, setBirthDate] = useState("")
+    const [description, setDescription] = useState("")
+    const [id, setId] = useState("")
+    const [name, setName] = useState("")
 
-export default class NewPet extends CommonComponent<ICommonProps, IState> {
-    constructor(props: ICommonProps) {
-        super(props);
+    const errorHandler = useErrorHandler()
 
-        this.state = {
-            birthDate: "",
-            description: "",
-            id: "",
-            name: "",
-        };
+    const loadPetById = async (petId: string) => {
+        if (petId) {
+            try {
+                const result = await loadPet(petId);
+                setBirthDate(result.birthDate)
+                setId(result.id)
+                setName(result.name)
+                setDescription(result.description)
+            } catch (error) {
+                errorHandler.processRestValidations(error);
+            }
+        }
     }
-
-    public async componentDidMount() {
-        const { id } = this.props.match.params;
+    const deleteClick = async () => {
         if (id) {
             try {
-                const result = await loadPet(id);
-                this.setState(result);
+                await deletePet(id);
+                props.history.push("/pets");
             } catch (error) {
-                this.processRestValidations(error);
+                errorHandler.processRestValidations(error);
             }
         }
     }
 
-    public deleteClick = async () => {
-        if (this.state.id) {
-            try {
-                await deletePet(this.state.id);
-                this.props.history.push("/pets");
-            } catch (error) {
-                this.processRestValidations(error);
-            }
-        }
-    }
-
-    public saveClick = async () => {
-        this.cleanRestValidations();
-        if (!this.state.name) {
-            this.addError("name", "No puede estar vacío");
+    const saveClick = async () => {
+        errorHandler.cleanRestValidations();
+        if (!name) {
+            errorHandler.addError("name", "No puede estar vacío");
         }
 
-        if (this.hasErrors()) {
-            this.forceUpdate();
+        if (errorHandler.hasErrors()) {
             return;
         }
 
         try {
-            if (this.state.id) {
-                await savePet(this.state);
+            if (id) {
+                await savePet({ id, name, birthDate, description });
             } else {
-                await newPet(this.state);
+                await newPet({ id, name, birthDate, description });
             }
-            this.props.history.push("/pets");
+            props.history.push("/pets");
         } catch (error) {
-            this.processRestValidations(error);
+            errorHandler.processRestValidations(error);
         }
     }
 
-    public render() {
-        return (
-            <div className="global_content">
-                <h2 className="global_title">Nueva Mascota</h2>
+    useEffect(() => {
+        const { paramId } = props.match.params;
+        if (paramId) {
+            loadPetById(paramId)
+        }
+        // eslint-disable-next-line
+    }, [])
 
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <div className="form-group">
-                        <label>Nombre</label>
-                        <input id="name" type="text"
-                            value={this.state.name}
-                            onChange={this.updateState}
-                            className={this.getErrorClass("name", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("name")} />
-                    </div>
+    return (
+        <div className="global_content">
+            <h2 className="global_title">Nueva Mascota</h2>
 
-                    <div className="form-group">
-                        <label>Descripción</label>
-                        <input id="description" type="text"
-                            value={this.state.description}
-                            onChange={this.updateState}
-                            className={this.getErrorClass("description", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("description")} />
-                    </div>
+            <form onSubmit={(e) => e.preventDefault()}>
+                <div className="form-group">
+                    <label>Nombre</label>
+                    <input id="name" type="text"
+                        value={name}
+                        onChange={event => setName(event.target.value)}
+                        className={errorHandler.getErrorClass("name", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("name")} />
+                </div>
 
-                    <div className="form-group">
-                        <label>Fecha de Nacimiento</label>
-                        <input id="birthDate" type="text"
-                            value={this.state.birthDate}
-                            onChange={this.updateState}
-                            className={this.getErrorClass("birthDate", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("birthDate")} />
-                    </div>
+                <div className="form-group">
+                    <label>Descripción</label>
+                    <input id="description" type="text"
+                        value={description}
+                        onChange={event => setDescription(event.target.value)}
+                        className={errorHandler.getErrorClass("description", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("description")} />
+                </div>
 
-                    <div hidden={!this.errorMessage}
-                        className="alert alert-danger"
-                        role="alert">
-                        {this.errorMessage}
-                    </div>
+                <div className="form-group">
+                    <label>Fecha de Nacimiento</label>
+                    <input id="birthDate" type="text"
+                        value={birthDate}
+                        onChange={event => setBirthDate(event.target.value)}
+                        className={errorHandler.getErrorClass("birthDate", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("birthDate")} />
+                </div>
 
-                    <div className="btn-group ">
-                        <button className="btn btn-primary" onClick={this.saveClick}>Guardar</button>
+                <DangerLabel message={errorHandler.errorMessage} />
 
-                        <button hidden={!this.state.id}
-                            className="btn btn-warning"
-                            onClick={this.deleteClick}>Eliminar</button>
+                <div className="btn-group ">
+                    <button className="btn btn-primary" onClick={saveClick}>Guardar</button>
 
-                        <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
-                    </div >
-                </form >
-            </div>
-        );
-    }
+                    <button hidden={!id}
+                        className="btn btn-warning"
+                        onClick={deleteClick}>Eliminar</button>
+
+                    <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
+                </div >
+            </form >
+        </div>
+    );
 }

@@ -1,11 +1,15 @@
 import React from "react";
 
-interface IProps {
-    error: string | undefined;
+interface ErrorLabelProps {
+    message: string | undefined;
 }
 
-export default function ErrorLabel(props: IProps) {
+export default function ErrorLabel(props: ErrorLabelProps) {
+    if (!props.message) {
+        return null
+    }
+
     return (
-        <div hidden={!props.error} className="invalid-feedback">{props.error}</div>
+        <div className="invalid-feedback">{props.message}</div>
     );
 }

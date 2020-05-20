@@ -1,96 +1,86 @@
-import React from "react";
+import React, { useState } from "react";
 import { changePassword } from "./api/userApi";
 import "../styles.css";
-import CommonComponent, { ICommonProps } from "../common/components/CommonComponent";
 import ErrorLabel from "../common/components/ErrorLabel";
+import useErrorHandler from "../common/utils/ErrorHandler";
+import { goHome, DefaultProps } from "../common/utils/Tools";
+import DangerLabel from "../common/components/DangerLabel";
 
-interface IState {
-    currentPassword: string;
-    newPassword: string;
-    newPassword2: string;
-}
 
-export default class Password extends CommonComponent<ICommonProps, IState> {
-    constructor(props: ICommonProps) {
-        super(props);
+export default function Password(props: DefaultProps) {
+    const [currentPassword, setCurrentPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [newPassword2, setNewPassword2] = useState("")
 
-        this.state = {
-            currentPassword: "",
-            newPassword: "",
-            newPassword2: "",
-        };
-    }
+    const errorHandler = useErrorHandler()
 
-    public updatePasswordClick = async () => {
-        this.cleanRestValidations();
+    const updatePasswordClick = async () => {
+        errorHandler.cleanRestValidations();
 
-        if (!this.state.currentPassword) {
-            this.addError("currentPassword", "No puede estar vacío");
+        if (!currentPassword) {
+            errorHandler.addError("currentPassword", "No puede estar vacío");
         }
-        if (!this.state.newPassword) {
-            this.addError("newPassword", "No puede estar vacío");
+        if (!newPassword) {
+            errorHandler.addError("newPassword", "No puede estar vacío");
         }
-        if (this.state.newPassword !== this.state.newPassword2) {
-            this.addError("newPassword2", "Las contraseñas no coinciden");
+        if (newPassword !== newPassword2) {
+            errorHandler.addError("newPassword2", "Las contraseñas no coinciden");
         }
-        if (this.hasErrors()) {
-            this.forceUpdate();
-            return;
+
+        if (errorHandler.hasErrors()) {
+            return
         }
 
         try {
-            await changePassword(this.state);
-            this.props.history.push("/");
+            await changePassword({
+                currentPassword,
+                newPassword
+            });
+            props.history.push("/");
         } catch (error) {
-            this.processRestValidations(error);
+            errorHandler.processRestValidations(error);
         }
     }
 
-    public render() {
-        return (
-            <div className="global_content">
-                <h2 className="global_title">Cambiar Password</h2>
+    return (
+        <div className="global_content">
+            <h2 className="global_title">Cambiar Password</h2>
 
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <div className="form-group">
-                        <label>Password Actual</label>
-                        <input id="currentPassword" type="password"
-                            onChange={this.updateState}
-                            className={this.getErrorClass("currentPassword", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("currentPassword")} />
-                    </div>
+            <form onSubmit={(e) => e.preventDefault()}>
+                <div className="form-group">
+                    <label>Password Actual</label>
+                    <input id="currentPassword" type="password"
+                        onChange={event => setCurrentPassword(event.target.value)}
+                        className={errorHandler.getErrorClass("currentPassword", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("currentPassword")} />
+                </div>
 
-                    <div className="form-group">
-                        <label>Nuevo Password</label>
-                        <input id="newPassword" type="password"
-                            onChange={this.updateState}
-                            className={this.getErrorClass("newPassword", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("newPassword")} />
-                    </div>
+                <div className="form-group">
+                    <label>Nuevo Password</label>
+                    <input id="newPassword" type="password"
+                        onChange={event => setNewPassword(event.target.value)}
+                        className={errorHandler.getErrorClass("newPassword", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("newPassword")} />
+                </div>
 
-                    <div className="form-group">
-                        <label>Repetir Password</label>
-                        <input id="newPassword2" type="password"
-                            onChange={this.updateState}
-                            className={this.getErrorClass("newPassword2", "form-control")}>
-                        </input>
-                        <ErrorLabel error={this.getErrorText("newPassword2")} />
-                    </div>
+                <div className="form-group">
+                    <label>Repetir Password</label>
+                    <input id="newPassword2" type="password"
+                        onChange={event => setNewPassword2(event.target.value)}
+                        className={errorHandler.getErrorClass("newPassword2", "form-control")}>
+                    </input>
+                    <ErrorLabel message={errorHandler.getErrorText("newPassword2")} />
+                </div>
 
-                    <div hidden={!this.errorMessage}
-                        className="alert alert-danger"
-                        role="alert">
-                        {this.errorMessage}
-                    </div>
+                <DangerLabel message={errorHandler.errorMessage} />
 
-                    <div className="btn-group ">
-                        <button className="btn btn-primary" onClick={this.updatePasswordClick}>Cambiar</button>
-                        <button className="btn btn-light" onClick={this.goHome} >Cancelar</button >
-                    </div >
-                </form >
-            </div>
-        );
-    }
+                <div className="btn-group ">
+                    <button className="btn btn-primary" onClick={updatePasswordClick}>Cambiar</button>
+                    <button className="btn btn-light" onClick={() => goHome(props)} >Cancelar</button >
+                </div >
+            </form >
+        </div>
+    );
 }

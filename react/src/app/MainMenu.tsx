@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { logout } from "../store/sessionStore";
-import { ICommonProps } from "../common/components/CommonComponent";
 import "./Menu.css";
+import { DefaultProps } from "../common/utils/Tools";
 
-export default function MainMenu(props: ICommonProps) {
+export default function MainMenu(props: DefaultProps) {
   const logoutApp = async () => {
     await logout();
   }
