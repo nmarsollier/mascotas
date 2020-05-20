@@ -1,8 +1,8 @@
 import React from "react";
-import { deletePet, loadPet, newPet, savePet } from "../../api/petsApi";
-import "../../styles.css";
-import CommonComponent, { ICommonProps } from "../../tools/CommonComponent";
-import ErrorLabel from "../../tools/ErrorLabel";
+import { deletePet, loadPet, newPet, savePet } from "./api/petsApi";
+import "../styles.css";
+import CommonComponent, { ICommonProps } from "../common/components/CommonComponent";
+import ErrorLabel from "../common/components/ErrorLabel";
 
 interface IState {
     birthDate: string;

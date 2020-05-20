@@ -1,6 +1,6 @@
 import { createStore } from "redux";
-import * as userApi from "../api/userApi";
-import { ILogin, ISignUpRequest, IUser } from "../api/userApi";
+import * as userApi from "../user/api/userApi";
+import { ILogin, ISignUpRequest, IUser } from "../user/api/userApi";
 
 export interface IStoredState {
     token?: string;

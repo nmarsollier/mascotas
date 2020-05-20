@@ -1,11 +1,11 @@
 import React from "react";
 // tslint:disable-next-line:max-line-length
-import { getCurrentProfile, getPictureUrl, updateBasicInfo, updateProfilePicture } from "../../api/profileApi";
-import { getProvinces, IProvince } from "../../api/provincesApi";
-import "../../styles.css";
-import CommonComponent, { ICommonProps } from "../../tools/CommonComponent";
-import ErrorLabel from "../../tools/ErrorLabel";
-import ImageUpload from "../../tools/ImageUpload";
+import { getCurrentProfile, getPictureUrl, updateBasicInfo, updateProfilePicture } from "./api/profileApi";
+import { getProvinces, IProvince } from "../provinces/provincesApi";
+import "../styles.css";
+import CommonComponent, { ICommonProps } from "../common/components/CommonComponent";
+import ErrorLabel from "../common/components/ErrorLabel";
+import ImageUpload from "../common/components/ImageUpload";
 
 interface IState {
     name: string;

@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import sessionStore from "./store/sessionStore";
 import "./styles.css";
-import App from "./views/app/App";
+import App from "./app/App";
 
 ReactDOM.render(
     <Provider store={sessionStore}>

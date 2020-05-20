@@ -1,11 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { logout } from "../../store/sessionStore";
-import { ICommonProps } from "../../common/components/CommonComponent";
+import { logout } from "../store/sessionStore";
+import { ICommonProps } from "../common/components/CommonComponent";
 import "./Menu.css";
 
 export default function MainMenu(props: ICommonProps) {
-  const logoutFn = async () => {
+  const logoutApp = async () => {
     await logout();
   }
 
@@ -13,7 +13,7 @@ export default function MainMenu(props: ICommonProps) {
     <div>
       <NavLink to="/info" className="menu_item btn btn-sm btn-link">Sesión</NavLink><br />
       <NavLink to="/password" className="menu_item btn btn-sm btn-link">Password</NavLink><br />
-      <NavLink to="" onClick={logoutFn} className="menu_item btn btn-sm btn-link">Logout</NavLink><br />
+      <NavLink to="" onClick={logoutApp} className="menu_item btn btn-sm btn-link">Logout</NavLink><br />
 
       <h6 className="menu_section">Perfil</h6>
       <NavLink to="/profile" className="menu_item btn btn-sm btn-link">Editar</NavLink><br />

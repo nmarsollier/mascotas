@@ -1,7 +1,7 @@
 import React from "react";
-import { IPet, loadPets } from "../../api/petsApi";
-import "../../styles.css";
-import CommonComponent, { ICommonProps } from "../../tools/CommonComponent";
+import { IPet, loadPets } from "./api/petsApi";
+import "../styles.css";
+import CommonComponent, { ICommonProps } from "../common/components/CommonComponent";
 
 interface IState {
     pets: IPet[];
