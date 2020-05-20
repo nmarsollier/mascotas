@@ -5,7 +5,7 @@ import LoginMenu from "./LoginMenu";
 import MainMenu from "./MainMenu";
 import "./Menu.css";
 
-export default function StateMenu() {
+export default function Menu() {
   const user = useSelector((state: IStoredState) => state.user)
 
   const menu = user ? <MainMenu /> : <LoginMenu />;
@@ -16,4 +16,3 @@ export default function StateMenu() {
     </div>
   );
 }
-

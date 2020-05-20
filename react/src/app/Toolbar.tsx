@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { IStoredState } from "../store/sessionStore";
 import "./Toolbar.css";
 
-export default function StateToolbar() {
+export default function Toolbar() {
   const user = useSelector((state: IStoredState) => state.user)
 
   return (
