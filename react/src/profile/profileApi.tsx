@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { logout } from "../../store/sessionStore";
+import { logout } from "../store/sessionStore";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 

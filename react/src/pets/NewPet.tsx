@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome, DefaultProps } from "../common/utils/Tools";
 import "../styles.css";
-import { deletePet, loadPet, newPet, savePet } from "./api/petsApi";
+import { deletePet, loadPet, newPet, savePet } from "./petsApi";
 import DangerLabel from "../common/components/DangerLabel";
 import FormInput from "../common/components/FormInput";
 import FormButtonBar from "../common/components/FormButtonBar";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
 import FormWarnButton from "../common/components/FormWarnButton";
+import FormTitle from "../common/components/FormTitle";
+import Form from "../common/components/Form";
+import GlobalContent from "../common/components/GlobalContent";
 
 export default function NewPet(props: DefaultProps) {
     const [birthDate, setBirthDate] = useState("")
@@ -73,10 +76,10 @@ export default function NewPet(props: DefaultProps) {
     }, [])
 
     return (
-        <div className="global_content">
-            <h2 className="global_title">Nueva Mascota</h2>
+        <GlobalContent>
+            <FormTitle>Nueva Mascota</FormTitle>
 
-            <form onSubmit={(e) => e.preventDefault()}>
+            <Form>
                 <FormInput
                     label="Nombre"
                     name="name"
@@ -108,7 +111,7 @@ export default function NewPet(props: DefaultProps) {
                     <FormButton label="Cancelar" onClick={() => goHome(props)} />
 
                 </FormButtonBar>
-            </form >
-        </div>
+            </Form >
+        </GlobalContent>
     );
 }

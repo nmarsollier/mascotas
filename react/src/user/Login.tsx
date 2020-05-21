@@ -9,6 +9,9 @@ import FormPassword from "../common/components/FormPassword";
 import FormButtonBar from "../common/components/FormButtonBar";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
+import FormTitle from "../common/components/FormTitle";
+import Form from "../common/components/Form";
+import GlobalContent from "../common/components/GlobalContent";
 
 export default function Login(props: DefaultProps) {
     const [userName, setUserName] = useState("")
@@ -37,10 +40,10 @@ export default function Login(props: DefaultProps) {
     }
 
     return (
-        <div className="global_content">
-            <h2 className="global_title">Login</h2>
+        <GlobalContent>
+            <FormTitle>Login</FormTitle>
 
-            <form onSubmit={(e) => e.preventDefault()}>
+            <Form>
                 <FormInput
                     label="Usuario"
                     name="login"
@@ -59,7 +62,7 @@ export default function Login(props: DefaultProps) {
                     <FormAcceptButton label="Login" onClick={loginClick} />
                     <FormButton label="Cancelar" onClick={() => goHome(props)} />
                 </FormButtonBar>
-            </form >
-        </div >
+            </Form >
+        </GlobalContent >
     );
 }

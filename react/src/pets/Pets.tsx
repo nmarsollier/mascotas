@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { IPet, loadPets } from "./api/petsApi";
+import { IPet, loadPets } from "./petsApi";
 import "../styles.css";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome, DefaultProps } from "../common/utils/Tools";
 import FormButtonBar from "../common/components/FormButtonBar";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
+import FormTitle from "../common/components/FormTitle";
+import GlobalContent from "../common/components/GlobalContent";
 
 export default function Pets(props: DefaultProps) {
     const [pets, setPets] = useState(new Array<IPet>())
@@ -35,8 +37,8 @@ export default function Pets(props: DefaultProps) {
     }, [])
 
     return (
-        <div className="global_content">
-            <h2 className="global_title">Mascotas</h2>
+        <GlobalContent>
+            <FormTitle>Mascotas</FormTitle>
             <table id="mascotas" className="table">
                 <thead>
                     <tr>
@@ -67,6 +69,6 @@ export default function Pets(props: DefaultProps) {
                 <FormAcceptButton label="Nueva Mascota" onClick={newPetClick} />
                 <FormButton label="Cancelar" onClick={() => goHome(props)} />
             </FormButtonBar>
-        </div>
+        </GlobalContent>
     );
 }

@@ -4,10 +4,13 @@ import FormPassword from "../common/components/FormPassword";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { DefaultProps, goHome } from "../common/utils/Tools";
 import "../styles.css";
-import { changePassword } from "./api/userApi";
+import { changePassword } from "./userApi";
 import FormButtonBar from "../common/components/FormButtonBar";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
+import FormTitle from "../common/components/FormTitle";
+import Form from "../common/components/Form";
+import GlobalContent from "../common/components/GlobalContent";
 
 
 export default function Password(props: DefaultProps) {
@@ -46,10 +49,10 @@ export default function Password(props: DefaultProps) {
     }
 
     return (
-        <div className="global_content">
-            <h2 className="global_title">Cambiar Password</h2>
+        <GlobalContent>
+            <FormTitle>Cambiar Password</FormTitle>
 
-            <form onSubmit={(e) => e.preventDefault()}>
+            <Form>
                 <FormPassword
                     label="Password Actual"
                     name="currentPassword"
@@ -74,7 +77,7 @@ export default function Password(props: DefaultProps) {
                     <FormAcceptButton label="Cambiar" onClick={updatePasswordClick} />
                     <FormButton label="Cancelar" onClick={() => goHome(props)} />
                 </FormButtonBar>
-            </form >
-        </div>
+            </Form >
+        </GlobalContent>
     );
 }

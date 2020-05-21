@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import FormTitle from "../common/components/FormTitle";
 import { IStoredState } from "../store/sessionStore";
+import Form from "../common/components/Form";
 
 export default function StateInfo() {
     const user = useSelector((state: IStoredState) => state.user)
@@ -8,8 +10,9 @@ export default function StateInfo() {
 
     return (
         <div>
-            <h2>Información de Perfil</h2>
-            <form onSubmit={(e) => e.preventDefault()}>
+            <FormTitle>Información de Perfil</FormTitle>
+
+            <Form>
                 <div className="form-group">
                     <label>Login</label>
                     <input className="form-control" id="login" value={user?.login} disabled />
@@ -26,7 +29,7 @@ export default function StateInfo() {
                     <label>Token</label>
                     <input className="form-control" id="name" value={token} disabled />
                 </div>
-            </form>
+            </Form>
         </div>
     );
 }

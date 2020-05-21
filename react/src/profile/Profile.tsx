@@ -6,12 +6,15 @@ import { goHome, DefaultProps } from "../common/utils/Tools";
 import { getProvinces, IProvince } from "../provinces/provincesApi";
 import "../styles.css";
 // tslint:disable-next-line:max-line-length
-import { getCurrentProfile, getPictureUrl, updateBasicInfo, updateProfilePicture } from "./api/profileApi";
+import { getCurrentProfile, getPictureUrl, updateBasicInfo, updateProfilePicture } from "./profileApi";
 import DangerLabel from "../common/components/DangerLabel";
 import FormInput from "../common/components/FormInput";
 import FormButtonBar from "../common/components/FormButtonBar";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
+import FormTitle from "../common/components/FormTitle";
+import Form from "../common/components/Form";
+import GlobalContent from "../common/components/GlobalContent";
 
 interface IState {
     name: string;
@@ -103,10 +106,10 @@ export default function Profile(props: DefaultProps) {
     }, []);
 
     return (
-        <div className="global_content">
-            <h2 className="global_title">Actualizar Perfil</h2>
+        <GlobalContent>
+            <FormTitle>Actualizar Perfil</FormTitle>
 
-            <form onSubmit={(e) => e.preventDefault()}>
+            <Form>
                 <FormInput
                     label="Nombre"
                     name="name"
@@ -159,7 +162,7 @@ export default function Profile(props: DefaultProps) {
                     <FormAcceptButton label="Actualizar" onClick={updateClick} />
                     <FormButton label="Cancelar" onClick={() => goHome(props)} />
                 </FormButtonBar>
-            </form >
-        </div>
+            </Form >
+        </GlobalContent>
     );
 }

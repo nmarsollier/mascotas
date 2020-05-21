@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { newUser } from "../store/sessionStore";
-import "../styles.css";
-import { useErrorHandler } from "../common/utils/ErrorHandler";
-import { goHome, DefaultProps } from "../common/utils/Tools";
 import DangerLabel from "../common/components/DangerLabel";
-import FormInput from "../common/components/FormInput";
-import FormPassword from "../common/components/FormPassword";
-import FormButtonBar from "../common/components/FormButtonBar";
+import Form from "../common/components/Form";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormInput from "../common/components/FormInput";
+import FormPassword from "../common/components/FormPassword";
+import FormTitle from "../common/components/FormTitle";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
+import { DefaultProps, goHome } from "../common/utils/Tools";
+import { newUser } from "../store/sessionStore";
+import "../styles.css";
+import GlobalContent from "../common/components/GlobalContent";
 
 export default function Register(props: DefaultProps) {
     const [login, setLogin] = useState("")
@@ -50,10 +53,10 @@ export default function Register(props: DefaultProps) {
     }
 
     return (
-        <div className="global_content">
-            <h2 className="global_title">Registrar Usuario</h2>
+        <GlobalContent>
+            <FormTitle>Registrar Usuario</FormTitle>
 
-            <form onSubmit={(e) => e.preventDefault()}>
+            <Form>
                 <FormInput
                     label="Login"
                     name="login"
@@ -88,7 +91,7 @@ export default function Register(props: DefaultProps) {
                     <FormAcceptButton label="Registrarse" onClick={registerClick} />
                     <FormButton label="Cancelar" onClick={() => goHome(props)} />
                 </FormButtonBar>
-            </form >
-        </div>
+            </Form >
+        </GlobalContent>
     );
 }
