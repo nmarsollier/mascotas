@@ -1,16 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Route, RouteComponentProps } from "react-router-dom";
-import { IStoredState } from "../../store/sessionStore";
+import { Route, RouteProps } from "react-router-dom";
+import { StoredState } from "../../store/sessionStore";
 import Welcome from "../../welcome/Welcome";
 
-interface IProps {
-  path: string;
-  component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
-}
 
-export default function StateLoggedInRoute(props: IProps) {
-  const token = useSelector((state: IStoredState) => state.token)
+export default function StateLoggedInRoute(props: RouteProps) {
+  const token = useSelector((state: StoredState) => state.token)
 
   if (token === undefined) {
     return (<Route exact path={props.path} component={Welcome} />);

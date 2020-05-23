@@ -3,7 +3,7 @@ import { logout } from "../store/sessionStore";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
-export interface IProfile {
+interface Profile {
     name: string;
     phone: string;
     email: string;
@@ -12,7 +12,7 @@ export interface IProfile {
     picture: string;
 }
 
-export interface IUpdateBasicProfile {
+interface UpdateBasicProfile {
     name: string;
     phone: string;
     email: string;
@@ -20,7 +20,7 @@ export interface IUpdateBasicProfile {
     province: string;
 }
 
-export async function updateBasicInfo(data: IUpdateBasicProfile): Promise<IProfile> {
+export async function updateBasicInfo(data: UpdateBasicProfile): Promise<Profile> {
     try {
         const res = await axios.post("http://localhost:3000/v1/profile", data);
         return Promise.resolve(res.data);
@@ -32,14 +32,14 @@ export async function updateBasicInfo(data: IUpdateBasicProfile): Promise<IProfi
     }
 }
 
-export interface IUpdateProfileImage {
+interface UpdateProfileImage {
     image: string;
 }
-export interface IUpdateProfileImageId {
+interface UpdateProfileImageId {
     id: string;
 }
 
-export async function updateProfilePicture(payload: IUpdateProfileImage): Promise<IUpdateProfileImageId> {
+export async function updateProfilePicture(payload: UpdateProfileImage): Promise<UpdateProfileImageId> {
     try {
         const res = await axios.post("http://localhost:3000/v1/profile/picture", payload);
         return Promise.resolve(res.data);
@@ -51,7 +51,7 @@ export async function updateProfilePicture(payload: IUpdateProfileImage): Promis
     }
 }
 
-export async function getCurrentProfile(): Promise<IProfile> {
+export async function getCurrentProfile(): Promise<Profile> {
     try {
         const res = await axios.get("http://localhost:3000/v1/profile");
         return Promise.resolve(res.data);

@@ -3,14 +3,14 @@ import { logout } from "../store/sessionStore";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
-export interface IPet {
+export interface Pet {
     id: string;
     name: string;
     birthDate: string;
     description: string;
 }
 
-export async function loadPets(): Promise<IPet[]> {
+export async function loadPets(): Promise<Pet[]> {
     try {
         const res = await axios.get("http://localhost:3000/v1/pet");
         return Promise.resolve(res.data);
@@ -22,7 +22,7 @@ export async function loadPets(): Promise<IPet[]> {
     }
 }
 
-export async function loadPet(id: string): Promise<IPet> {
+export async function loadPet(id: string): Promise<Pet> {
     try {
         const res = await axios.get("http://localhost:3000/v1/pet/" + id);
         return Promise.resolve(res.data);
@@ -34,10 +34,10 @@ export async function loadPet(id: string): Promise<IPet> {
     }
 }
 
-export async function newPet(payload: IPet): Promise<IPet> {
+export async function newPet(payload: Pet): Promise<Pet> {
     try {
         const res = await axios.post("http://localhost:3000/v1/pet", payload);
-        return Promise.resolve(res.data as IPet);
+        return Promise.resolve(res.data as Pet);
     } catch (err) {
         if ((err as AxiosError) && err.response && err.response.status === 401) {
             logout();
@@ -46,7 +46,7 @@ export async function newPet(payload: IPet): Promise<IPet> {
     }
 }
 
-export async function savePet(payload: IPet): Promise<IPet> {
+export async function savePet(payload: Pet): Promise<Pet> {
     try {
         const res = await axios.post("http://localhost:3000/v1/pet/" + payload.id, payload);
         return Promise.resolve(res.data);

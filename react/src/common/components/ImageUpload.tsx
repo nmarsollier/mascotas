@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 
-interface IProps {
+interface ImageUploadProps {
     src: string;
     onChange: (image: string) => void;
 }
 
-export default function ImageUpload(props: IProps) {
+export default function ImageUpload(props: ImageUploadProps) {
     const fileInput = useRef<HTMLInputElement>(null)
 
     const imageClick = () => {

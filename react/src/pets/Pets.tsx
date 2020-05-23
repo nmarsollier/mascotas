@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IPet, loadPets } from "./petsApi";
+import { Pet, loadPets } from "./petsApi";
 import "../styles.css";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome } from "../common/utils/Tools";
@@ -11,7 +11,7 @@ import GlobalContent from "../common/components/GlobalContent";
 import { RouteComponentProps } from "react-router-dom";
 
 export default function Pets(props: RouteComponentProps) {
-    const [pets, setPets] = useState(new Array<IPet>())
+    const [pets, setPets] = useState(new Array<Pet>())
 
     const errorHandler = useErrorHandler()
 

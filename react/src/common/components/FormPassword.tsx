@@ -2,7 +2,7 @@ import React from "react"
 import { ErrorHandler } from "../utils/ErrorHandler";
 import ErrorLabel from "./ErrorLabel";
 
-interface FormPasswordParams {
+interface FormPasswordProps {
     label: string,
     name: string,
     errorHandler: ErrorHandler,
@@ -10,16 +10,16 @@ interface FormPasswordParams {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => any
 }
 
-export default function FormPassword(params: FormPasswordParams) {
+export default function FormPassword(props: FormPasswordProps) {
     return (
         <div className="form-group">
-            <label>{params.label}</label>
-            <input id={params.name} type="password"
-                value={params.value}
-                onChange={params.onChange}
-                className={params.errorHandler.getErrorClass(params.name, "form-control")}>
+            <label>{props.label}</label>
+            <input id={props.name} type="password"
+                value={props.value}
+                onChange={props.onChange}
+                className={props.errorHandler.getErrorClass(props.name, "form-control")}>
             </input>
-            <ErrorLabel message={params.errorHandler.getErrorText(params.name)} />
+            <ErrorLabel message={props.errorHandler.getErrorText(props.name)} />
         </div>
     )
 }

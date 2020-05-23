@@ -12,20 +12,10 @@ import GlobalContent from "../common/components/GlobalContent";
 import ImageUpload from "../common/components/ImageUpload";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
 import { goHome } from "../common/utils/Tools";
-import { getProvinces, IProvince } from "../provinces/provincesApi";
+import { getProvinces, Province } from "../provinces/provincesApi";
 import "../styles.css";
 // tslint:disable-next-line:max-line-length
 import { getCurrentProfile, getPictureUrl, updateBasicInfo, updateProfilePicture } from "./profileApi";
-
-interface IState {
-    name: string;
-    province: string;
-    email: string;
-    address: string;
-    phone: string;
-    picture: string;
-    provinces: IProvince[];
-}
 
 export default function Profile(props: RouteComponentProps) {
     const [address, setAddress] = useState("")
@@ -34,7 +24,7 @@ export default function Profile(props: RouteComponentProps) {
     const [phone, setPhone] = useState("")
     const [picture, setPicture] = useState("")
     const [province, setProvince] = useState("")
-    const [provinces, setProvinces] = useState(new Array<IProvince>())
+    const [provinces, setProvinces] = useState(new Array<Province>())
 
     const errorHandler = useErrorHandler()
 

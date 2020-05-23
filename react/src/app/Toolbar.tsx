@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { IStoredState } from "../store/sessionStore";
+import { StoredState } from "../store/sessionStore";
 import "./Toolbar.css";
 
 export default function Toolbar() {
-  const user = useSelector((state: IStoredState) => state.user)
+  const user = useSelector((state: StoredState) => state.user)
 
   return (
     <nav className="navbar navbar-expand-sm bg-dark navbar-dark d-flex shadow">

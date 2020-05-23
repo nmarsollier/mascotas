@@ -13,8 +13,8 @@ function setCurrentToken(token: string) {
     axios.defaults.headers.common.Authorization = "bearer " + token;
 }
 
-export function getCurrentUser(): IUser | undefined {
-    return (localStorage.getItem("user") as unknown) as IUser;
+export function getCurrentUser(): User | undefined {
+    return (localStorage.getItem("user") as unknown) as User;
 }
 
 export async function logout(): Promise<void> {
@@ -30,7 +30,7 @@ export async function logout(): Promise<void> {
     }
 }
 
-export interface ILogin {
+export interface Login {
     login: string;
     password: string;
 }
@@ -39,7 +39,7 @@ export interface IToken {
     token: string;
 }
 
-export async function login(payload: ILogin): Promise<IToken> {
+export async function login(payload: Login): Promise<IToken> {
     try {
         const res = await axios.post("http://localhost:3000/v1/user/signin", payload);
         setCurrentToken(res.data.token);
@@ -49,14 +49,14 @@ export async function login(payload: ILogin): Promise<IToken> {
     }
 }
 
-export interface IUser {
+export interface User {
     id: string;
     name: string;
     login: string;
     permissions: string[];
 }
 
-export async function reloadCurrentUser(): Promise<IUser> {
+export async function reloadCurrentUser(): Promise<User> {
     try {
         const res = await axios.get("http://localhost:3000/v1/users/current");
         localStorage.setItem("user", res.data);
@@ -69,13 +69,13 @@ export async function reloadCurrentUser(): Promise<IUser> {
     }
 }
 
-export interface ISignUpRequest {
+export interface SignUpRequest {
     name: string;
     password: string;
     login: string;
 }
 
-export async function newUser(payload: ISignUpRequest): Promise<IToken> {
+export async function newUser(payload: SignUpRequest): Promise<IToken> {
     try {
         const res = await axios.post("http://localhost:3000/v1/user", payload);
         setCurrentToken(res.data.token);

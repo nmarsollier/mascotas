@@ -2,7 +2,7 @@ import React from "react"
 import { ErrorHandler } from "../utils/ErrorHandler";
 import ErrorLabel from "./ErrorLabel";
 
-interface FormInputParams {
+interface FormInputProps {
     label: string,
     name: string,
     errorHandler: ErrorHandler,
@@ -10,16 +10,16 @@ interface FormInputParams {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => any
 }
 
-export default function FormInput(params: FormInputParams) {
+export default function FormInput(props: FormInputProps) {
     return (
         <div className="form-group">
-            <label>{params.label}</label>
-            <input id={params.name} type="text"
-                value={params.value}
-                onChange={params.onChange}
-                className={params.errorHandler.getErrorClass(params.name, "form-control")}>
+            <label>{props.label}</label>
+            <input id={props.name} type="text"
+                value={props.value}
+                onChange={props.onChange}
+                className={props.errorHandler.getErrorClass(props.name, "form-control")}>
             </input>
-            <ErrorLabel message={params.errorHandler.getErrorText(params.name)} />
+            <ErrorLabel message={props.errorHandler.getErrorText(props.name)} />
         </div>
     )
 }

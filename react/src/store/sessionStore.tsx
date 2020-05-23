@@ -1,22 +1,22 @@
 import { createStore } from "redux";
 import * as userApi from "../user/userApi";
-import { ILogin, ISignUpRequest, IUser } from "../user/userApi";
+import { Login, SignUpRequest, User } from "../user/userApi";
 
-export interface IStoredState {
+export interface StoredState {
     token?: string;
-    user?: IUser;
+    user?: User;
 }
 
 enum StoreAction {
     UPDATE, CLEANUP,
 }
 
-interface IAction {
+interface Action {
     type: StoreAction;
-    payload?: IStoredState;
+    payload?: StoredState;
 }
 
-const sessionStore = createStore((state: IStoredState = {}, action: IAction) => {
+const sessionStore = createStore((state: StoredState = {}, action: Action) => {
     switch (action.type) {
         case StoreAction.UPDATE:
             return {
@@ -34,7 +34,7 @@ const sessionStore = createStore((state: IStoredState = {}, action: IAction) => 
     }
 });
 
-export async function login(payload: ILogin): Promise<IUser> {
+export async function login(payload: Login): Promise<User> {
     try {
         const data = await userApi.login(payload);
         sessionStore.dispatch({
@@ -48,7 +48,7 @@ export async function login(payload: ILogin): Promise<IUser> {
     }
 }
 
-export async function newUser(payload: ISignUpRequest): Promise<IUser> {
+export async function newUser(payload: SignUpRequest): Promise<User> {
     try {
         const data = await userApi.newUser(payload);
         sessionStore.dispatch({
@@ -62,7 +62,7 @@ export async function newUser(payload: ISignUpRequest): Promise<IUser> {
     }
 }
 
-async function reloadCurrentUser(): Promise<IUser> {
+async function reloadCurrentUser(): Promise<User> {
     try {
         const data = await userApi.reloadCurrentUser();
         sessionStore.dispatch({
