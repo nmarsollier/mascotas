@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import DangerLabel from "../common/components/DangerLabel";
 import ErrorLabel from "../common/components/ErrorLabel";
+import Form from "../common/components/Form";
+import FormAcceptButton from "../common/components/FormAcceptButton";
+import FormButton from "../common/components/FormButton";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormInput from "../common/components/FormInput";
+import FormTitle from "../common/components/FormTitle";
+import GlobalContent from "../common/components/GlobalContent";
 import ImageUpload from "../common/components/ImageUpload";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
-import { goHome, DefaultProps } from "../common/utils/Tools";
+import { goHome } from "../common/utils/Tools";
 import { getProvinces, IProvince } from "../provinces/provincesApi";
 import "../styles.css";
 // tslint:disable-next-line:max-line-length
 import { getCurrentProfile, getPictureUrl, updateBasicInfo, updateProfilePicture } from "./profileApi";
-import DangerLabel from "../common/components/DangerLabel";
-import FormInput from "../common/components/FormInput";
-import FormButtonBar from "../common/components/FormButtonBar";
-import FormAcceptButton from "../common/components/FormAcceptButton";
-import FormButton from "../common/components/FormButton";
-import FormTitle from "../common/components/FormTitle";
-import Form from "../common/components/Form";
-import GlobalContent from "../common/components/GlobalContent";
 
 interface IState {
     name: string;
@@ -26,7 +27,7 @@ interface IState {
     provinces: IProvince[];
 }
 
-export default function Profile(props: DefaultProps) {
+export default function Profile(props: RouteComponentProps) {
     const [address, setAddress] = useState("")
     const [email, setEmail] = useState("")
     const [name, setName] = useState("")

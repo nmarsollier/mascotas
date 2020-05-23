@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { IPet, loadPets } from "./petsApi";
 import "../styles.css";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
-import { goHome, DefaultProps } from "../common/utils/Tools";
+import { goHome } from "../common/utils/Tools";
 import FormButtonBar from "../common/components/FormButtonBar";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
 import FormTitle from "../common/components/FormTitle";
 import GlobalContent from "../common/components/GlobalContent";
+import { RouteComponentProps } from "react-router-dom";
 
-export default function Pets(props: DefaultProps) {
+export default function Pets(props: RouteComponentProps) {
     const [pets, setPets] = useState(new Array<IPet>())
 
     const errorHandler = useErrorHandler()

@@ -1,7 +1,7 @@
-import { DefaultProps } from "../utils/Tools";
 import React from "react";
+import { RouteProps } from "react-router-dom";
 
-export default function FormButtonBar(props: DefaultProps) {
+export default function FormButtonBar(props: RouteProps) {
     return (
         <div className="btn-group ">
             {props.children}

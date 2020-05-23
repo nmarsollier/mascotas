@@ -1,19 +1,20 @@
 import React, { useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import DangerLabel from "../common/components/DangerLabel";
-import { useErrorHandler } from "../common/utils/ErrorHandler";
-import { DefaultProps, goHome } from "../common/utils/Tools";
-import { login } from "../store/sessionStore";
-import "../styles.css";
-import FormInput from "../common/components/FormInput";
-import FormPassword from "../common/components/FormPassword";
-import FormButtonBar from "../common/components/FormButtonBar";
+import Form from "../common/components/Form";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormInput from "../common/components/FormInput";
+import FormPassword from "../common/components/FormPassword";
 import FormTitle from "../common/components/FormTitle";
-import Form from "../common/components/Form";
 import GlobalContent from "../common/components/GlobalContent";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
+import { goHome } from "../common/utils/Tools";
+import { login } from "../store/sessionStore";
+import "../styles.css";
 
-export default function Login(props: DefaultProps) {
+export default function Login(props: RouteComponentProps) {
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
 
@@ -33,7 +34,7 @@ export default function Login(props: DefaultProps) {
                 login: userName,
                 password
             });
-            props.history.push("/");
+            props.history?.push("/");
         } catch (error) {
             errorHandler.processRestValidations(error);
         }

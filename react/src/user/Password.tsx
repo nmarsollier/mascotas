@@ -1,19 +1,20 @@
 import React, { useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import DangerLabel from "../common/components/DangerLabel";
-import FormPassword from "../common/components/FormPassword";
-import { useErrorHandler } from "../common/utils/ErrorHandler";
-import { DefaultProps, goHome } from "../common/utils/Tools";
-import "../styles.css";
-import { changePassword } from "./userApi";
-import FormButtonBar from "../common/components/FormButtonBar";
+import Form from "../common/components/Form";
 import FormAcceptButton from "../common/components/FormAcceptButton";
 import FormButton from "../common/components/FormButton";
+import FormButtonBar from "../common/components/FormButtonBar";
+import FormPassword from "../common/components/FormPassword";
 import FormTitle from "../common/components/FormTitle";
-import Form from "../common/components/Form";
 import GlobalContent from "../common/components/GlobalContent";
+import { useErrorHandler } from "../common/utils/ErrorHandler";
+import { goHome } from "../common/utils/Tools";
+import "../styles.css";
+import { changePassword } from "./userApi";
 
 
-export default function Password(props: DefaultProps) {
+export default function Password(props: RouteComponentProps) {
     const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [newPassword2, setNewPassword2] = useState("")
@@ -42,7 +43,7 @@ export default function Password(props: DefaultProps) {
                 currentPassword,
                 newPassword
             });
-            props.history.push("/");
+            props.history?.push("/");
         } catch (error) {
             errorHandler.processRestValidations(error);
         }

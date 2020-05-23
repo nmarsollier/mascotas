@@ -1,7 +1,7 @@
 import React from "react";
-import { DefaultProps } from "../utils/Tools";
+import { RouteProps } from "react-router-dom";
 
-export default function GlobalContent(props: DefaultProps) {
+export default function GlobalContent(props: RouteProps) {
     return (
         <div className="global_content">
             {props.children}

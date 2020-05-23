@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import DangerLabel from "../common/components/DangerLabel";
 import Form from "../common/components/Form";
 import FormAcceptButton from "../common/components/FormAcceptButton";
@@ -7,13 +8,13 @@ import FormButtonBar from "../common/components/FormButtonBar";
 import FormInput from "../common/components/FormInput";
 import FormPassword from "../common/components/FormPassword";
 import FormTitle from "../common/components/FormTitle";
+import GlobalContent from "../common/components/GlobalContent";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
-import { DefaultProps, goHome } from "../common/utils/Tools";
+import { goHome } from "../common/utils/Tools";
 import { newUser } from "../store/sessionStore";
 import "../styles.css";
-import GlobalContent from "../common/components/GlobalContent";
 
-export default function Register(props: DefaultProps) {
+export default function Register(props: RouteComponentProps) {
     const [login, setLogin] = useState("")
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")

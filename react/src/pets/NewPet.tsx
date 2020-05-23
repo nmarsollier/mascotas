@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useErrorHandler } from "../common/utils/ErrorHandler";
-import { goHome, DefaultProps } from "../common/utils/Tools";
+import { goHome } from "../common/utils/Tools";
 import "../styles.css";
 import { deletePet, loadPet, newPet, savePet } from "./petsApi";
 import DangerLabel from "../common/components/DangerLabel";
@@ -12,8 +12,9 @@ import FormWarnButton from "../common/components/FormWarnButton";
 import FormTitle from "../common/components/FormTitle";
 import Form from "../common/components/Form";
 import GlobalContent from "../common/components/GlobalContent";
+import { RouteComponentProps } from "react-router-dom";
 
-export default function NewPet(props: DefaultProps) {
+export default function NewPet(props: RouteComponentProps<{ id: string }>) {
     const [birthDate, setBirthDate] = useState("")
     const [description, setDescription] = useState("")
     const [petId, setPetId] = useState("")
@@ -68,7 +69,7 @@ export default function NewPet(props: DefaultProps) {
     }
 
     useEffect(() => {
-        const { id } = props.match.params;
+        const id  = props.match.params.id;
         if (id) {
             loadPetById(id)
         }

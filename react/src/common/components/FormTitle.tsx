@@ -1,7 +1,7 @@
 import React from "react";
-import { DefaultProps } from "../utils/Tools";
+import { RouteProps } from "react-router-dom";
 
-export default function FormTitle(props: DefaultProps) {
+export default function FormTitle(props: RouteProps) {
     return (
         <h2 className="global_title">
             {props.children}

@@ -1,15 +1,8 @@
 import { useState } from "react";
+import { RouteComponentProps } from 'react-router-dom';
 
-export interface DefaultProps {
-    history?: any;
-    match?: any;
-    children?: any;
-}
-
-export function goHome(props: DefaultProps) {
-    if (props.history) {
-        props.history.push("/");
-    }
+export function goHome(props: RouteComponentProps) {
+    props.history.push("/");
 }
 
 export function useForceUpdate() {
