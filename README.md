@@ -15,7 +15,7 @@ node : Node con typescript para backend.
 
 ## Guía de Instalación
 
-### Node con npm versión 8
+### Node con npm versión 13+
 
 Seguir la guia de instalacion desde el sitio oficial [nodejs.org](https://nodejs.org/)
 

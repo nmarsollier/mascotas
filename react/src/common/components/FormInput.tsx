@@ -14,7 +14,8 @@ export default function FormInput(props: FormInputProps) {
     return (
         <div className="form-group">
             <label>{props.label}</label>
-            <input id={props.name} type="text"
+            <input id={props.name}
+                type="text"
                 value={props.value}
                 onChange={props.onChange}
                 className={props.errorHandler.getErrorClass(props.name, "form-control")}>

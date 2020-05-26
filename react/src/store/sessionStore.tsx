@@ -48,6 +48,20 @@ export async function login(payload: Login): Promise<User> {
     }
 }
 
+export async function logout(): Promise<void> {
+    try {
+        if (userApi.getCurrentToken() !== undefined) {
+            await userApi.logout();
+        }
+    } finally {
+        sessionStore.dispatch({
+            payload: undefined,
+            type: StoreAction.CLEANUP,
+        });
+    }
+    return Promise.resolve();
+}
+
 export async function newUser(payload: SignUpRequest): Promise<User> {
     try {
         const data = await userApi.newUser(payload);
@@ -75,20 +89,6 @@ async function reloadCurrentUser(): Promise<User> {
     } catch (err) {
         return Promise.reject(err);
     }
-}
-
-export async function logout(): Promise<void> {
-    try {
-        if (userApi.getCurrentToken() !== undefined) {
-            await userApi.logout();
-        }
-    } finally {
-        sessionStore.dispatch({
-            payload: undefined,
-            type: StoreAction.CLEANUP,
-        });
-    }
-    return Promise.resolve();
 }
 
 if (userApi.getCurrentToken() !== undefined) {
