@@ -1,0 +1,35 @@
+# Este es un compose que trae desde github el Dockerfile, compila y crea la imagen.
+# Util para devs porque estamos haciendo build directamente desde el codigo fuente de github.
+version: "3"
+services:
+    mascotas-mongo:
+        container_name: mascotas-mongo
+        ports:
+            - "27017:27017"
+        image: "mongo:4.0.18-xenial"
+    mascotas-redis:
+        container_name: mascotas-redis
+        ports:
+            - "6379:6379"
+        image: "redis:5.0.9-buster"
+    mascotas-node:
+        build:
+            context: https://raw.githubusercontent.com/nmarsollier/mascotas/master/node/Dockerfile
+        container_name: mascotas-node
+        image: mascotas-node
+        ports:
+            - "3000:3000"
+        depends_on:
+            - "mascotas-mongo"
+            - "mascotas-redis"
+    mascotas-react:
+        build:
+            context: https://raw.githubusercontent.com/nmarsollier/mascotas/master/react/Dockerfile
+        container_name: mascotas-react
+        ports:
+            - '4200:80'
+        image: mascotas-react
+
+networks:
+    default:
+        driver: bridge
