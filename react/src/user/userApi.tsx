@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { logout as sessionLogout } from "../store/sessionStore";
+import { environment } from "../app/environment/environment";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -22,7 +23,7 @@ export async function logout(): Promise<void> {
     localStorage.removeItem("user");
 
     try {
-        await axios.get("http://localhost:3000/v1/user/signout");
+        await axios.get(environment.backendUrl + "/v1/user/signout");
         axios.defaults.headers.common.Authorization = "";
         return Promise.resolve();
     } catch (err) {
@@ -41,7 +42,7 @@ export interface IToken {
 
 export async function login(payload: Login): Promise<IToken> {
     try {
-        const res = await axios.post("http://localhost:3000/v1/user/signin", payload);
+        const res = await axios.post(environment.backendUrl + "/v1/user/signin", payload);
         setCurrentToken(res.data.token);
         return Promise.resolve(res.data);
     } catch (err) {
@@ -58,7 +59,7 @@ export interface User {
 
 export async function reloadCurrentUser(): Promise<User> {
     try {
-        const res = await axios.get("http://localhost:3000/v1/users/current");
+        const res = await axios.get(environment.backendUrl + "/v1/users/current");
         localStorage.setItem("user", res.data);
         return Promise.resolve(res.data);
     } catch (err) {
@@ -77,7 +78,7 @@ export interface SignUpRequest {
 
 export async function newUser(payload: SignUpRequest): Promise<IToken> {
     try {
-        const res = await axios.post("http://localhost:3000/v1/user", payload);
+        const res = await axios.post(environment.backendUrl + "/v1/user", payload);
         setCurrentToken(res.data.token);
         return Promise.resolve(res.data);
     } catch (err) {
@@ -92,7 +93,7 @@ export interface IChangePassword {
 
 export async function changePassword(payload: IChangePassword): Promise<void> {
     try {
-        const res = await axios.post("http://localhost:3000/v1/user/password", payload);
+        const res = await axios.post(environment.backendUrl + "/v1/user/password", payload);
         return Promise.resolve(res.data);
     } catch (err) {
         if ((err as AxiosError) && err.response && err.response.status === 401) {

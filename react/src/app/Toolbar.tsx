@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { StoredState } from "../store/sessionStore";
 import "./Toolbar.css";
+import { environment } from "./environment/environment";
 
 export default function Toolbar() {
   const user = useSelector((state: StoredState) => state.user)
@@ -17,7 +18,7 @@ export default function Toolbar() {
       </div>
 
       <div className="btn-group navbar-nav">
-        <a href="http://localhost:3000/" target="apidoc"
+        <a href={environment.backendUrl + "/"} target="apidoc"
           className="toolbar_button btn btn-outline-secondary btn-sm nav-link">
           ApiDoc
           </a>

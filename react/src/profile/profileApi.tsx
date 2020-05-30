@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { logout } from "../store/sessionStore";
+import { environment } from "../app/environment/environment";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -22,7 +23,7 @@ interface UpdateBasicProfile {
 
 export async function updateBasicInfo(data: UpdateBasicProfile): Promise<Profile> {
     try {
-        const res = await axios.post("http://localhost:3000/v1/profile", data);
+        const res = await axios.post(environment.backendUrl + "/v1/profile", data);
         return Promise.resolve(res.data);
     } catch (err) {
         if ((err as AxiosError).code === "401") {
@@ -41,7 +42,7 @@ interface UpdateProfileImageId {
 
 export async function updateProfilePicture(payload: UpdateProfileImage): Promise<UpdateProfileImageId> {
     try {
-        const res = await axios.post("http://localhost:3000/v1/profile/picture", payload);
+        const res = await axios.post(environment.backendUrl + "/v1/profile/picture", payload);
         return Promise.resolve(res.data);
     } catch (err) {
         if ((err as AxiosError) && err.response && err.response.status === 401) {
@@ -53,7 +54,7 @@ export async function updateProfilePicture(payload: UpdateProfileImage): Promise
 
 export async function getCurrentProfile(): Promise<Profile> {
     try {
-        const res = await axios.get("http://localhost:3000/v1/profile");
+        const res = await axios.get(environment.backendUrl + "/v1/profile");
         return Promise.resolve(res.data);
     } catch (err) {
         if ((err as AxiosError) && err.response && err.response.status === 401) {
@@ -65,7 +66,7 @@ export async function getCurrentProfile(): Promise<Profile> {
 
 export function getPictureUrl(id: string) {
     if (id && id.length > 0) {
-        return "http://localhost:3000/v1/image/" + id;
+        return environment.backendUrl + "/v1/image/" + id;
     } else {
         return "/assets/profile.png";
     }
