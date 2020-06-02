@@ -17,28 +17,8 @@ docker run -d --name mascotas-redis -p 6379:6379 redis:5.0.9-buster
 
 ## Node
 
-```bash
-docker build --no-cache -t mascotas-node https://raw.githubusercontent.com/nmarsollier/mascotas/master/node/Dockerfile
-
-# Mac || Windows
-docker run -d --name mascotas-node -p 3000:3000 mascotas-node
-
-# Linux
-docker run --add-host host.docker.internal:172.17.0.1 -d --name mascotas-node -p 3000:3000 mascotas-node
-```
-
-[Test](http://localhost:3000/)
+Ver las notas en el proyecto [Node](https://github.com/nmarsollier/mascotas_node)
 
 ## React
 
-```bash
-docker build --no-cache -t mascotas-react https://raw.githubusercontent.com/nmarsollier/mascotas/master/react/Dockerfile
-
-# Mac || Windows
-docker run -it -d --name mascotas-react -p 4200:80 mascotas-react
-
-# Linux
-docker run --add-host host.docker.internal:172.17.0.1 -it -d --name mascotas-react -p 4200:80 mascotas-react
-```
-
-[Test](http://localhost:4200/)
+Ver las notas en el proyecto [UI React](https://github.com/nmarsollier/mascotas_node)

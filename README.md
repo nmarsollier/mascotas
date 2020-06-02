@@ -1,21 +1,24 @@
-### Si queres sabes mas sobre mi:
+# Si queres sabes mas sobre mi:
+
 [Nestor Marsollier](https://github.com/nmarsollier/profile)
 
-# Proyecto Mascotas - Programación Avanzada
+## Proyecto Mascotas - Programación Avanzada
 
 Proyecto Red social de Mascotas, ejemplo de código para la cátedra "Programación Avanzada" en la Universidad Tecnología Nacional, Facultad Regional Mendoza.
 
-Este proyecto es un ejemplo de como armar un proyecto Node 6 con Typescript como backend, y React como frontend.
-
-El proyecto tiene 2 carpetas
-
-react :  Frontend desarrollado en react y typescript.
-
-node : Node con typescript para backend.
+Este proyecto es un ejemplo de como armar un proyecto Node con Typescript como backend, y React como frontend.
 
 ## Guía de Instalación
 
-### Node con npm versión 13+
+El proyecto esa compuesto por 2 proyectos github, cada uno proporciona sus guías de instalación :
+
+[UI React](https://github.com/nmarsollier/mascotas_react) :  Frontend desarrollado en react y typescript.
+
+[Backend en Node](https://github.com/nmarsollier/mascotas_node) : Node con typescript para backend.
+
+Ademas vamos a necesitar lo siguiente :
+
+### Node con npm versión 12+
 
 Seguir la guía de instalación desde el sitio oficial [nodejs.org](https://nodejs.org/)
 
@@ -44,32 +47,6 @@ O seguir los pasos de instalación desde la pagina oficial [redis.io](https://re
 Para windows conviene un ejecutable : [Redis Windows](https://sourceforge.net/projects/redis/)
 
 Recomiendo instalar FastoRedis para navegar la base de datos [fastoredis.com](https://fastoredis.com/)
-
-## Ejecución
-
-### Backend
-
-Abrir ventana de comandos en el folder node y ejecutar :
-
-```bash
-npm install
-npm start
-```
-
-El backend expone la documentación de las api abriendo [localhost:3000](http://localhost:3000/)
-
-Pueden ver la documentación del proyecto en [node](./node/README.md)
-
-### React
-
-Abrir ventana de comandos en la carpeta react, ejecutar:
-
-```bash
-npm install
-npm start
-```
-
-Desde un browser debemos abrir [localhost:4200](http://localhost:4200/)
 
 ## Docker Producción
 
