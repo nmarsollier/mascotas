@@ -16,6 +16,8 @@ El proyecto esa compuesto por 2 proyectos github, cada uno proporciona sus guía
 
 [Backend en Node](https://github.com/nmarsollier/mascotas_node) : Node con typescript para backend.
 
+También existe una demo de [UI Modular en React](https://github.com/nmarsollier/mascotas_react_app)
+
 Ademas vamos a necesitar lo siguiente :
 
 ### Node con npm versión 12+
